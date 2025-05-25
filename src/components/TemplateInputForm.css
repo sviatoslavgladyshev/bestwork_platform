@@ -1,0 +1,689 @@
+/* TemplateInputForm.css */
+
+/* Global body styles for thematic cyberpunk background */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #0d1b2a, #1b263b);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Particle effect for background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: particleGlow 20s linear infinite;
+    z-index: -1;
+    opacity: 0.3;
+  }
+  
+  @keyframes particleGlow {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 20px; }
+  }
+  
+  /* Container */
+  .template-form-container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(13, 27, 42, 0.9), rgba(27, 38, 59, 0.9));
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 1s ease-in;
+  }
+  
+  .template-form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.08), transparent 70%);
+    z-index: 0;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Form title */
+  .form-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #00ffcc;
+    text-shadow: 0 0 8px #00ffcc;
+    margin-bottom: 30px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1.5px;
+  }
+  
+  /* Progress bar */
+  .progress-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  
+  .progress {
+    height: 100%;
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    transition: width 0.4s ease;
+  }
+  
+  /* Step indicator */
+  .step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 10px;
+  }
+  
+  .step {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .step.active {
+    background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+    color: #00ffcc;
+    text-shadow: 0 0 5px #00ffcc;
+  }
+  
+  .step.completed {
+    background: rgba(255, 255, 255, 0.1);
+    color: #00cc99;
+  }
+  
+  .step-number {
+    font-size: 1.1rem;
+    font-family: 'Orbitron', sans-serif;
+    margin-right: 8px;
+  }
+  
+  .step-label {
+    font-size: 0.9rem;
+  }
+  
+  /* Form */
+  .template-form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Step content */
+  .step-content {
+    animation: slideIn 0.5s ease;
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  .step-title {
+    font-size: 2rem;
+    color: #00ffcc;
+    text-shadow: 0 0 8px #00ffcc;
+    margin-bottom: 25px;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  /* Form section */
+  .form-section {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  /* Form group */
+  .form-group {
+    position: relative;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Instructions group for vertical spacing */
+  .instructions-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Context rules */
+  .context-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .context-rule {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.03), rgba(255, 0, 255, 0.03));
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    animation: fadeInCard 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  @keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .context-rule .rule-title {
+    margin: 0 0 15px;
+    color: #00ffcc;
+    font-size: 1.4rem;
+    text-shadow: 0 0 5px #00ffcc;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  /* Holographic card effect */
+  .holographic-card {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .holographic-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(0, 255, 255, 0.08),
+      transparent
+    );
+    transform: rotate(30deg);
+    animation: hologram 10s infinite linear;
+  }
+  
+  @keyframes hologram {
+    0% { transform: rotate(30deg) translateX(-50%); }
+    100% { transform: rotate(30deg) translateX(50%); }
+  }
+  
+  /* Rule template selector */
+  .rule-template-selector,
+  .example-template-selector {
+    margin-bottom: 25px;
+  }
+  
+  .template-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+  }
+  
+  .template-button {
+    padding: 10px 18px;
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .template-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+  }
+  
+  /* Condition tags */
+  .condition-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .condition-tag {
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .condition-tag.selected {
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    color: #fff;
+  }
+  
+  .condition-tag:hover {
+    transform: scale(1.05);
+  }
+  
+  .condition-tag.selected:hover {
+    background: linear-gradient(90deg, #00cc99, #cc00cc);
+  }
+  
+  /* Custom condition input */
+  .custom-condition {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .custom-condition input {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .add-condition-button {
+    padding: 10px 18px;
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .add-condition-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+  }
+  
+  /* Labels */
+  .form-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 0 0 4px rgba(0, 255, 255, 0.1);
+  }
+  
+  /* Tooltip */
+  .tooltip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #00ffcc, #ff00ff);
+    color: #fff;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    width: 22px;
+    height: 22px;
+    margin-left: 8px;
+    cursor: help;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .tooltip:hover,
+  .tooltip:focus {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+  
+  .tooltip:hover:after,
+  .tooltip:focus:after {
+    content: attr(title);
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: #e0e0e0;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    width: 280px;
+    max-width: 90vw;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 255, 255, 0.2);
+    white-space: pre-wrap;
+    text-align: left;
+    border: 1px solid rgba(0, 255, 255, 0.15);
+  }
+  
+  /* Inputs, textareas, selects, slider */
+  .form-input,
+  .form-textarea,
+  .form-select {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    font-size: 1rem;
+    transition: box-shadow 0.3s, border 0.3s;
+    border: 1px solid transparent;
+  }
+  
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    outline: none;
+    border: 1px solid #00ffcc;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+  }
+  
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .form-select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="#00ffcc" d="M6 9l4-4H2z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+  
+  .form-slider {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #555, #999);
+    outline: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  
+  .form-slider:hover {
+    opacity: 1;
+  }
+  
+  .form-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+  
+  .form-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+  
+  .slider-value {
+    display: block;
+    margin-top: 10px;
+    color: #00ffcc;
+    font-size: 0.9rem;
+    text-shadow: 0 0 4px #00ffcc;
+  }
+  
+  /* Neon glow effect */
+  .neon-glow {
+    transition: box-shadow 0.3s, border 0.3s;
+  }
+  
+  .neon-glow:hover,
+  .neon-glow:focus {
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.4), 0 0 20px rgba(255, 0, 255, 0.2);
+    border-color: #00ffcc;
+  }
+  
+  /* Email example */
+  .email-example {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Buttons */
+  .add-rule,
+  .remove-rule,
+  .add-example,
+  .remove-example,
+  .template-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .add-rule,
+  .add-example,
+  .template-button {
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    color: #fff;
+  }
+  
+  .add-rule:hover,
+  .add-example:hover,
+  .template-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+  }
+  
+  .remove-rule,
+  .remove-example {
+    background: linear-gradient(90deg, #ff5252, #b71c1c);
+    color: #fff;
+  }
+  
+  .remove-rule:hover,
+  .remove-example:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 82, 82, 0.3);
+  }
+  
+  /* Navigation buttons */
+  .navigation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  
+  .nav-button {
+    padding: 16px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .back-button {
+    background: linear-gradient(90deg, #555, #999);
+    color: #e0e0e0;
+  }
+  
+  .back-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+  }
+  
+  .next-button,
+  .submit-button {
+    background: linear-gradient(90deg, #00ffcc, #ff00ff);
+    color: #fff;
+  }
+  
+  .next-button:hover,
+  .submit-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+  }
+  
+  /* Review section */
+  .review-section {
+    margin-top: 25px;
+  }
+  
+  .preview-box {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.15);
+  }
+  
+  .preview-box p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+  }
+  
+  .preview-box p strong {
+    color: #00ffcc;
+  }
+  
+  /* Error messages */
+  .error-message {
+    background: rgba(255, 64, 129, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ff4081;
+    color: #e0e0e0;
+    text-align: center;
+  }
+  
+  .error-message h3 {
+    margin: 0 0 10px;
+    color: #ff4081;
+    text-shadow: 0 0 4px #ff4081;
+  }
+  
+  .error-message p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  .error {
+    color: #ff4081;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    display: block;
+    text-shadow: 0 0 4px #ff4081;
+  }
+  
+  /* New styles for enhanced descriptions */
+  .step-intro {
+    font-size: 1rem;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    text-shadow: 0 0 4px rgba(0, 255, 255, 0.2);
+  }
+  
+  .helper-text {
+    font-size: 0.9rem;
+    color: #00cc99;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 4px rgba(0, 255, 255, 0.2);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 480px) {
+    .template-form-container {
+      margin: 20px;
+      padding: 20px;
+    }
+  
+    .form-title {
+      font-size: 1.8rem;
+    }
+  
+    .step-indicator {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  
+    .step {
+      flex: 1 1 45%;
+    }
+  
+    .form-input,
+    .form-textarea,
+    .form-select {
+      font-size: 0.9rem;
+    }
+  
+    .context-rule {
+      padding: 15px;
+    }
+  
+    .template-buttons {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .condition-tags {
+      gap: 6px;
+    }
+  
+    .custom-condition {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .navigation-buttons {
+      flex-direction: column;
+      gap: 12px;
+    }
+  
+    .tooltip:hover:after,
+    .tooltip:focus:after {
+      width: 200px;
+    }
+  }

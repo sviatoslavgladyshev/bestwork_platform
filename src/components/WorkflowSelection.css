@@ -1,0 +1,362 @@
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+.workflow-selection-container {
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.workflow-selection-title {
+  font-size: 24px;
+  font-weight: 600 !important;
+  font-family: 'Inter', sans-serif !important;
+  color: #000000;
+  margin-bottom: 24px;
+}
+
+.workflow-selection-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; /* Consistent gap */
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px; /* Space before buttons */
+  flex-grow: 1; /* Allow grid to grow and take available space */
+  justify-content: center; /* Center cards horizontally */
+  align-items: center; /* Center cards vertically */
+}
+
+.workflow-selection-item {
+  background-color: #ffffff;
+  border: 1px solid #C2C2C2; /* Normalized border width */
+  box-shadow: 0px 6px 12px 0px #0000000A;
+  border-radius: 25px;
+  padding: 30px 30px 10px 30px; /* Reduced bottom padding to bring description closer to bottom */
+  width: 100%; /* Full width of grid cell */
+  max-width: 400px; /* Match minmax max value */
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent content overflow */
+  min-height: 300px; /* Decreased height */
+}
+
+.workflow-selection-item.selected {
+  border: 1px solid #007AFF; /* Same width as unselected state to prevent reflow */
+}
+
+.workflow-selection-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; /* Ensure no extra space above info */
+}
+
+.workflow-selection-name {
+  font-size: 20px; /* Larger font */
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 12px; /* Space between title and description */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workflow-selection-description {
+  font-size: 16px; /* Larger font */
+  color: #6b7280;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0; /* No extra space above description */
+  margin-bottom: 0; /* Ensure no extra space below description */
+}
+
+.workflow-selection-icon-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 10px; /* Increased padding */
+  background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+  background-size: 12px 12px; /* Adjusted for larger size */
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 160px; /* Increased for larger circuit */
+  flex-shrink: 0;
+  margin-bottom: 24px; /* Space between circuit and info */
+}
+
+.workflow-selection-icon-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  margin: 12px 0; /* Increased for more vertical spacing */
+  padding: 8px 12px; /* Increased padding */
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  width: 80%; /* Wider for balance */
+  max-width: 180px; /* Increased for larger size */
+  box-sizing: border-box;
+  height: 36px; /* Increased for taller items */
+}
+
+.workflow-selection-icon {
+  width: 2.5vw; /* Larger icons */
+  height: 2vw;
+  min-width: 24px;
+  max-width: 28px;
+  min-height: 20px;
+  max-height: 24px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+/* Specific logo size adjustments */
+.workflow-selection-icon[alt="Hubspot"] {
+  width: 3vw;
+  height: 2vw;
+  min-width: 26px;
+  max-width: 30px;
+  min-height: 20px;
+  max-height: 24px;
+}
+
+.workflow-selection-icon[alt="BestWork"] {
+  width: 1.8vw;
+  height: 1.6vw;
+  min-width: 18px;
+  max-width: 22px;
+  min-height: 16px;
+  max-height: 20px;
+}
+
+.workflow-selection-icon[alt="Slack"] {
+  width: 2.2vw;
+  height: 1.8vw;
+  min-width: 22px;
+  max-width: 26px;
+  min-height: 18px;
+  max-height: 22px;
+}
+
+.workflow-selection-icon-label {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: 14px; /* Larger font */
+  color: #1f2937;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Connecting line */
+.workflow-selection-icon-flow::before {
+  content: '';
+  position: absolute;
+  top: 40px; /* Adjusted for larger spacing */
+  bottom: 20px; /* Adjusted for larger spacing */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background-image: linear-gradient(#2563eb 50%, transparent 50%);
+  background-size: 1px 14px; /* Adjusted for larger size */
+  z-index: 0;
+}
+
+/* Dots at connection points */
+.workflow-selection-icon-item::before,
+.workflow-selection-icon-item::after {
+  content: '';
+  width: 6px; /* Larger dots */
+  height: 6px;
+  background-color: #2563eb;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Dot at the bottom of the first block */
+.workflow-selection-icon-flow .workflow-selection-icon-item:first-child::before {
+  bottom: -6px;
+}
+
+/* Dot at the top of the second block */
+.workflow-selection-icon-flow .workflow-selection-icon-item:nth-child(2)::before {
+  top: -6px;
+}
+
+/* Dot at the bottom of the second block */
+.workflow-selection-icon-flow .workflow-selection-icon-item:nth-child(2)::after {
+  bottom: -6px;
+}
+
+/* Dot at the top of the third block */
+.workflow-selection-icon-flow .workflow-selection-icon-item:last-child::before {
+  top: -6px;
+}
+
+/* Hide unnecessary dots */
+.workflow-selection-icon-flow .workflow-selection-icon-item:first-child::after,
+.workflow-selection-icon-flow .workflow-selection-icon-item:last-child::after {
+  display: none;
+}
+
+.workflow-selection-buttons {
+  display: flex;
+  justify-content: flex-end; /* Original right-aligned */
+  gap: 25px;
+  margin-top: auto; /* Pin to bottom */
+  padding: 20px 0; /* Consistent vertical spacing */
+}
+
+.workflow-selection-back-button,
+.workflow-selection-select-button {
+  padding: 13px 20px;
+  font-size: 14px;
+  font-weight: 400;
+  width: 150px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.workflow-selection-back-button {
+  background-color: #fff;
+  color: #000000;
+  border: 1px solid #d1d5db;
+}
+
+.workflow-selection-select-button {
+  background-color: #fff;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.workflow-selection-select-button:not(:disabled) {
+  background-color: #007AFF;
+  color: #ffffff;
+  border: 1px solid #007AFF;
+}
+
+.workflow-selection-select-button:disabled {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #007AFF;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .workflow-selection-grid {
+    gap: 15px;
+  }
+  .workflow-selection-container {
+    max-width: calc(100% - 30px);
+    margin: 15px;
+  }
+  .workflow-selection-icon-flow {
+    min-height: 140px; /* Adjusted for responsive size */
+  }
+  .workflow-selection-item {
+    min-height: 280px; /* Decreased height */
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 900px) {
+  .workflow-selection-grid {
+    gap: 10px;
+  }
+  .workflow-selection-icon-flow::before {
+    background-image: none;
+    background-color: #2563eb;
+  }
+  .workflow-selection-container {
+    max-width: calc(100% - 20px);
+    margin: 10px;
+  }
+  .workflow-selection-icon-flow {
+    min-height: 120px; /* Adjusted for responsive size */
+  }
+  .workflow-selection-item {
+    min-height: 260px; /* Decreased height */
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 600px) {
+  .workflow-selection-grid {
+    flex-direction: column; /* Stack cards vertically */
+    gap: 10px;
+  }
+  .workflow-selection-container {
+    max-width: calc(100% - 20px);
+    margin: 10px;
+    padding: 15px;
+  }
+  .workflow-selection-icon-flow {
+    min-height: 100px; /* Adjusted for responsive size */
+  }
+  .workflow-selection-item {
+    min-height: 240px; /* Decreased height */
+    max-width: 100%; /* Full width on mobile */
+    padding: 15px 15px 5px 15px; /* Reduced bottom padding for mobile */
+  }
+  .workflow-selection-description {
+    font-size: 16px; /* Ensure consistent font size */
+    line-height: 1.4; /* Consistent line height */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Ensure consistent line clamping */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .workflow-selection-item.selected .workflow-selection-description {
+    font-size: 16px; /* Ensure font size doesn’t change on selection */
+    line-height: 1.4; /* Consistent line height */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Ensure consistent line clamping */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (min-width: 1200px) {
+  .workflow-selection-item {
+    padding: 35px 35px 15px 35px; /* Adjusted bottom padding for larger screens */
+  }
+  .workflow-selection-icon-flow {
+    min-height: 180px; /* Adjusted for larger screens */
+  }
+  .workflow-selection-item {
+    min-height: 320px; /* Decreased height */
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+  .workflow-selection-name {
+    font-size: 18px;
+  }
+  .workflow-selection-description {
+    font-size: 14px;
+  }
+}

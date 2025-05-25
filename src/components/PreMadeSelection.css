@@ -1,0 +1,430 @@
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+/* Premade Selection Styles */
+.premade-selection-container {
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.premade-selection-title {
+  font-size: 24px;
+  font-weight: 600 !important;
+  font-family: 'Inter', sans-serif !important;
+  color: #000000;
+  margin-bottom: 24px;
+}
+
+.premade-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 360px)); /* Default for larger screens */
+  gap: 40px; /* Consistent gap */
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px; /* Space before buttons */
+  justify-content: flex-start; /* Align cards */
+}
+
+.premade-selection-item {
+  background-color: #ffffff;
+  border: 1px solid #C2C2C2; /* Normalized border width */
+  box-shadow: 0px 6px 12px 0px #0000000A;
+  border-radius: 25px;
+  padding: 30px 30px 10px 30px; /* Reduced bottom padding */
+  width: 100%; /* Full width of grid cell */
+  max-width: 480px; /* Increased from 400px */
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent content overflow */
+  min-height: 300px; /* Decreased height */
+}
+
+.premade-selection-item.selected {
+  border: 1px solid #007AFF; /* Same width as unselected state */
+}
+
+.premade-selection-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; /* Ensure no extra space above info */
+}
+
+.premade-selection-name {
+  font-size: 20px; /* Larger font */
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 12px; /* Space between title and description */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.premade-selection-description {
+  font-size: 16px; /* Larger font */
+  color: #6b7280;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0; /* No extra space above description */
+  margin-bottom: 0; /* Ensure no extra space below description */
+}
+
+.premade-selection-icon-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 10px; /* Increased padding */
+  background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+  background-size: 12px 12px; /* Adjusted for larger size */
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 160px; /* Increased for larger circuit */
+  flex-shrink: 0;
+  margin-bottom: 24px; /* Space between circuit and info */
+}
+
+.premade-selection-icon-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  margin: 12px 0; /* Increased for more vertical spacing */
+  padding: 8px 12px; /* Increased padding */
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  width: 80%; /* Wider for balance */
+  max-width: 180px; /* Increased for larger size */
+  box-sizing: border-box;
+  height: 36px; /* Increased for taller items */
+}
+
+.premade-selection-icon {
+  width: 2.5vw; /* Larger icons */
+  height: 2vw;
+  min-width: 24px;
+  max-width: 28px;
+  min-height: 20px;
+  max-height: 24px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+/* Specific logo size adjustments */
+.premade-selection-icon[alt="Hubspot"] {
+  width: 3vw;
+  height: 2vw;
+  min-width: 26px;
+  max-width: 30px;
+  min-height: 20px;
+  max-height: 24px;
+}
+
+.premade-selection-icon[alt="BestWork"] {
+  width: 1.8vw;
+  height: 1.6vw;
+  min-width: 18px;
+  max-width: 22px;
+  min-height: 16px;
+  max-height: 20px;
+}
+
+.premade-selection-icon[alt="Slack"] {
+  width: 2.2vw;
+  height: 1.8vw;
+  min-width: 22px;
+  max-width: 26px;
+  min-height: 18px;
+  max-height: 22px;
+}
+
+.premade-selection-icon-label {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: 14px; /* Larger font */
+  color: #1f2937;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Connecting line */
+.premade-selection-icon-flow::before {
+  content: '';
+  position: absolute;
+  top: 40px; /* Adjusted for larger spacing */
+  bottom: 20px; /* Adjusted for larger spacing */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background-image: linear-gradient(#2563eb 50%, transparent 50%);
+  background-size: 1px 14px; /* Adjusted for larger size */
+  z-index: 0;
+}
+
+/* Dots at connection points */
+.premade-selection-icon-item::before,
+.premade-selection-icon-item::after {
+  content: '';
+  width: 6px; /* Larger dots */
+  height: 6px;
+  background-color: #2563eb;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Dot at the bottom of the first block */
+.premade-selection-icon-flow .premade-selection-icon-item:first-child::before {
+  bottom: -6px;
+}
+
+/* Dot at the top of the second block */
+.premade-selection-icon-flow .premade-selection-icon-item:nth-child(2)::before {
+  top: -6px;
+}
+
+/* Dot at the bottom of the second block */
+.premade-selection-icon-flow .premade-selection-icon-item:nth-child(2)::after {
+  bottom: -6px;
+}
+
+/* Dot at the top of the third block */
+.premade-selection-icon-flow .premade-selection-icon-item:last-child::before {
+  top: -6px;
+}
+
+/* Hide unnecessary dots */
+.premade-selection-icon-flow .premade-selection-icon-item:first-child::after,
+.premade-selection-icon-flow .premade-selection-icon-item:last-child::after {
+  display: none;
+}
+
+.premade-selection-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px;
+  margin-top: auto; /* Pin to bottom */
+  padding: 20px 0; /* Consistent vertical spacing */
+}
+
+.premade-selection-back-button,
+.premade-selection-select-button {
+  padding: 13px 20px;
+  font-size: 14px;
+  font-weight: 400;
+  width: 150px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.premade-selection-back-button {
+  background-color: #fff;
+  color: #000000;
+  border: 1px solid #d1d5db;
+}
+
+.premade-selection-select-button {
+  background-color: #fff;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.premade-selection-select-button:not(:disabled) {
+  background-color: #007AFF;
+  color: #ffffff;
+  border: 1px solid #007AFF;
+}
+
+.premade-selection-select-button:disabled {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #007AFF;
+  cursor: not-allowed;
+}
+
+/* Responsive Design for Premade Selection */
+@media (max-width: 1200px) {
+  .premade-selection-grid {
+    gap: 15px;
+  }
+  .premade-selection-container {
+    max-width: calc(100% - 30px);
+    margin: 15px;
+  }
+  .premade-selection-icon-flow {
+    min-height: 140px;
+  }
+  .premade-selection-item {
+    min-height: 280px;
+    max-width: 432px; /* 90% of 480px */
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 601px) {
+  .premade-selection-grid {
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    gap: 10px;
+  }
+  .premade-selection-container {
+    max-width: calc(100% - 20px);
+    margin: 10px;
+    padding: 15px;
+  }
+  .premade-selection-icon-flow {
+    min-height: 120px;
+  }
+  .premade-selection-item {
+    min-height: 260px;
+    max-width: 280px; /* Adjusted to fit three items in ~800–1000px */
+    padding: 20px 20px 10px 20px;
+  }
+  .premade-selection-name {
+    font-size: 18px;
+  }
+  .premade-selection-description {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+  .premade-selection-icon-item {
+    width: 85%;
+    max-width: 160px;
+    height: 32px;
+    padding: 6px 10px;
+  }
+  .premade-selection-icon {
+    width: 22px;
+    height: 18px;
+    min-width: 20px;
+    max-width: 24px;
+    min-height: 16px;
+    max-height: 20px;
+  }
+  .premade-selection-icon-label {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .premade-selection-grid {
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    gap: 10px;
+  }
+  .premade-selection-container {
+    max-width: calc(100% - 20px);
+    margin: 10px;
+    padding: 15px;
+  }
+  .premade-selection-icon-flow {
+    min-height: 80px; /* Reduced for smaller cards */
+  }
+  .premade-selection-item {
+    min-height: 220px; /* Reduced for smaller cards */
+    max-width: 140px; /* Reduced to fit three items */
+    padding: 10px 10px 5px 10px; /* Reduced padding */
+  }
+  .premade-selection-description {
+    font-size: 12px; /* Smaller for smaller cards */
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .premade-selection-item.selected .premade-selection-description {
+    font-size: 12px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .premade-selection-name {
+    font-size: 14px; /* Smaller for smaller cards */
+    margin-bottom: 8px;
+  }
+  .premade-selection-icon-item {
+    width: 90%; /* Adjust for smaller card width */
+    max-width: 120px; /* Reduced for smaller cards */
+    height: 28px;
+    padding: 5px 8px;
+  }
+  .premade-selection-icon {
+    width: 16px; /* Smaller icons */
+    height: 12px;
+    min-width: 14px;
+    max-width: 18px;
+    min-height: 10px;
+    max-height: 14px;
+    margin-right: 6px;
+  }
+  .premade-selection-icon-label {
+    font-size: 10px; /* Smaller for smaller cards */
+  }
+  /* Specific logo size adjustments for smaller cards */
+  .premade-selection-icon[alt="Hubspot"] {
+    width: 18px;
+    height: 12px;
+    min-width: 16px;
+    max-width: 20px;
+    min-height: 10px;
+    max-height: 14px;
+  }
+  .premade-selection-icon[alt="BestWork"] {
+    width: 14px;
+    height: 10px;
+    min-width: 12px;
+    max-width: 16px;
+    min-height: 8px;
+    max-height: 12px;
+  }
+  .premade-selection-icon[alt="Slack"] {
+    width: 16px;
+    height: 11px;
+    min-width: 14px;
+    max-width: 18px;
+    min-height: 9px;
+    max-height: 13px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .premade-selection-item {
+    padding: 35px 35px 15px 35px; /* Adjusted bottom padding */
+    min-height: 320px;
+    max-width: 480px; /* Ensure consistency */
+  }
+  .premade-selection-icon-flow {
+    min-height: 180px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+  .premade-selection-name {
+    font-size: 18px;
+  }
+  .premade-selection-description {
+    font-size: 14px;
+  }
+}

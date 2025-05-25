@@ -1,0 +1,639 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+.diagram-container {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  width: calc(100vw - 100px);
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FFFFFF;
+  background-image: radial-gradient(circle, #D1D5DB 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  touch-action: none;
+  isolation: isolate;
+  cursor: move;
+  user-select: none;
+}
+
+.diagram-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+.diagram-node-group {
+  position: absolute;
+  display: contents;
+}
+
+.diagram-zoom-control {
+  position: fixed;
+  left: 120px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  background-color: #FFFFFF;
+  padding: 6px 8px;
+  border-radius: 18px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.diagram-zoom-button,
+.diagram-fit-to-width-button,
+.diagram-back-button {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  color: #4A90E2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.diagram-fit-to-width-button {
+  font-size: 26px;
+  line-height: 30px;
+}
+
+.diagram-zoom-button:hover,
+.diagram-fit-to-width-button:hover {
+  background-color: #f0f0f0;
+}
+
+.diagram-back-button:hover {
+  background-color: #d0d0d0;
+}
+
+.diagram-node {
+  position: absolute;
+  background-color: #fff !important;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.diagram-gmail-data-node {
+  width: 320px;
+  height: clamp(80px, 12vh + 20px, 120px);
+  padding: 0px 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.diagram-bestwork-node {
+  width: 480px;
+  height: clamp(160px, 22vh + 20px, 200px);
+  padding: 0px 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.diagram-gmail-output-node {
+  width: 480px;
+  height: clamp(160px, 22vh + 20px, 200px);
+  padding: 0px 8px;
+  cursor: default;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+@media (max-width: 800px) {
+  .diagram-gmail-data-node {
+    width: 260px;
+    height: clamp(60px, 10vh + 20px, 100px);
+  }
+  .diagram-bestwork-node,
+  .diagram-gmail-output-node {
+    width: 400px;
+    height: clamp(140px, 18vh + 20px, 180px);
+  }
+}
+
+.diagram-gmail-output-node-plus {
+  border: 1px solid #C2C2C2;
+}
+
+.diagram-salesforce-node,
+.diagram-center {
+}
+
+.diagram-connected {
+  opacity: 1;
+}
+
+.diagram-disconnected {
+  filter: grayscale(20%);
+}
+
+.diagram-gmail-data-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: space-evenly;
+  gap: 3px;
+}
+
+.diagram-gmail-data-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.diagram-gmail-data-header {
+  justify-content: space-between;
+  padding: 0 8px;
+  gap: 16px;
+}
+
+.diagram-gmail-logo {
+  width: 34px;
+  height: 28px;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.diagram-bestwork-logo,
+.diagram-gmail-output-logo {
+  width: 32px;
+  height: 28px;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.diagram-gmail-logo.diagram-plus-icon {
+  width: 34px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4A90E2;
+  border: 2px solid #C2C2C2;
+  border-radius: 50%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.diagram-plus-symbol {
+  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: #000000;
+  transform: translateY(-1px);
+  line-height: 1;
+}
+
+.diagram-gmail-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 165%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #000000;
+  flex-grow: 1;
+  text-align: left;
+  margin-left: 4px;
+}
+
+.diagram-gmail-menu-button {
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #666666;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.diagram-gmail-menu-button:hover {
+  color: #4A90E2;
+}
+
+.diagram-gmail-data-permissions {
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.diagram-permission-text {
+  background-color: #F9F9F9;
+  border: 1px solid #C2C2C2;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 16px;
+  color: #000000;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-left: 2px;
+  min-width: 90px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.diagram-permission-select {
+  background: #F9F9F9;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: #000000;
+  padding: 8px 16px;
+  width: 100%;
+  flex-grow: 1;
+  height: 32px;
+  line-height: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 5px;
+}
+
+@media (max-width: 800px) {
+  .diagram-permission-select {
+    font-size: 12px;
+    height: 28px;
+    line-height: 12px;
+  }
+}
+
+.diagram-permission-select:focus {
+  outline: none;
+}
+
+.diagram-model-text {
+  background-color: #F9F9F9;
+  border: 1px solid #C2C2C2;
+  border-radius: 5px;
+  padding: 4px 6px;
+  font-size: 12px;
+  color: #000000;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  margin-left: 2px;
+  min-width: 90px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.diagram-model-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.diagram-model-icon {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+.diagram-bestwork-logic-condition,
+.diagram-gmail-output-logic-condition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.diagram-bestwork-logic-if {
+  background-color: #F9F9F9;
+  border: 1px solid #C2C2C2;
+  border-radius: 4px;
+  padding: 3px 15px;
+  font-size: 14px;
+  color: #000000;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  min-width: 28px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.diagram-bestwork-logic-equals {
+  background-color: #F9F9F9;
+  border: 1px solid #C2C2C2;
+  border-radius: 4px;
+  padding: 3px 15px;
+  font-size: 14px;
+  color: #000000;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  min-width: 18px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.diagram-bestwork-logic-category {
+  --gmail-output-dropdown-border: none;
+  background: #F9F9F9;
+  border: var(--gmail-output-dropdown-border) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px; /* Modified: Increased from 13px */
+  color: #000000;
+  padding: 8px 16px;
+  flex-grow: 1;
+  height: 40px; /* Modified: Increased from 32px */
+  line-height: 24px; /* Modified: Adjusted from 12px for readability */
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  text-underline-offset: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.diagram-bestwork-logic-value {
+  --bestwork-dropdown-border: none;
+  background: #F9F9F9;
+  border: var(--bestwork-dropdown-border) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px; /* Modified: Increased from 13px */
+  color: #000000;
+  padding: 8px 16px;
+  flex-grow: 1;
+  height: 40px; /* Modified: Increased from 32px */
+  line-height: 24px; /* Modified: Adjusted from 20px for readability */
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  text-underline-offset: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.diagram-bestwork-logic-value:focus,
+.diagram-bestwork-logic-category:focus {
+  outline: none;
+}
+
+@media (max-width: 800px) {
+  .diagram-gmail-logo {
+    width: 32px;
+    height: 26px;
+    margin-left: 4px;
+  }
+  .diagram-gmail-logo.diagram-plus-icon {
+    width: 32px;
+    height: 26px;
+  }
+  .diagram-plus-symbol {
+    font-size: 22px;
+    transform: translateY(-1px);
+  }
+  .diagram-gmail-title {
+    font-size: 16px;
+    line-height: 165%;
+    margin-left: 4px;
+  }
+  .diagram-gmail-data-permissions {
+    gap: 8px;
+  }
+  .diagram-permission-text,
+  .diagram-model-text {
+    font-size: 15px;
+    padding: 3px 5px;
+    margin-left: 2px;
+  }
+  .diagram-model-icon {
+    width: 14px;
+    height: 14px;
+  }
+  .diagram-model-content {
+    gap: 5px;
+  }
+  .diagram-permission-select {
+    font-size: 14px;
+    margin: 0 2px;
+    padding-bottom: 2px;
+    width: 100%;
+    flex-grow: 1;
+    text-align: center;
+    text-decoration: var(--permission-dropdown-underline);
+    text-underline-offset: 3px;
+  }
+  .circular-progress {
+    width: 24px;
+    height: 24px;
+  }
+  .diagram-bestwork-logic-condition,
+  .diagram-gmail-output-logic-condition {
+    gap: 6px;
+    padding: 0 8px;
+  }
+  .diagram-bestwork-logic-if {
+    font-size: 13px;
+    padding: 2px 12px;
+    min-width: 26px;
+  }
+  .diagram-bestwork-logic-equals {
+    font-size: 13px;
+    padding: 2px 12px;
+    min-width: 16px;
+  }
+  .diagram-bestwork-logic-category {
+    font-size: 14px; /* Modified: Increased from 12px */
+    padding: 8px 16px;
+    flex-grow: 0;
+    flex-basis: 100px; /* Modified: Increased from 80px */
+    min-width: 100px; /* Modified: Increased from 80px */
+    height: 36px; /* Modified: Increased from 28px */
+    line-height: 20px; /* Modified: Adjusted from 12px for readability */
+  }
+  .diagram-bestwork-logic-value {
+    font-size: 14px; /* Modified: Increased from 12px */
+    padding: 8px 16px;
+    flex-grow: 1;
+    min-width: 100px; /* Modified: Increased from 70px */
+    height: 36px; /* Modified: Increased from 28px */
+    line-height: 20px; /* Modified: Adjusted from 12px for readability */
+  }
+}
+
+.diagram-permission-input {
+  background: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 15px;
+  color: #000000;
+  padding: 0px 0;
+  padding-bottom: 2px;
+  width: 100%;
+  flex-grow: 1;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.diagram-permission-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.diagram-action-header {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border: 0.5px solid #E5E7EB;
+  border-radius: 5px;
+  padding: 0.2rem 0.6rem;
+  box-sizing: border-box;
+  height: 2.5rem;
+  width: 6rem;
+  line-height: normal;
+  z-index: 1;
+}
+
+.diagram-gmail-data-action-header {
+  background-color: #FFEDA5;
+}
+
+.diagram-gmail-data-action-header .diagram-action-text-bestwork {
+  color: #BD9400;
+}
+
+.diagram-bestwork-action-header {
+  background-color: #C5A5FF;
+}
+
+.diagram-bestwork-action-header .diagram-action-text-bestwork {
+  color: #5F00BD;
+}
+
+.diagram-gmail-output-action-header {
+  background-color: #B3F2C3;
+}
+
+.diagram-gmail-output-action-header .diagram-action-text-bestwork {
+  color: #459E52;
+}
+
+.diagram-action-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.diagram-action-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.diagram-action-text-bestwork {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.diagram-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.diagram-dropdown-menu {
+  position: fixed;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.diagram-dropdown-item {
+  padding: 10px 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.diagram-dropdown-item-delete {
+  color: #FF0000; /* Red color for Delete Block */
+}
+
+.diagram-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+select {
+    border-radius: 5px;
+}

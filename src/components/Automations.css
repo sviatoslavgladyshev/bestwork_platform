@@ -1,0 +1,185 @@
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+.automations-container {
+  width: calc(100% - 40px); /* Account for 20px margins on left and right */
+  max-width: calc(100% - 40px); /* Prevent exceeding parent */
+  margin: 20px; /* 20px margin on all sides */
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: calc(100% - 40px); /* Account for 20px margins on top and bottom */
+  overflow: auto;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  /* border: 1px solid red; */ /* Uncomment for debugging */
+}
+
+.automations-title {
+  font-size: 24px;
+  font-weight: 600 !important;
+  font-family: 'Inter', sans-serif !important;
+  color: #000000;
+  margin-bottom: 24px;
+}
+
+.automations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 100%; /* Prevent grid from overflowing */
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  /* border: 1px solid blue; */ /* Uncomment for debugging */
+}
+
+.automation-item {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  min-height: 80px;
+  width: 100%;
+  max-width: 100%; /* Override previous max-width: 400px */
+  /* border: 1px solid green; */ /* Uncomment for debugging */
+}
+
+.status-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.status-label {
+  font-size: 12px;
+  font-weight: 400;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.status-label.active {
+  background-color: #b3f2c3;
+  color: #000000;
+}
+
+.status-label.inactive {
+  background-color: #bfdbfe;
+  color: #1e3a8a;
+}
+
+.more-options-container {
+  position: relative;
+}
+
+.more-options {
+  font-size: 16px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 24px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #1f2937;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.automation-info {
+  display: flex;
+  align-items: center;
+}
+
+.automation-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; /* Prevent text from causing overflow */
+}
+
+/* No automations state */
+.no-automations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.no-automations-image {
+  max-width: 45%; /* Ensure image fits container */
+  height: auto;
+  margin-bottom: 32px;
+}
+
+.no-automations-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.no-automations-title {
+  font-size: 24px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif !important;
+  color: #1f2937;
+  margin: 0;
+}
+
+.no-automations-subtext {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif !important;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .automations-container {
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
+    margin: 10px;
+    padding: 15px;
+    height: calc(100% - 20px);
+  }
+  .automations-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .automations-container {
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
+    margin: 10px;
+    padding: 10px;
+    height: calc(100% - 20px);
+  }
+  .automations-grid {
+    grid-template-columns: 1fr;
+  }
+}

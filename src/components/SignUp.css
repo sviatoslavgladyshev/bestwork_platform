@@ -1,0 +1,420 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container and Layout */
+.bw-signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.bw-signup__logo-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.bw-signup__logo {
+  height: 32px;
+  width: auto;
+}
+
+/* Progress bar styles - with unique class names */
+.bw-signup__progress-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 24px;
+  margin-top: 80px;
+}
+
+.bw-signup__progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bw-signup__progress-bar-filled {
+  height: 100%;
+  background-color: #2196f3;
+  transition: width 0.3s ease;
+}
+
+/* Form container - separate from progress bar */
+.bw-signup__container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+/* Sign Up Form */
+.bw-signup__title {
+  font-size: 32px;
+  font-weight: 200;
+  color: #000000;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.bw-signup__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.bw-signup__field-group {
+  margin-bottom: 24px;
+}
+
+.bw-signup__label {
+  display: block;
+  font-size: 16px;
+  font-weight: 200;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.bw-signup__input {
+  width: 100%;
+  height: 48px;
+  padding: 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #000000;
+}
+
+.bw-signup__input::placeholder {
+  color: #9CA3AF;
+}
+
+.bw-signup__input:focus {
+  outline: none;
+  border-color: #007AFF;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+}
+
+/* Password Field */
+.bw-signup__password-container {
+  position: relative;
+}
+
+.bw-signup__password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6B7280;
+  padding: 4px;
+}
+
+/* Password Requirements */
+.bw-signup__password-requirements {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.bw-signup__password-requirements h4 {
+  margin-bottom: 8px;
+  color: #000000;
+}
+
+.bw-signup__password-requirements ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.bw-signup__password-requirements li {
+  margin-bottom: 4px;
+  color: #DC2626;
+}
+
+.bw-signup__password-requirements li.valid {
+  color: #059669;
+}
+
+/* Buttons */
+.bw-signup__button {
+  width: 100%;
+  height: 48px;
+  background-color: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 200;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: background-color 0.2s;
+}
+
+.bw-signup__button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.bw-signup__button:disabled {
+  background-color: #007AFF;
+  cursor: not-allowed;
+}
+
+/* Links */
+.bw-signup__signin-link {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #000000;
+}
+
+.bw-signup__signin-link a {
+  color: #2563EB;
+  text-decoration: none;
+  font-weight: 200;
+}
+
+/* Terms */
+.bw-signup__terms {
+  text-align: center;
+  font-size: 14px;
+  color: #4B5563;
+}
+
+.bw-signup__terms a {
+  color: #2563EB;
+  text-decoration: none;
+}
+
+/* Verification Page */
+.bw-signup__verification-title {
+  font-size: 24px;
+  font-weight: 200;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.bw-signup__verification-digits {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.bw-signup__digit-input {
+  width: 40px;
+  height: 48px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
+}
+
+.bw-signup__digit-input:focus {
+  outline: none;
+  border-color: #007AFF;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+}
+
+.bw-signup__verify-button {
+  width: 245px;
+  height: 35px;
+  background-color: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 200;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: background-color 0.2s;
+}
+
+.bw-signup__verify-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.bw-signup__verify-button:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.bw-signup__resend-wrapper {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.bw-signup__timer {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.bw-signup__resend-button {
+  background: none;
+  border: none;
+  color: #007AFF;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.bw-signup__resend-button:disabled {
+  color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.bw-signup__error {
+  color: #DC2626;
+  font-size: 14px;
+  text-align: center;
+  margin: 8px 0;
+  padding: 8px;
+  background-color: rgba(220, 38, 38, 0.1);
+  border-radius: 6px;
+}
+
+/* Modal Styles */
+.bw-signup__modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.bw-signup__modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bw-signup__modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #1e1e24;
+}
+
+.bw-signup__modal-content {
+  padding: 20px;
+}
+
+.bw-signup__modal-content h2 {
+  font-size: 24px;
+  font-weight: 200;
+  margin-bottom: 16px;
+  color: #1e1e24;
+}
+
+.bw-signup__modal-content h3 {
+  font-size: 18px;
+  font-weight: 200;
+  margin: 16px 0 8px;
+  color: #1e1e24;
+}
+
+.bw-signup__modal-content h4 {
+  font-size: 16px;
+  font-weight: 200;
+  margin: 12px 0 6px;
+  color: #1e1e24;
+}
+
+.bw-signup__modal-content p {
+  font-size: 14px;
+  color: #1e1e24;
+  margin-bottom: 12px;
+}
+
+.bw-signup__modal-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.bw-signup__modal-content li {
+  font-size: 14px;
+  color: #1e1e24;
+  margin-bottom: 8px;
+}
+
+.bw-signup__modal-content a {
+  color: #007AFF;
+  text-decoration: none;
+}
+
+.bw-signup__modal-content a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .bw-signup__container {
+    padding: 16px;
+    margin-top: 60px;
+  }
+
+  .bw-signup__title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .bw-signup__verification-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .bw-signup__verify-button {
+    width: 100%;
+  }
+
+  .bw-signup__logo-container {
+    top: 16px;
+    left: 16px;
+  }
+
+  .bw-signup__logo {
+    height: 28px;
+  }
+
+  .bw-signup__verification-digits {
+    gap: 6px;
+  }
+
+  .bw-signup__digit-input {
+    width: 36px;
+    height: 42px;
+    font-size: 18px;
+  }
+}

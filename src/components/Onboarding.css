@@ -1,0 +1,1118 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
+
+.bw-onboarding {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  height: auto !important;
+}
+
+html, body {
+  height: auto !important;
+  overflow-y: auto !important;
+}
+
+.bw-onboarding__logo-container {
+  padding: 20px;
+  background-color: white;
+  width: 100%;
+}
+
+.bw-onboarding__logo {
+  height: 40px;
+}
+
+.bw-onboarding__container {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background-color: #ffffff;
+  height: auto !important;
+  min-height: 100%;
+}
+
+.bw-onboarding__content {
+  background-color: white;
+  border-radius: 8px;
+  padding: 40px;
+  width: 100%;
+  margin-top: 20px;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.bw-onboarding__title {
+  font-size: 28px;
+  line-height: 1.3;
+  margin-bottom: 24px;
+  color: #333;
+  text-align: center;
+  width: 100%;
+}
+
+.bw-onboarding__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: visible !important;
+}
+
+.question-content {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.question-content h1 {
+  font-size: 28px;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  color: #000000;
+  width: 100%;
+  text-align: center;
+}
+
+.question-content p {
+  color: #000000;
+  margin-bottom: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+.full-width-question-header {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  text-align: center;
+  padding: 0 20px;
+}
+
+.full-width-question-header h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: 0%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.full-width-question-header p {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  margin-bottom: 50px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+/* Button Styles */
+.bw-onboarding__button-group {
+  display: flex;
+  gap: 40px;
+  margin-top: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.bw-onboarding__back-button,
+.bw-onboarding__next-button,
+.bw-onboarding__skip-button {
+  padding: 14px 50px;
+  border-radius: 8px;
+  font-weight: 200;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+  font-size: 16px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bw-onboarding__back-button {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.bw-onboarding__back-button:hover {
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bw-onboarding__next-button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+}
+
+.bw-onboarding__next-button:hover {
+  background-color: #1976d2;
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.2);
+}
+
+.bw-onboarding__skip-button {
+  background-color: #ffffff;
+  color: #2196f3;
+  border: 2px solid #2196f3;
+}
+
+.bw-onboarding__skip-button:hover {
+  background-color: rgba(33, 150, 243, 0.1);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.1);
+}
+
+/* Enhanced Connect HubSpot button */
+.connect-hubspot-button {
+  background-color: #2196f3;
+  color: white;
+  padding: 16px 48px;
+  border-radius: 8px;
+  border: none;
+  font-size: 18px;
+  font-weight: 200;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin: 24px auto;
+  display: block;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.connect-hubspot-button:hover {
+  background-color: #1976d2;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+}
+
+.connect-hubspot-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Progress Bar Styles */
+.progress-container {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-filled {
+  height: 100%;
+  background-color: #2196f3;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin-top: 8px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Disabled States */
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Label Styles */
+label {
+  display: block;
+  margin-bottom: 16px;
+  color: #333;
+  font-weight: 200;
+}
+
+/* Error States */
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+input.error {
+  border-color: #f44336;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 800px) {
+  .full-width-question-header h1 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .bw-onboarding__container {
+    padding: 20px;
+  }
+
+  .bw-onboarding__content {
+    padding: 20px;
+  }
+
+  .bw-onboarding__button-group {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .bw-onboarding__back-button,
+  .bw-onboarding__next-button,
+  .bw-onboarding__skip-button {
+    width: 100%;
+    padding: 12px 24px;
+  }
+
+  .connect-hubspot-button {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+
+  .full-width-question-header h1 {
+    font-size: 24px;
+  }
+
+  .full-width-question-header p {
+    font-size: 14px;
+  }
+}
+
+.option-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.option-pill {
+  padding: 8px 24px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  background: white;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  color: #666;
+  min-width: 100px;
+  text-align: center;
+}
+
+.option-pill:hover {
+  border-color: #2196f3;
+  color: #2196f3;
+}
+
+.option-pill.selected {
+  border: none;
+  color: #333;
+}
+
+/* Booking Pill Base Styles */
+.booking-pill {
+  padding: 8px 24px;
+  border-radius: 20px;
+  cursor: pointer;
+  background: white;
+  font-size: 16px;
+  height: 38px;
+  transition: all 0.2s ease;
+  color: #666;
+  min-width: 100px;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 600px) {
+  .option-pills {
+    gap: 8px;
+  }
+
+  .option-pill,
+  .booking-pill {
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 80px;
+  }
+}
+
+/* Step-Specific Styles */
+
+/* Step 0: Your Name */
+.step-0 .question-content {
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.step-0 input[type="text"] {
+  padding: 14px;
+  font-size: 20px;
+}
+
+/* Step 1: Hours per Week (Not Used in Current Steps) */
+.step-1 .question-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.step-1 .option-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  row-gap: 20px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.step-1 .option-pill {
+  margin-bottom: 10px;
+  background: white;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+.step-1 .option-pill[data-value="<10"] {
+  border-color: #a5d6a7;
+}
+
+.step-1 .option-pill[data-value="10-20"] {
+  border-color: #90caf9;
+}
+
+.step-1 .option-pill[data-value="20-30"] {
+  border-color: #ff5722;
+}
+
+.step-1 .option-pill[data-value="30-40"] {
+  border-color: #80deea;
+}
+
+.step-1 .option-pill[data-value="40-50"] {
+  border-color: #ef9a9a;
+}
+
+.step-1 .option-pill[data-value="50-60"] {
+  border-color: #d8c622;
+}
+
+.step-1 .option-pill[data-value="60-70"] {
+  border-color: #ce93d8;
+}
+
+.step-1 .option-pill[data-value=">70"] {
+  border-color: #f48fb1;
+}
+
+.step-1 .option-pill.selected {
+  background: #a5d6a7;
+  color: #ffffff;
+}
+
+.step-1 .option-pill[data-value="10-20"].selected {
+  background: #90caf9;
+  color: #ffffff;
+}
+
+.step-1 .option-pill[data-value="20-30"].selected {
+  background: #ff5722;
+  color: #ffffff;
+}
+
+.step-1 .option-pill[data-value="30-40"].selected {
+  background: #80deea;
+  color: #ffffff;
+}
+
+.step-1 .option-pill[data-value="40-50"].selected {
+  background: #ef9a9a;
+  color: #ffffff;
+}
+
+.step-1 .option-pill[data-value="50-60"].selected {
+  background: #d8c622;
+  color: #ffffff;
+}
+
+.step-1 .option-pill[data-value="60-70"].selected {
+  background: #ce93d8;
+  color: #ffffff;
+}
+
+.step-1 .option-pill[data-value=">70"].selected {
+  background: #f48fb1;
+  color: #ffffff;
+}
+
+/* Step 2: Proportion Selling (Not Used in Current Steps) */
+.step-2 .question-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.step-2 .option-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  row-gap: 20px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.step-2 .option-pill {
+  margin-bottom: 10px;
+  background: white;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+.step-2 .option-pill[data-value="<10%"] {
+  border-color: #a5d6a7;
+}
+
+.step-2 .option-pill[data-value="10-20%"] {
+  border-color: #90caf9;
+}
+
+.step-2 .option-pill[data-value="20-30%"] {
+  border-color: #80deea;
+}
+
+.step-2 .option-pill[data-value="30-40%"] {
+  border-color: #d8c622;
+}
+
+.step-2 .option-pill[data-value="40-50%"] {
+  border-color: #ef9a9a;
+}
+
+.step-2 .option-pill[data-value="50-60%"] {
+  border-color: #ffca28;
+}
+
+.step-2 .option-pill[data-value="60-70%"] {
+  border-color: #ce93d8;
+}
+
+.step-2 .option-pill[data-value=">70%"] {
+  border-color: #f48fb1;
+}
+
+.step-2 .option-pill.selected {
+  background: #a5d6a7;
+  color: #ffffff;
+}
+
+.step-2 .option-pill[data-value="10-20%"].selected {
+  background: #90caf9;
+  color: #ffffff;
+}
+
+.step-2 .option-pill[data-value="20-30%"].selected {
+  background: #80deea;
+  color: #ffffff;
+}
+
+.step-2 .option-pill[data-value="30-40%"].selected {
+  background: #d8c622;
+  color: #ffffff;
+}
+
+.step-2 .option-pill[data-value="40-50%"].selected {
+  background: #ef9a9a;
+  color: #ffffff;
+}
+
+.step-2 .option-pill[data-value="50-60%"].selected {
+  background: #ffca28;
+  color: #ffffff;
+}
+
+.step-2 .option-pill[data-value="60-70%"].selected {
+  background: #ce93d8;
+  color: #ffffff;
+}
+
+.step-2 .option-pill[data-value=">70%"].selected {
+  background: #f48fb1;
+  color: #ffffff;
+}
+
+/* Step 3: Team Information */
+.step-3 .question-content {
+  background: white;
+  padding: 40px;
+}
+
+.step-3 .booking-pill[data-value="Yes"]:not(.selected) {
+  border: 1px solid #d0edd2; /* Light green border for "Yes" */
+}
+
+.step-3 .booking-pill[data-value="No"]:not(.selected) {
+  border: 1px solid #ede7f6; /* Light purple border for "No" */
+}
+
+.step-3 .booking-pill:hover {
+  border-color: #2196f3;
+  color: #2196f3;
+}
+
+.step-3 .booking-pill[data-value="Yes"].selected {
+  background: #a5d6a7; /* Green background for "Yes" when selected */
+  border: none;
+  color: #ffffff;
+}
+
+.step-3 .booking-pill[data-value="No"].selected {
+  background: #b39ddb; /* Purple background for "No" when selected */
+  border: none;
+  color: #ffffff;
+}
+
+/* Step 4: Booking Activities */
+.step-4 .question-content {
+  background: white;
+  padding: 40px;
+}
+
+.step-4 .booking-pill[data-value="Call"]:not(.selected) {
+  border: 1px solid #d0edd2;
+}
+
+.step-4 .booking-pill[data-value="Email"]:not(.selected) {
+  border: 1px solid #ede7f6;
+}
+
+.step-4 .booking-pill:hover {
+  border-color: #2196f3;
+  color: #2196f3;
+}
+
+.step-4 .booking-pill[data-value="Call"].selected {
+  background: #d0edd2;
+  border: none;
+  color: #ffffff;
+}
+
+.step-4 .booking-pill[data-value="Email"].selected {
+  background: #b39ddb;
+  border: none;
+  color: #ffffff;
+}
+
+/* Step 5: Prospecting Behaviors (Not Used in Current Steps) */
+.step-5 .prospecting-block {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1px;
+  margin-bottom: 20px;
+  animation: slideIn 0.3s ease;
+}
+
+.prospecting-blocks-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 400px;
+}
+
+.prospecting-blocks-container::-webkit-scrollbar {
+  display: none;
+}
+
+.prospecting-blocks-container::-webkit-scrollbar-track {
+  display: none;
+}
+
+.prospecting-blocks-container::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+.prospecting-blocks-container::-webkit-scrollbar-thumb:hover {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .prospecting-blocks-container {
+    padding: 0 10px;
+  }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.step-5 .styled-block-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.step-5 .styled-input:focus {
+  border-color: #f06292;
+}
+
+/* Step 6: Evaluation Type */
+.step-6 .question-content {
+  background: #fffde7;
+}
+
+.step-6 .booking-pill[data-value="meetings set"]:not(.selected) {
+  border: 1px solid #e8f5e9;
+}
+
+.step-6 .booking-pill[data-value="meetings shown"]:not(.selected) {
+  border: 1px solid #e3f2fd;
+}
+
+.step-6 .booking-pill[data-value="meetings set"].selected {
+  background: #a5d6a7;
+  border: none;
+  color: #ffffff;
+}
+
+.step-6 .booking-pill[data-value="meetings shown"].selected {
+  background: #2196f3;
+  border: none;
+  color: #ffffff;
+}
+
+/* Step 7: CRM Selection */
+.step-7 .question-content {
+  background: #fffde7;
+}
+
+.step-7 .booking-pill[data-value="HubSpot"]:not(.selected) {
+  border: 1px solid #ff7a59; /* HubSpot orange */
+}
+
+.step-7 .booking-pill[data-value="Salesforce"]:not(.selected) {
+  border: 1px solid #00a1e0; /* Salesforce blue */
+}
+
+.step-7 .booking-pill[data-value="HubSpot"].selected {
+  background: #ff7a59;
+  border: none;
+  color: #ffffff;
+}
+
+.step-7 .booking-pill[data-value="Salesforce"].selected {
+  background: #00a1e0;
+  border: none;
+  color: #ffffff;
+}
+
+/* Step 8: Expected Performance Calculation (Not Used in Current Steps) */
+.wide-step {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 20px 0;
+}
+
+.step-8 {
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
+.performance-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.progress-section {
+  flex: 0 0 auto;
+}
+
+.actions-section {
+  flex: 0 0 auto;
+  width: 350px;
+  background-color: transparent;
+  padding: 15px;
+  border-radius: 10px;
+  min-height: 160px;
+}
+
+.actions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  list-style-type: none;
+}
+
+.action-icon {
+  margin-right: 10px;
+}
+
+.action-text {
+  font-size: 18px;
+  color: #333;
+}
+
+.circular-progressbar-wrapper {
+  position: relative;
+}
+
+.circular-progressbar-wrapper svg {
+  width: 100%;
+  height: 100%;
+}
+
+.circular-progressbar-wrapper .CircularProgressbar-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  dominant-baseline: middle;
+  text-anchor: middle;
+  transform: translateY(-0.3em);
+}
+
+.performance-text {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: 300;
+  color: #666;
+  text-align: center;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.2;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .performance-container {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .actions-section {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .circular-progressbar-wrapper {
+    width: 180px !important;
+    height: 180px !important;
+  }
+
+  .performance-text {
+    font-size: 13px;
+  }
+}
+
+/* Behavior Blocks Styles */
+.styled-block {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 400px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  position: relative;
+  width: 100%;
+}
+
+.styled-block-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.styled-block-header h2 {
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+}
+
+.styled-label {
+  display: block;
+  color: #666;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.input-with-suffix {
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.styled-input.with-suffix {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.styled-input.with-suffix:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+  outline: none;
+}
+
+.suffix {
+  position: absolute;
+  right: 12px;
+  color: #666;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* Specific styling for different block types */
+.call-block {
+  border-left: 4px solid #a5d6a7;
+}
+
+.email-block {
+  border-left: 4px solid #b39ddb;
+}
+
+.linkedin-block {
+  border-left: 4px solid #d1c4e9;
+}
+
+/* Custom Radio Button Styles */
+.custom-radio-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.custom-radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #333;
+  font-size: 16px;
+}
+
+.square-radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  margin-right: 8px;
+  border-radius: 4px;
+  transition: border-color 0.2s ease;
+}
+
+.custom-radio-option input:checked + .square-radio {
+  border-color: #2196f3;
+  background-color: #2196f3;
+}
+
+.custom-radio-option input:checked + .square-radio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+}
+
+/* Remove button styling */
+.remove-button {
+  background: transparent;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 20px;
+}
+
+.remove-button:hover {
+  border-color: #f44336;
+  color: #f44336;
+}
+
+/* Information Icon and Tooltip Styles */
+.info-icon {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 5px;
+  width: 16px;
+  height: 16px;
+  background-color: #ccc;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.info-icon:hover {
+  transform: scale(1.1);
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  color: #333;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 300;
+  z-index: 1;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+.info-icon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+}
+
+.question-heading {
+  width: 100vw !important;
+  margin-left: 50% !important;
+  transform: translateX(-50%) !important;
+  text-align: center !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 36px !important;
+  line-height: 54px !important;
+  letter-spacing: 0% !important;
+  position: relative !important;
+  margin-bottom: 40px !important;
+  margin-top: 20px !important;
+  background: white !important;
+}
+
+@media (max-width: 800px) {
+  .question-heading {
+    font-size: 28px !important;
+    line-height: 42px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .question-heading {
+    font-size: 24px !important;
+    line-height: 36px !important;
+    padding: 0 10px !important;
+  }
+}
+
+.question-subheading {
+  width: 100vw !important;
+  margin-left: 50% !important;
+  transform: translateX(-50%) !important;
+  text-align: center !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: #666666 !important;
+  position: relative !important;
+  margin-bottom: 50px !important;
+  margin-top: -20px !important;
+  background: white !important;
+}
+
+@media (max-width: 600px) {
+  .question-subheading {
+    font-size: 14px !important;
+    line-height: 20px !important;
+    padding: 0 10px !important;
+  }
+}
+
+/* Transition for Steps */
+.step-transition {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,288 @@
+.bw-signin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.bw-signin__logo-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.bw-signin__logo {
+  height: 32px;
+  width: auto;
+}
+
+.bw-signin__container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  margin-top: 80px;
+}
+
+.bw-signin__title {
+  font-size: 32px;
+  font-weight: 200;
+  margin-bottom: 32px;
+  text-align: center;
+  color: #1e1e24;
+}
+
+.bw-signin__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bw-signin__field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bw-signin__label {
+  font-size: 14px;
+  font-weight: 200;
+  color: #1e1e24;
+}
+
+.bw-signin__input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.bw-signin__input:focus {
+  outline: none;
+  border-color: #007AFF;
+}
+
+.bw-signin__password-container {
+  position: relative;
+}
+
+.bw-signin__password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 18px;
+}
+
+.bw-signin__forgot-button {
+  background: none;
+  border: none;
+  color: #007AFF;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  margin-top: -10px;
+}
+
+.bw-signin__forgot-button:hover {
+  text-decoration: underline;
+}
+
+.bw-signin__error {
+  color: #DC2626;
+  font-size: 14px;
+  padding: 12px;
+  background-color: rgba(220, 38, 38, 0.1);
+  border-radius: 6px;
+}
+
+.bw-signin__button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.bw-signin__create-button,
+.bw-signin__submit-button {
+  flex: 1 1 50%;
+  height: 48px;
+  padding: 0 12px;
+  font-size: 16px;
+  font-weight: 200;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bw-signin__create-button {
+  background-color: #F3F4F6;
+  color: #1e1e24;
+}
+
+.bw-signin__create-button:hover {
+  background-color: #E5E7EB;
+}
+
+.bw-signin__submit-button {
+  background-color: #007AFF;
+  color: white;
+}
+
+.bw-signin__submit-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.bw-signin__submit-button:disabled {
+  background-color: #E5E7EB;
+  cursor: not-allowed;
+}
+
+.bw-signin__terms {
+  text-align: center;
+  font-size: 14px;
+  color: #6B7280;
+  margin-top: 20px;
+}
+
+.bw-signin__terms a {
+  color: #007AFF;
+  text-decoration: none;
+}
+
+.bw-signin__terms a:hover {
+  text-decoration: underline;
+}
+
+/* Modal Styles */
+.bw-signin__modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.bw-signin__modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bw-signin__modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #1e1e24;
+}
+
+.bw-signin__modal-content {
+  padding: 20px;
+}
+
+.bw-signin__modal-content h2 {
+  font-size: 24px;
+  font-weight: 200;
+  margin-bottom: 16px;
+  color: #1e1e24;
+}
+
+.bw-signin__modal-content h3 {
+  font-size: 18px;
+  font-weight: 200;
+  margin: 16px 0 8px;
+  color: #1e1e24;
+}
+
+.bw-signin__modal-content h4 {
+  font-size: 16px;
+  font-weight: 200;
+  margin: 12px 0 6px;
+  color: #1e1e24;
+}
+
+.bw-signin__modal-content p {
+  font-size: 14px;
+  color: #1e1e24;
+  margin-bottom: 12px;
+}
+
+.bw-signin__modal-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.bw-signin__modal-content li {
+  font-size: 14px;
+  color: #1e1e24;
+  margin-bottom: 8px;
+}
+
+.bw-signin__modal-content a {
+  color: #007AFF;
+  text-decoration: none;
+}
+
+.bw-signin__modal-content a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .bw-signin__container {
+    padding: 16px;
+    margin-top: 60px;
+  }
+
+  .bw-signin__title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .bw-signin__logo-container {
+    top: 16px;
+    left: 16px;
+  }
+
+  .bw-signin__logo {
+    height: 28px;
+  }
+
+  .bw-signin__button-group {
+    flex-direction: column;
+  }
+
+  .bw-signin__create-button,
+  .bw-signin__submit-button {
+    width: 100%;
+  }
+}
