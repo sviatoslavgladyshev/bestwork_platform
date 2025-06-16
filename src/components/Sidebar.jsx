@@ -1,11 +1,11 @@
 // src/components/Sidebar.jsx
 import React from 'react';
 import './dashboard.css';
-import companyLogo from '/assets/blue_icon.jpeg';
-import diagramBlueIcon from '/assets/dashboard_icon_blue.png';
-import diagramBlackIcon from '/assets/dashboard_icon_black.png';
+import companyLogo from '/assets/logo_colors_3d.png';
+import diagramBlueIcon from '/assets/dashboard_icon_sidebar.png';
+import diagramBlackIcon from '/assets/dashbaord_grey_icon.png';
 import settingsBlueIcon from '/assets/icon_settings_blue.png';
-import settingsBlackIcon from '/assets/icon_settings_grey.png';
+import settingsBlackIcon from '/assets/settings_white.png';
 
 // Props:
 // - activeTab: string ('Templates', 'Settings')

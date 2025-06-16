@@ -7,6 +7,7 @@ import './ForgotPassword.css';
 Amplify.configure(awsExports);
 
 const ForgotPassword = () => {
+  console.log('ForgotPassword: Component rendered');
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [verificationDigits, setVerificationDigits] = useState(['', '', '', '', '', '']);
@@ -47,6 +48,7 @@ const ForgotPassword = () => {
   }, [timer]);
 
   const validatePassword = (password) => {
+    console.log('Validating password:', password);
     setPasswordRequirements({
       length: password.length >= 8,
       uppercase: /[A-Z]/.test(password),
@@ -56,6 +58,7 @@ const ForgotPassword = () => {
   };
 
   const handleDigitChange = (index, value, isPaste = false) => {
+    console.log('Digit change:', { index, value, isPaste });
     if (isPaste) {
       const pastedValue = value.replace(/\D/g, '').slice(0, 6);
       const newDigits = [...verificationDigits];
@@ -88,9 +91,9 @@ const ForgotPassword = () => {
 
   const requestPasswordReset = async (e) => {
     e.preventDefault();
+    console.log('Requesting password reset for email:', email);
     setIsLoading(true);
     setError('');
-
     try {
       await Auth.forgotPassword(email);
       setStep(2);
@@ -105,6 +108,7 @@ const ForgotPassword = () => {
   };
 
   const resendConfirmationCode = async () => {
+    console.log('Resending confirmation code for email:', email);
     try {
       await Auth.forgotPassword(email);
       setTimer(60);
@@ -117,18 +121,26 @@ const ForgotPassword = () => {
 
   const submitNewPassword = async (e) => {
     e.preventDefault();
+    console.log('Submitting new password:', {
+      email,
+      code: verificationDigits.join(''),
+      passwordMatch,
+      passwordRequirements
+    });
     if (!passwordMatch || !Object.values(passwordRequirements).every(Boolean)) {
+      console.log('Submission blocked due to invalid state');
       return;
     }
-
     setIsLoading(true);
     setError('');
-
     try {
       const code = verificationDigits.join('');
       await Auth.forgotPasswordSubmit(email, code, newPassword);
-      console.log("Password reset successful");
-      navigate('/signin');
+      console.log("Password reset successful, navigating to /signin");
+      navigate('/signin', {
+        state: { message: 'Password reset successful. Please sign in.' },
+        replace: true
+      });
     } catch (err) {
       console.error("Error resetting password:", err);
       setError(err.message || "Error resetting password");
@@ -163,14 +175,16 @@ const ForgotPassword = () => {
             <form className="bw-forgot-password__form" onSubmit={requestPasswordReset}>
               <div className="bw-forgot-password__field-group">
                 <label className="bw-forgot-password__label">Email</label>
-                <input
-                  type="email"
-                  className="bw-forgot-password__input"
-                  placeholder="example@work.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <div className="bw-forgot-password__input-wrapper">
+                  <input
+                    type="email"
+                    className="bw-forgot-password__input bw-forgot-password__input--gradient"
+                    placeholder="example@work.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
 
               {error && <div className="bw-forgot-password__error">{error}</div>}
@@ -179,6 +193,7 @@ const ForgotPassword = () => {
                 type="submit"
                 className="bw-forgot-password__button"
                 disabled={isLoading}
+                onClick={() => console.log('Step 1 Submit Clicked', { isLoading })}
               >
                 {isLoading ? "Sending..." : "Send reset code"}
               </button>
@@ -196,22 +211,23 @@ const ForgotPassword = () => {
                 <label className="bw-forgot-password__label">Verification code</label>
                 <div className="bw-forgot-password__verification-digits">
                   {verificationDigits.map((digit, index) => (
-                    <input
-                      key={index}
-                      ref={digitRefs[index]}
-                      type="text"
-                      className="bw-forgot-password__digit-input"
-                      value={digit}
-                      maxLength={1}
-                      onChange={(e) => handleDigitChange(index, e.target.value)}
-                      onPaste={(e) => {
-                        e.preventDefault();
-                        const pastedData = e.clipboardData.getData('text');
-                        handleDigitChange(index, pastedData, true);
-                      }}
-                      onKeyDown={(e) => handleDigitKeyDown(index, e)}
-                      required
-                    />
+                    <div key={index} className="bw-forgot-password__digit-wrapper">
+                      <input
+                        ref={digitRefs[index]}
+                        type="text"
+                        className="bw-forgot-password__digit-input bw-forgot-password__input--gradient"
+                        value={digit}
+                        maxLength={1}
+                        onChange={(e) => handleDigitChange(index, e.target.value)}
+                        onPaste={(e) => {
+                          e.preventDefault();
+                          const pastedData = e.clipboardData.getData('text');
+                          handleDigitChange(index, pastedData, true);
+                        }}
+                        onKeyDown={(e) => handleDigitKeyDown(index, e)}
+                        required
+                      />
+                    </div>
                   ))}
                 </div>
                 
@@ -235,22 +251,25 @@ const ForgotPassword = () => {
               <div className="bw-forgot-password__field-group">
                 <label className="bw-forgot-password__label">New Password</label>
                 <div className="bw-forgot-password__password-container">
-                  <input
-                    type={isPasswordVisible ? "text" : "password"}
-                    className="bw-forgot-password__input"
-                    placeholder="********"
-                    value={newPassword}
-                    onChange={(e) => {
-                      const newPass = e.target.value;
-                      setNewPassword(newPass);
-                      setPasswordTouched(true);
-                      validatePassword(newPass);
-                      if (confirmPasswordTouched) {
-                        setPasswordMatch(newPass === confirmNewPassword);
-                      }
-                    }}
-                    required
-                  />
+                  <div className="bw-forgot-password__input-wrapper">
+                    <input
+                      type={isPasswordVisible ? "text" : "password"}
+                      className="bw-forgot-password__input bw-forgot-password__input--gradient"
+                      placeholder="********"
+                      value={newPassword}
+                      onChange={(e) => {
+                        const newPass = e.target.value;
+                        setNewPassword(newPass);
+                        setPasswordTouched(true);
+                        validatePassword(newPass);
+                        if (confirmPasswordTouched) {
+                          setPasswordMatch(newPass === confirmNewPassword);
+                        }
+                        console.log('New Password Change', { newPass, confirmNewPassword });
+                      }}
+                      required
+                    />
+                  </div>
                   <button
                     type="button"
                     className="bw-forgot-password__password-toggle"
@@ -264,18 +283,21 @@ const ForgotPassword = () => {
               <div className="bw-forgot-password__field-group">
                 <label className="bw-forgot-password__label">Confirm New Password</label>
                 <div className="bw-forgot-password__password-container">
-                  <input
-                    type={isConfirmPasswordVisible ? "text" : "password"}
-                    className="bw-forgot-password__input"
-                    placeholder="********"
-                    value={confirmNewPassword}
-                    onChange={(e) => {
-                      setConfirmNewPassword(e.target.value);
-                      setConfirmPasswordTouched(true);
-                      setPasswordMatch(e.target.value === newPassword);
-                    }}
-                    required
-                  />
+                  <div className="bw-forgot-password__input-wrapper">
+                    <input
+                      type={isConfirmPasswordVisible ? "text" : "password"}
+                      className="bw-forgot-password__input bw-forgot-password__input--gradient"
+                      placeholder="********"
+                      value={confirmNewPassword}
+                      onChange={(e) => {
+                        setConfirmNewPassword(e.target.value);
+                        setConfirmPasswordTouched(true);
+                        setPasswordMatch(e.target.value === newPassword);
+                        console.log('Confirm Password Change', { newPassword, confirmPassword: e.target.value });
+                      }}
+                      required
+                    />
+                  </div>
                   <button
                     type="button"
                     className="bw-forgot-password__password-toggle"
@@ -316,6 +338,7 @@ const ForgotPassword = () => {
                 type="submit"
                 className="bw-forgot-password__button"
                 disabled={isLoading || !passwordMatch || !Object.values(passwordRequirements).every(Boolean)}
+                onClick={() => console.log('Step 2 Submit Clicked', { isLoading, passwordMatch, passwordRequirements })}
               >
                 {isLoading ? "Resetting..." : "Reset Password"}
               </button>

@@ -87,7 +87,7 @@ const GoogleAppDetails = () => {
             </p>
           </section>
 
-          {/* Privacy Policy */}
+          {/* Commitment to Privacy */}
           <section className="section">
             <h2 className="section-title">Our Commitment to Privacy</h2>
             <p className="section-text">
@@ -104,21 +104,9 @@ const GoogleAppDetails = () => {
             </p>
           </section>
 
-          {/* Standalone Privacy Policy Link */}
-          <div className="bw-google-app-details__privacy-link">
-            <a
-              href="https://platform.bestwork.ai/privacy-policy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link"
-            >
-              Privacy Policy
-            </a>
-          </div>
-
           {/* Button Group */}
           <div className="bw-google-app-details__button-group">
-            <Link to="/signup">
+            <Link to="/welcome">
               <button className="bw-google-app-details__next-button">Sign Up</button>
             </Link>
           </div>
@@ -128,14 +116,6 @@ const GoogleAppDetails = () => {
       {/* Footer */}
       <div className="bw-google-app-details__footer">
         <p>© 2025 Bestwork.ai</p>
-        <a
-          href="https://platform.bestwork.ai/privacy-policy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="link"
-        >
-          Privacy Policy
-        </a>
       </div>
     </div>
   );

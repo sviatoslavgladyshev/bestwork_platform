@@ -6,6 +6,8 @@ import TemplateOverview from './TemplateOverview';
 import PreMadeSelection from './PreMadeSelection';
 import WorkflowSelection from './WorkflowSelection';
 import CreateTemplate from './CreateTemplate';
+import TemplateCreator from './TemplateCreator';
+import EditEmailForm from './EditEmailForm';
 import TabBar from './TabBar';
 import Sidebar from './Sidebar';
 import diagramBlueIcon from '/assets/icon_diagram_blue.png';
@@ -29,13 +31,13 @@ const imagesToPreload = [
 export default function Dashboard({ activeTab, setActiveTab, firstName, lastName, templates, setUserData }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start with false to avoid initial loading
   const imagesLoadedRef = useRef(false);
   const [error, setError] = useState(null);
   const [resetCounter, setResetCounter] = useState(0);
-  const [templateName, setTemplateName] = useState(location.state?.template?.name || '');
+  const [templateName, setTemplateName] = useState(location.state?.template?.title || '');
   const [isPublishing, setIsPublishing] = useState(false);
-  const [templateData, setTemplateData] = useState(location.state?.template || null);
+  const [templateData, setTemplateData] = useState(location.state?.template || {});
 
   const handleReset = () => {
     setResetCounter((prev) => prev + 1);
@@ -43,6 +45,7 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
 
   useEffect(() => {
     const preloadImages = async () => {
+      if (imagesLoadedRef.current) return;
       const promises = imagesToPreload.map((src) => {
         return new Promise((resolve) => {
           const img = new Image();
@@ -54,14 +57,13 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
       await Promise.all(promises);
       console.log('Dashboard: Images preloaded');
       imagesLoadedRef.current = true;
-      setLoading(false);
     };
     preloadImages();
   }, []);
 
   const handleTemplateOverviewCreateNewCurrent = (template = null) => {
-    console.log('Dashboard: Navigating to workflow selection', { template });
-    navigate('/dashboard/workflow-selection', { state: { template } });
+    console.log('Dashboard: Navigating to template creator', { template });
+    navigate('/dashboard/template-creator', { state: { template } });
   };
 
   const handleUpgradeToPro = () => {
@@ -77,7 +79,7 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
     const newName = e.target.value;
     console.log('Dashboard: Updating templateName to:', newName);
     setTemplateName(newName);
-    setTemplateData((prev) => ({ ...prev, name: newName }));
+    setTemplateData((prev) => ({ ...prev, title: newName }));
   };
 
   const handlePublish = async () => {
@@ -104,15 +106,13 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
       }
 
       const payload = {
-        email: userEmail,
-        name: templateName || 'Untitled template',
-        tone: templateData.tone || 'Professional',
-        length: templateData.length || 50,
-        emailExamples: (templateData.emailExamples || []).map((example) => example.text || ''),
-        type: templateData.type || 'announcement',
-        customRequirements: templateData.customRequirements || '',
-        customResponseStyle: templateData.customResponseStyle || '',
-        id: templateData.id || Date.now().toString(),
+        userEmail,
+        templateName,
+        category: templateData.category || 'client_communications',
+        scenarios: templateData.scenarios || [],
+        scenarioDetails: templateData.scenarioDetails || {},
+        workflowTitle: templateName,
+        workflowDescription: templateData.description || '',
       };
 
       console.log('Dashboard: Sending API request to publish:', { payload });
@@ -143,9 +143,9 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
       const cachedData = JSON.parse(localStorage.getItem('userDataCache') || '{}');
       const newTemplate = {
         ...templateData,
-        name: templateName,
+        title: templateName,
         id: result.templateId || Date.now().toString(),
-        category: result.category || 'Uncategorized',
+        category: result.category || 'client_communications',
         lastUpdated: Date.now(),
       };
       localStorage.setItem(
@@ -167,15 +167,6 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
       setIsPublishing(false);
     }
   };
-
-  if (loading || !imagesLoadedRef.current) {
-    return (
-      <div className="loading-overlay">
-        <div className="loader"></div>
-        <p className="loading-text">Loading...</p>
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -207,7 +198,7 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
         routePath={location.pathname}
         templateName={templateName}
         onTemplateNameChange={handleTemplateNameChange}
-        handleBack={location.pathname.includes('/dashboard/create-template') ? handleBack : undefined}
+        handleBack={location.pathname.includes('/dashboard/create-template') || location.pathname.includes('/dashboard/template-creator') || location.pathname.includes('/dashboard/edit-template') ? handleBack : undefined}
         handlePublish={handlePublish}
         isPublishing={isPublishing}
       />
@@ -270,6 +261,36 @@ export default function Dashboard({ activeTab, setActiveTab, firstName, lastName
                 setTemplateData={setTemplateData}
                 handlePublish={handlePublish}
                 isPublishing={isPublishing}
+              />
+            }
+          />
+          <Route
+            path="template-creator"
+            element={
+              <TemplateCreator
+                userEmail={setUserData.userEmail}
+                handleBack={handleBack}
+                templateName={templateName}
+                onTemplateNameChange={handleTemplateNameChange}
+                templateData={templateData}
+                setTemplateData={setTemplateData}
+                handlePublish={handlePublish}
+                isPublishing={isPublishing}
+              />
+            }
+          />
+          <Route
+            path="edit-template/:id"
+            element={
+              <EditEmailForm
+                userEmail={setUserData.userEmail}
+                handleBack={handleBack}
+                templates={templates}
+                setUserData={setUserData}
+                isPublishing={isPublishing}
+                setIsPublishing={setIsPublishing}
+                templateName={templateName}
+                onTemplateNameChange={handleTemplateNameChange}
               />
             }
           />

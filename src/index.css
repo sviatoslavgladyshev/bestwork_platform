@@ -14,7 +14,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
   font-family: 'Inter', sans-serif;
-  background-color: #ffffff;
+  background-color: rgb(32, 39, 53) !important;
 }
 button {
   font-family: 'Inter', sans-serif;

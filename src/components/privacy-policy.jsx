@@ -81,7 +81,10 @@ const PrivacyPolicy = () => {
           <h3>10. Changes to This Privacy Policy</h3>
           <p>We may update this Privacy Policy from time to time. The updated version will be posted on this page with a revised "Last Updated" date. We encourage you to review this policy periodically. Your continued use of the Service after changes are posted constitutes your acceptance of the updated policy.</p>
 
-          <h3>11. Contact Us</h3>
+          <h3>11. Use of Google Workspace APIs</h3>
+          <p>We confirm that Google Workspace APIs are not used to develop, improve, or train generalized artificial intelligence (AI) or machine learning (ML) models.</p>
+
+          <h3>12. Contact Us</h3>
           <p>If you have questions or concerns about this Privacy Policy or our data practices, please contact us at:</p>
           <p>
             LevelUp Innovations Inc.<br />

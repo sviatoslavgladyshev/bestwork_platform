@@ -1,4 +1,3 @@
-/* src/components/Dashboard.css */
 @import './colors.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
 
@@ -14,7 +13,7 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  background-color: rgb(251, 252, 255);
+  background-color: #101827;
   font-weight: 200;
   height: 100vh;
   overflow: hidden;
@@ -26,7 +25,7 @@ body, html {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(18, 18, 18, 0.7);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,11 +34,12 @@ body, html {
   gap: 1rem;
 }
 
+/* Loader */
 .loader {
   --s: 28px;
   height: var(--s);
   aspect-ratio: 2.5;
-  --_g: #007AFF 90%, #0000;
+  --_g: #4a90e2 90%, #0000;
   --_g0: no-repeat radial-gradient(farthest-side, var(--_g));
   --_g1: no-repeat radial-gradient(farthest-side at top, var(--_g));
   --_g2: no-repeat radial-gradient(farthest-side at bottom, var(--_g));
@@ -48,20 +48,27 @@ body, html {
   animation: l45 1s infinite;
 }
 
+/* Loading Text */
 .loading-text {
-  font-size: 1.25rem;
-  color: #333;
+  font-size: 16px;
+  color: #e0e0e0;
   margin: 0;
   font-family: 'Inter', sans-serif;
-  font-weight: 300;
+  font-weight: 200;
   animation: textFade 1.2s ease-in-out infinite alternate;
 }
 
+/* Text Fade Animation */
 @keyframes textFade {
-  0% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
+/* Loader Animation */
 @keyframes l45 {
   0% {
     background-position:
@@ -121,7 +128,7 @@ body, html {
 .fade-in-delay-5 { animation-delay: 0.5s; }
 
 .dashboard-container {
-  background-color: rgb(251, 252, 255);
+  background-color: rgb(32, 39, 53) !important;
 }
 
 .dashboard-sidebar {
@@ -130,12 +137,12 @@ body, html {
   left: 0;
   width: 80px;
   height: 100vh;
-  background-color: #FFFFFF;
+  background-color: #101827;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(to bottom, transparent 79px, #e0e0e0 79px, #e0e0e0 100%);
+  background-image: linear-gradient(to bottom, transparent 79px, #62676f7b 79px, #62676f7b 100%);
   background-size: 1px 100%;
   background-position: right top;
   background-repeat: no-repeat;
@@ -166,10 +173,11 @@ body, html {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.3rem;
+  padding: 0.4rem;
   border-radius: 8px;
   transition: background-color 0.2s ease, padding 0.2s ease;
   color: #666;
+  position: relative;
 }
 
 .dashboard-nav-item:hover {
@@ -177,15 +185,63 @@ body, html {
 }
 
 .dashboard-nav-item.active {
-  background-color: #007AFF24;
-  padding: 0.5rem;
+  background: transparent;
+  padding: 0.4rem;
+  position: relative;
+}
+
+.dashboard-nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background-image: url('/assets/odd_steps.png');
+  background-size: 100% 120%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  border-radius: 8px;
+  z-index: -2;
+  transition: opacity 0.3s ease;
+}
+
+.dashboard-nav-item.active::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background: linear-gradient(45deg, rgba(107, 0, 181, 0.2), rgba(161, 0, 230, 0.2));
+  border-radius: 8px;
+  z-index: -3;
+  transition: opacity 0.3s ease;
+}
+
+.edit-template-title-tab-bar {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-left: 10px;
+  line-height: 40px;
+  font-family: 'Inter', sans-serif;
 }
 
 .nav-icon {
-  width: 25px;
-  height: 25px;
+  width: 28px; /* Dashboard icon size */
+  height: 28px;
   display: block;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Smaller size for settings icon */
+.dashboard-settings .nav-icon {
+  width: 24px; /* Smaller settings icon */
+  height: 24px;
 }
 
 .dashboard-nav-item:hover .nav-icon {
@@ -194,6 +250,12 @@ body, html {
 
 .dashboard-nav-item.active .nav-icon {
   opacity: 1;
+  filter: none; /* Preserve dashboard icon color */
+}
+
+/* Whiten settings icon when active */
+.dashboard-settings .dashboard-nav-item.active .nav-icon {
+  filter: brightness(0) invert(1); /* Make blue settings icon white */
 }
 
 .dashboard-settings {
@@ -204,7 +266,7 @@ body, html {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.3rem;
+  padding: 0.4rem;
   border-radius: 8px;
   transition: background-color 0.2s ease, padding 0.2s ease;
   color: #666;
@@ -215,8 +277,39 @@ body, html {
 }
 
 .dashboard-settings button.active {
-  background-color: #007AFF24;
-  padding: 0.5rem;
+  background: transparent;
+  padding: 0.4rem;
+  position: relative;
+}
+
+.dashboard-settings button.active::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background-image: url('/assets/odd_steps.png');
+  background-size: 100% 120%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  border-radius: 8px;
+  z-index: -2;
+  transition: opacity 0.3s ease;
+}
+
+.dashboard-settings button.active::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background: linear-gradient(45deg, rgba(107, 0, 181, 0.2), rgba(161, 0, 230, 0.2));
+  border-radius: 8px;
+  z-index: -3;
+  transition: opacity 0.3s ease;
 }
 
 .dashboard-tab-bar {
@@ -224,14 +317,14 @@ body, html {
   top: 0;
   left: 60px;
   width: calc(100% - 60px);
-  background-color: #fff;
+  background-color: #101827;
   padding-left: 0.75rem;
   height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #62676f7b;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -263,7 +356,7 @@ body, html {
 }
 
 .dashboard-tab-bar-content.create-template-active {
-  background-color: #fff;
+  background-color: #101827;
   padding: 0 1.5rem;
   height: 100%;
   align-items: center;
@@ -302,14 +395,12 @@ body, html {
 }
 
 .create-template-back-button:hover {
-  background-color: #f0f0f0;
-  color: #007AFF;
+  background-color: #007bff41;
 }
 
 .create-template-back-button:focus {
   outline: none;
-  background-color: #f0f0f0;
-  color: #007AFF;
+  background-color: #007bff41;
 }
 
 .back-button-icon {
@@ -319,6 +410,7 @@ body, html {
 
 .back-button-text {
   font-family: 'Inter', sans-serif;
+  color: #ffffff;
 }
 
 .create-template-name-input {
@@ -366,7 +458,7 @@ body, html {
   font-family: 'Inter', sans-serif;
   font-size: 18px;
   font-weight: 500;
-  color: #333;
+  color: #ffffff;
   padding-left: 1rem;
   white-space: nowrap;
 }
@@ -383,7 +475,8 @@ body, html {
 }
 
 .dashboard-tab-bar .upgrade-to-pro-button {
-  background-color: #007AFF;
+  position: relative;
+  background-color: transparent;
   border: none;
   border-radius: 8px;
   padding: 8px 12px;
@@ -392,28 +485,67 @@ body, html {
   line-height: 1.5;
   color: #ffffff;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
   font-family: 'Inter', sans-serif;
   min-width: 80px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
+}
+
+.dashboard-tab-bar .upgrade-to-pro-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/assets/odd_steps.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  border-radius: 8px;
+  z-index: -2;
+  transition: opacity 0.3s ease;
+}
+
+.dashboard-tab-bar .upgrade-to-pro-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border-radius: 8px;
+  z-index: -1;
+  transition: background 0.3s ease;
 }
 
 .dashboard-tab-bar .upgrade-to-pro-button:hover {
-  background-color: #005BB5;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 91, 181, 0.4);
+}
+
+.dashboard-tab-bar .upgrade-to-pro-button:hover::before {
+  opacity: 0.5;
+}
+
+.dashboard-tab-bar .upgrade-to-pro-button:hover::after {
+  background: linear-gradient(45deg, rgba(0, 91, 181, 0.7), rgba(0, 115, 230, 0.7));
 }
 
 .dashboard-tab-bar .current-tab-create-new-button {
-  background-color: #ffffff;
+  background-color: #007bff72;
   border: 1px solid #007AFF;
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 13px;
   font-weight: 400;
   line-height: 1.5;
-  color: #000000;
+  color: #ffffff;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
   font-family: 'Inter', sans-serif;
@@ -425,7 +557,7 @@ body, html {
 }
 
 .dashboard-tab-bar .current-tab-create-new-button:hover {
-  background-color: #f0f0f0;
+  background-color: #007bff41;
 }
 
 .dashboard-tab-bar .publish-button {
@@ -476,7 +608,7 @@ body, html {
   position: absolute;
   top: 80px;
   left: 80px;
-  background-color: rgb(251, 252, 255);
+  background-color: rgb(32, 39, 53);
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 1;

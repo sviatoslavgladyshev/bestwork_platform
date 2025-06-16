@@ -211,7 +211,7 @@ const CreateTemplate = ({ userEmail, handleBack, templateName, onTemplateNameCha
 
       const payload = {
         email: userEmail,
-        name: templateName || 'Untitled template',
+        name: templateName || 'Untitled agent',
         tone: templateData.tone || 'Professional',
         length: templateData.length || 50,
         emailExamples: (templateData.emailExamples || []).map((example) => example.text || ''),

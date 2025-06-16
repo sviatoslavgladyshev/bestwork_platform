@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './dashboard.css';
 
@@ -15,57 +16,91 @@ const TabBar = ({
   routePath,
   onTemplateNameChange,
 }) => {
-  console.log('TabBar: Props:', {
-    activeTab,
+  // Debug logs to verify props and route
+  console.log('TabBar Debug:', {
     routePath,
-    templateName,
-    handleTemplateOverviewCreateNewCurrent: !!handleTemplateOverviewCreateNewCurrent,
     handleBack: !!handleBack,
-    handlePublish: !!handlePublish,
+    activeTab,
+    templateName,
     isPublishing,
+    isTemplateRelatedRoute:
+      routePath?.includes('/dashboard/create-template') ||
+      routePath?.includes('/dashboard/edit-template') ||
+      routePath?.includes('/dashboard/template-creator'),
   });
 
-  const isSelectionRoute = routePath?.includes('/dashboard/workflow-selection') || routePath?.includes('/dashboard/premade-selection');
-  const isCreateTemplateRoute = routePath?.includes('/dashboard/create-template');
-  console.log('TabBar: isCreateTemplateRoute:', isCreateTemplateRoute);
+  // Fallback navigation using useNavigate
+  const navigate = useNavigate();
+  const defaultHandleBack = () => {
+    console.log('Default handleBack: Navigating to /dashboard');
+    navigate('/dashboard');
+  };
+
+  // Handle button click
+  const onBackClick = () => {
+    console.log('Dashboard button clicked');
+    if (handleBack) {
+      console.log('Using provided handleBack');
+      handleBack();
+    } else {
+      console.log('handleBack not provided, using defaultHandleBack');
+      defaultHandleBack();
+    }
+  };
+
+  // Determine if we're on a template-related route where the Dashboard button should show
+  const isTemplateRelatedRoute =
+    routePath?.includes('/dashboard/create-template') ||
+    routePath?.includes('/dashboard/edit-template') ||
+    routePath?.includes('/dashboard/template-creator');
 
   return (
     <div className="dashboard-tab-bar">
       <div
         className={`dashboard-tab-bar-content ${
-          activeTab === 'Templates' && !isCreateTemplateRoute ? 'template-overview-tab' : ''
-        } ${isCreateTemplateRoute ? 'create-template-active' : ''}`}
+          activeTab === 'Templates' && !isTemplateRelatedRoute ? 'template-overview-tab' : ''
+        } ${isTemplateRelatedRoute ? 'create-template-active' : ''}`}
       >
-        {isCreateTemplateRoute ? (
+        {isTemplateRelatedRoute ? (
           <div className="tab-bar-content">
             <div className="tab-bar-left">
-              {handleBack && (
-                <button
-                  className="create-template-back-button"
-                  onClick={handleBack}
-                  aria-label="Go back to templates"
-                >
-                  <img
-                    src="/assets/back_button_left_arrow.png"
-                    alt=""
-                    className="back-button-icon"
-                  />
-                  <span className="back-button-text">Back</span>
-                </button>
-              )}
-              <input
-                type="text"
-                value={templateName}
-                onChange={(e) => {
-                  console.log('TabBar: Template name input changed:', e.target.value);
-                  onTemplateNameChange(e);
-                }}
-                className="create-template-name-input"
-                placeholder="Untitled template"
-                aria-label="Template name"
-              />
+              {/* Dashboard button for template-related routes */}
+              <button
+                className="create-template-back-button"
+                onClick={onBackClick}
+                aria-label="Go to dashboard"
+              >
+                <img
+                  src="/assets/chevron_white_back.png"
+                  alt=""
+                  className="back-button-icon"
+                />
+                <span className="back-button-text">Dashboard</span>
+              </button>
+              <span className="edit-template-title-tab-bar">
+                {routePath?.includes('/dashboard/create-template')
+                  ? 'Create Agent'
+                  : routePath?.includes('/dashboard/edit-template')
+                  ? 'Edit Agent'
+                  : routePath?.includes('/dashboard/template-creator')
+                  ? 'Create Agent'
+                  : ''}
+              </span>
             </div>
             <div className="create-template-controls">
+              {routePath?.includes('/dashboard/create-template') && (
+                <input
+                  type="text"
+                  value={templateName}
+                  onChange={(e) => {
+                    console.log('TabBar: Template name input changed:', e.target.value);
+                    onTemplateNameChange(e);
+                  }}
+                  className="create-template-name-input"
+                  placeholder="Untitled agent"
+                  aria-label="Template name"
+                />
+              )}
               {handleUpgradeToPro && (
                 <button
                   className="upgrade-to-pro-button"
@@ -75,7 +110,7 @@ const TabBar = ({
                   Upgrade to Pro
                 </button>
               )}
-              {isCreateTemplateRoute && (
+              {handlePublish && routePath?.includes('/dashboard/create-template') && (
                 <button
                   className="publish-button"
                   onClick={handlePublish}
@@ -102,7 +137,7 @@ const TabBar = ({
                   Upgrade to Pro
                 </button>
               )}
-              {activeTab === 'Templates' && !isSelectionRoute && handleTemplateOverviewCreateNewCurrent ? (
+              {activeTab === 'Templates' && handleTemplateOverviewCreateNewCurrent ? (
                 <button
                   className="current-tab-create-new-button"
                   onClick={() => handleTemplateOverviewCreateNewCurrent(null)}

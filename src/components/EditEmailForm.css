@@ -1,0 +1,841 @@
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+/* Ensure the entire parent chain has a defined height */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.edit-email-container {
+  padding: 20px;
+  background-color: #101827;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  color: #ffffff;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.edit-email-left-aligned-container {
+  width: 100%;
+  align-self: flex-start;
+  margin-left: 0;
+}
+
+.edit-email-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.edit-email-header-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #ffffff;
+  text-align: left;
+}
+
+.edit-email-step-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 165%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #ffffff;
+  text-align: left;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+/* Scrollable content container */
+.edit-email-scrollable-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Centered content */
+.edit-email-centered-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  flex-grow: 1;
+}
+
+/* Review section */
+.edit-email-review-section {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.edit-email-review-section > div {
+  padding: 15px 0;
+}
+
+/* Review titles */
+.edit-email-review-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+/* Review inputs */
+.edit-email-review-input {
+  width: 70%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: transparent !important;
+  border: 1px solid #3a4a6a;
+  border-radius: 8px;
+  padding: 9px;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  resize: none;
+}
+
+.edit-email-title-review-input {
+  height: 40px;
+}
+
+.edit-email-description-review-input {
+  height: 120px;
+}
+
+.edit-email-review-input::placeholder {
+  color: #b0b0b0;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+}
+
+.edit-email-review-input:focus {
+  outline: none;
+  border-color: #5a6a8a;
+  box-shadow: 0 0 5px rgba(90, 106, 138, 0.3);
+}
+
+/* Review cards */
+.edit-email-review-card {
+  background-color: transparent;
+  border: 1px solid #3a4a6a;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.edit-email-review-card.email-category {
+  width: 40%;
+  margin-left: 0;
+  cursor: pointer;
+}
+
+.edit-email-review-card.email-category:hover {
+  border-color: #5a6a8a;
+}
+
+.edit-email-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.edit-email-review-type {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.edit-email-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #d1d5db;
+  line-height: 1.2;
+  text-align: left;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+/* Scenario block styles (aligned with TemplateCreator Step 5) */
+.edit-email-review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.edit-email-review-subsection {
+  margin-top: 12px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.edit-email-section-divider {
+  border: none;
+  border-top: 1px solid #3a4a6a;
+  margin: 20px 0;
+  width: 100%;
+}
+
+/* Document card styles */
+.edit-email-review-document-card {
+  background-color: transparent;
+  border: 1px solid #3a4a6a;
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
+
+.edit-email-document-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.edit-email-document-size {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: #d1d5db;
+  margin-bottom: 4px;
+}
+
+.edit-email-document-summary {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: #d1d5db;
+  margin-bottom: 4px;
+}
+
+.edit-email-delete-document-btn {
+  padding: 6px 12px;
+  border: 1px solid #ff4d4f;
+  border-radius: 5px;
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background-color: transparent;
+  color: #ff4d4f;
+  margin-top: 4px;
+}
+
+.edit-email-delete-document-btn:hover {
+  background-color: #ff4d4f;
+  color: #ffffff;
+}
+
+/* Attachment card styles */
+.edit-email-attachment-card {
+  background-color: transparent;
+  border: 1px dashed #3a4a6a;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.edit-email-attachment-label {
+  display: block;
+  cursor: pointer;
+}
+
+.edit-email-attachment-info {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.edit-email-attachment-info > div:first-child {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.edit-email-file-input {
+  display: none;
+}
+
+/* Modal styles */
+.edit-email-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.edit-email-modal {
+  background-color: #101827;
+  padding: 20px;
+  border-radius: 8px;
+  width: clamp(70%, 85vw, 90%);
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.edit-email-modal-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.edit-email-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.edit-email-modal-item {
+  background-color: transparent;
+  border: 1px solid #3a4a6a;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.edit-email-modal-item:hover {
+  border-color: #5a6a8a;
+}
+
+.edit-email-modal-item.selected {
+  border-color: #0056d2;
+}
+
+.edit-email-email-type {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  color: #ffffff;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.edit-email-modal-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #d1d5db;
+  margin: 20px 0;
+}
+
+.edit-email-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.edit-email-cancel-btn {
+  padding: 9px 30px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.edit-email-cancel-btn:hover {
+  background-color: #3a4a6a;
+}
+
+/* Footer container */
+.edit-email-footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  background-color: #101827;
+  border-top: 1px solid #3a4a6a;
+  flex-shrink: 0;
+}
+
+.edit-email-footer-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #d1d5db;
+  text-align: left;
+}
+
+.edit-email-navigation {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.edit-email-unique-back-btn,
+.edit-email-save-btn {
+  padding: 9px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+}
+
+.edit-email-unique-back-btn {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #d1d5db;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.edit-email-save-btn {
+  background-color: #0056d2;
+  color: #ffffff;
+}
+
+.edit-email-unique-back-btn:hover {
+  background-color: #2a344a;
+  border-color: #b0b0b0;
+}
+
+.edit-email-save-btn:hover {
+  background-color: #003a8c;
+}
+
+.edit-email-unique-back-btn:disabled,
+.edit-email-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Error and loading messages */
+.edit-email-error,
+.edit-email-loading {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+.edit-email-error {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.edit-email-loading {
+  color: #437DF7;
+  margin-bottom: 20px;
+}
+
+/* Media queries for scenario block */
+@media (max-width: 600px) {
+  .edit-email-review-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .edit-email-review-card {
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+
+  .edit-email-review-type {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .edit-email-description {
+    font-size: 10px;
+    margin-top: 8px;
+    margin-bottom: 6px;
+  }
+
+  .edit-email-review-subsection {
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .edit-email-review-input {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .edit-email-section-divider {
+    margin: 15px 0;
+  }
+
+  .edit-email-review-document-card {
+    padding: 6px;
+    margin-bottom: 6px;
+  }
+
+  .edit-email-document-name {
+    font-size: 10px;
+  }
+
+  .edit-email-document-size,
+  .edit-email-document-summary {
+    font-size: 8px;
+  }
+
+  .edit-email-delete-document-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .edit-email-attachment-card {
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+
+  .edit-email-attachment-info {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 2560px) {
+  .edit-email-review-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .edit-email-review-card {
+    padding: 12px;
+    margin-bottom: 30px;
+  }
+
+  .edit-email-review-type {
+    font-size: 17px;
+    margin-bottom: 12px;
+  }
+
+  .edit-email-review-subsection {
+    margin-top: 16px;
+    margin-bottom: 30px;
+  }
+
+  .edit-email-review-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .edit-email-section-divider {
+    margin: 25px 0;
+  }
+
+  .edit-email-review-document-card {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .edit-email-document-name {
+    font-size: 13px;
+  }
+
+  .edit-email-document-size,
+  .edit-email-document-summary {
+    font-size: 11px;
+  }
+
+  .edit-email-delete-document-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .edit-email-attachment-card {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .edit-email-attachment-info {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 2561px) {
+  .edit-email-review-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 50px;
+  }
+
+  .edit-email-review-card {
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+
+  .edit-email-review-type {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .edit-email-review-subsection {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .edit-email-review-input {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .edit-email-section-divider {
+    margin: 30px 0;
+  }
+
+  .edit-email-review-document-card {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .edit-email-document-name {
+    font-size: 14px;
+  }
+
+  .edit-email-document-size,
+  .edit-email-document-summary {
+    font-size: 12px;
+  }
+
+  .edit-email-delete-document-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .edit-email-attachment-card {
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .edit-email-attachment-info {
+    font-size: 14px;
+  }
+}
+
+/* Media queries for other sections */
+@media (min-width: 1280px) and (max-width: 2560px) {
+  .edit-email-review-card.email-category {
+    width: 40%;
+    margin-left: 0;
+  }
+
+  .edit-email-icon {
+    width: 48px;
+    height: 48px;
+    margin-top: 10px;
+    margin-bottom: 16px;
+  }
+
+  .edit-email-review-title {
+    font-size: 19px;
+    margin-bottom: 16px;
+  }
+
+  .edit-email-review-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .edit-email-footer-text {
+    font-size: 14px;
+  }
+
+  .edit-email-unique-back-btn,
+  .edit-email-save-btn {
+    padding: 10px 35px;
+    font-size: 14px;
+  }
+
+  .edit-email-footer-container {
+    padding: 15px 20px;
+  }
+
+  .edit-email-navigation {
+    gap: 15px;
+  }
+
+  .edit-email-modal-grid {
+    gap: 20px;
+  }
+
+  .edit-email-modal-item {
+    padding: 14px;
+  }
+
+  .edit-email-email-type {
+    font-size: 18px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 2561px) {
+  .edit-email-icon {
+    width: 56px;
+    height: 56px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+  }
+
+  .edit-email-review-title {
+    font-size: 21px;
+    margin-bottom: 20px;
+  }
+
+  .edit-email-review-input {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .edit-email-footer-text {
+    font-size: 15px;
+  }
+
+  .edit-email-unique-back-btn,
+  .edit-email-save-btn {
+    padding: 11px 40px;
+    font-size: 15px;
+  }
+
+  .edit-email-footer-container {
+    padding: 15px 25px;
+  }
+
+  .edit-email-navigation {
+    gap: 18px;
+  }
+
+  .edit-email-modal-grid {
+    gap: 24px;
+  }
+
+  .edit-email-modal-item {
+    padding: 16px;
+  }
+
+  .edit-email-email-type {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .edit-email-icon {
+    width: 32px;
+    height: 32px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+  }
+
+  .edit-email-review-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .edit-email-review-input {
+    width: 90%;
+    max-width: 400px;
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .edit-email-footer-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .edit-email-footer-text {
+    font-size: 11px;
+  }
+
+  .edit-email-unique-back-btn,
+  .edit-email-save-btn {
+    padding: 7px 20px;
+    font-size: 11px;
+  }
+
+  .edit-email-navigation {
+    gap: 8px;
+  }
+
+  .edit-email-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .edit-email-modal-item {
+    padding: 10px;
+  }
+
+  .edit-email-email-type {
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .edit-email-modal {
+    width: clamp(60%, 80vw, 85%);
+    max-height: 60vh;
+    padding: 15px;
+  }
+
+  .edit-email-modal-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .edit-email-modal-note {
+    font-size: 10px;
+  }
+}

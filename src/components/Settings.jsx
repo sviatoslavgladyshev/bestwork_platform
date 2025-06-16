@@ -38,7 +38,7 @@ ErrorBoundary.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setIsGmailConnected, activeTab, setActiveTab }) => {
+const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserData, activeTab, setActiveTab }) => {
   console.log('Settings.jsx rendering:', { userEmail, isGmailConnected });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -181,7 +181,7 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setIsGmail
           console.log('Redirecting to Google OAuth:', gmailAuthResult.authUrl);
           window.location.href = gmailAuthResult.authUrl;
         } else if (!gmailAuthResult.needsAuth && gmailAuthResult.isGmailConnected) {
-          setIsGmailConnected(true);
+          setUserData((prev) => ({ ...prev, isGmailConnected: true }));
           navigate('/dashboard', { replace: true });
         } else {
           throw new Error('Unexpected response: ' + (gmailAuthResult.message || 'No auth details'));
@@ -228,7 +228,7 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setIsGmail
       const data = await response.json();
       console.log('Disconnect platform response:', data);
       if (platform.toLowerCase() === 'gmail') {
-        setIsGmailConnected(false);
+        setUserData((prev) => ({ ...prev, isGmailConnected: false }));
       } else {
         throw new Error(`Unknown platform: ${platform}`);
       }
@@ -523,7 +523,7 @@ Settings.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   isGmailConnected: PropTypes.bool,
-  setIsGmailConnected: PropTypes.func,
+  setUserData: PropTypes.func,
   activeTab: PropTypes.string,
   setActiveTab: PropTypes.func,
 };

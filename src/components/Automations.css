@@ -6,7 +6,7 @@
   max-width: calc(100% - 40px); /* Prevent exceeding parent */
   margin: 20px; /* 20px margin on all sides */
   padding: 20px;
-  background-color: #ffffff;
+  background-color: rgb(32, 39, 53);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   height: calc(100% - 40px); /* Account for 20px margins on top and bottom */

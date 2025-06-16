@@ -1,5 +1,7 @@
+/* Import Inter font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
+/* Root variables for gradient shadows */
 :root {
   --gradient-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 
                     0 0 16px 6px linear-gradient(135deg, rgba(150, 80, 100, 0.7) 0%, rgba(90, 110, 180, 0.7) 100%);
@@ -7,25 +9,79 @@
                           0 0 20px 6px linear-gradient(135deg, rgba(150, 80, 100, 0.9) 0%, rgba(90, 110, 180, 0.9) 100%);
 }
 
+/* Ensure the entire parent chain has a defined height */
 html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-.template-creator-wrapper {
+/* Top-level container for header and content */
+.welcome-agent-creator-container {
   height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  background-color: transparent;
 }
 
-.template-creator-selector-container {
+/* Main content container */
+.welcome-agent-creator-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #212836;
+  padding-top: 72px;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Header styles */
+.welcome-agent-creator-header-top {
+  width: 100%;
+  background: #101827;
+  padding: 16px 32px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header content */
+.welcome-agent-creator-header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-start;
+  padding-left: 0;
+}
+
+/* Logo styles */
+.welcome-agent-creator-header-logo {
+  height: 40px;
+  width: 40px;
+  margin-right: 20px;
+}
+
+/* Header title styles */
+.welcome-agent-creator-header-title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.welcome-agent-creator-selector-container {
   padding: 20px;
   background-color: #101827;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 40px);
+  height: calc(100vh - 112px);
+  margin: 20px;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   color: #ffffff;
@@ -35,13 +91,13 @@ html, body, #root {
   overflow: hidden;
 }
 
-.template-creator-left-aligned-container {
+.welcome-agent-creator-left-aligned-container {
   width: 100%;
   align-self: flex-start;
   margin-left: 0;
 }
 
-.template-creator-header {
+.welcome-agent-creator-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -49,7 +105,7 @@ html, body, #root {
   margin-bottom: 18px;
 }
 
-.template-creator-header-title {
+.welcome-agent-creator-header-title-text {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 18px;
@@ -61,13 +117,13 @@ html, body, #root {
   align-items: center;
 }
 
-.template-creator-header-dot {
+.welcome-agent-creator-header-dot {
   font-size: 14px;
   margin: 0 12px;
   color: #ffffff;
 }
 
-.template-creator-step-title {
+.welcome-agent-creator-step-title {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 24px;
@@ -84,7 +140,7 @@ html, body, #root {
   margin-bottom: 0px;
 }
 
-.template-creator-scrollable-content {
+.welcome-agent-creator-scrollable-content {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -94,17 +150,17 @@ html, body, #root {
   justify-content: flex-start;
 }
 
-.template-creator-scrollable-content.step-1,
-.template-creator-scrollable-content.step-2,
-.template-creator-scrollable-content.step-3,
-.template-creator-scrollable-content.step-4,
-.template-creator-scrollable-content.step-5,
-.template-creator-scrollable-content.step-6,
-.template-creator-scrollable-content.step-7 {
+.welcome-agent-creator-scrollable-content.step-1,
+.welcome-agent-creator-scrollable-content.step-2,
+.welcome-agent-creator-scrollable-content.step-3,
+.welcome-agent-creator-scrollable-content.step-4,
+.welcome-agent-creator-scrollable-content.step-5,
+.welcome-agent-creator-scrollable-content.step-6,
+.welcome-agent-creator-scrollable-content.step-7 {
   justify-content: center;
 }
 
-.template-creator-centered-content {
+.welcome-agent-creator-centered-content {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -113,25 +169,25 @@ html, body, #root {
   flex-grow: 0;
 }
 
-.template-creator-step-content {
+.welcome-agent-creator-step-content {
   width: 100%;
   position: relative;
 }
 
-.template-creator-progress-bar {
+.welcome-agent-creator-progress-bar {
   width: 100%;
   margin: 18px 0 6px 0;
   background: transparent;
 }
 
-.template-creator-progress-segments {
+.welcome-agent-creator-progress-segments {
   display: flex;
   justify-content: space-between;
   width: 100%;
   background: none;
 }
 
-.template-creator-progress {
+.welcome-agent-creator-progress {
   flex: 1;
   height: 1px;
   background-color: #9CA3AF;
@@ -140,20 +196,20 @@ html, body, #root {
   margin: 0 5px;
 }
 
-.template-creator-progress.success[data-step="1"],
-.template-creator-progress.success[data-step="3"],
-.template-creator-progress.success[data-step="5"],
-.template-creator-progress.success[data-step="7"] {
+.welcome-agent-creator-progress.success[data-step="1"],
+.welcome-agent-creator-progress.success[data-step="3"],
+.welcome-agent-creator-progress.success[data-step="5"],
+.welcome-agent-creator-progress.success[data-step="7"] {
   background-image: url('/assets/odd_steps.png');
   background-size: cover;
   background-color: #005BB5;
   opacity: 1;
 }
 
-.template-creator-progress.success[data-step="2"],
-.template-creator-progress.success[data-step="4"],
-.template-creator-progress.success[data-step="6"],
-.template-creator-progress.success[data-step="8"] {
+.welcome-agent-creator-progress.success[data-step="2"],
+.welcome-agent-creator-progress.success[data-step="4"],
+.welcome-agent-creator-progress.success[data-step="6"],
+.welcome-agent-creator-progress.success[data-step="8"] {
   background-image: url('/assets/even_steps.png');
   background-size: cover;
   background-position: center;
@@ -161,7 +217,7 @@ html, body, #root {
   background-color: #0073E6;
 }
 
-.template-creator-grid {
+.welcome-agent-creator-grid {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -170,13 +226,13 @@ html, body, #root {
   align-items: stretch; /* Ensures cards stretch to the same width */
 }
 
-.template-creator-left-aligned-review .template-creator-grid {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-grid {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.template-creator-card {
+.welcome-agent-creator-card {
   position: relative;
   background-color: transparent;
   border: none;
@@ -191,14 +247,14 @@ html, body, #root {
 }
 
 /* Ensure cards in steps 1-3 have uniform height */
-.template-creator-scrollable-content.step-1 .template-creator-card,
-.template-creator-scrollable-content.step-2 .template-creator-card,
-.template-creator-scrollable-content.step-3 .template-creator-card {
+.welcome-agent-creator-scrollable-content.step-1 .welcome-agent-creator-card,
+.welcome-agent-creator-scrollable-content.step-2 .welcome-agent-creator-card,
+.welcome-agent-creator-scrollable-content.step-3 .welcome-agent-creator-card {
   min-height: 140px; /* Compact height */
   height: 100%; /* Ensure cards stretch to the same height */
 }
 
-.template-creator-card-content {
+.welcome-agent-creator-card-content {
   display: flex;
   padding: 5px;
   flex-direction: column;
@@ -207,19 +263,19 @@ html, body, #root {
   gap: 6px; /* Reduced gap for closer content */
 }
 
-.template-creator-left-aligned-review .template-creator-card {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-card {
   max-width: 600px;
   padding: 16px;
 }
 
-.template-creator-icon {
+.welcome-agent-creator-icon {
   width: 36px;
   height: 36px;
   display: block;
   margin: 0; /* No margins for even spacing */
 }
 
-.template-creator-email-type {
+.welcome-agent-creator-email-type {
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   font-weight: bold;
@@ -228,7 +284,7 @@ html, body, #root {
   margin: 0; /* No margins for even spacing */
 }
 
-.template-creator-description {
+.welcome-agent-creator-description {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -238,7 +294,7 @@ html, body, #root {
   margin: 0; /* No margins for even spacing */
 }
 
-.template-creator-card::before {
+.welcome-agent-creator-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -254,16 +310,16 @@ html, body, #root {
   pointer-events: none;
 }
 
-.template-creator-card:hover {
+.welcome-agent-creator-card:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.template-creator-card.selected {
+.welcome-agent-creator-card.selected {
   background-color: #1B2A50;
 }
 
-.template-creator-input-wrapper,
-.template-creator-dropdown-wrapper {
+.welcome-agent-creator-input-wrapper,
+.welcome-agent-creator-dropdown-wrapper {
   position: relative;
   width: 100%;
   max-width: 400px;
@@ -276,16 +332,16 @@ html, body, #root {
   margin-bottom: 15px;
 }
 
-.template-creator-left-aligned-review .template-creator-input-wrapper,
-.template-creator-left-aligned-review .template-creator-dropdown-wrapper {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-input-wrapper,
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-dropdown-wrapper {
   max-width: 600px;
   margin: 0;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.template-creator-input-wrapper::before,
-.template-creator-dropdown-wrapper::before {
+.welcome-agent-creator-input-wrapper::before,
+.welcome-agent-creator-dropdown-wrapper::before {
   content: '';
   position: absolute;
   top: 0;
@@ -301,7 +357,7 @@ html, body, #root {
   pointer-events: none;
 }
 
-.template-creator-dropdown {
+.welcome-agent-creator-dropdown {
   width: 100%;
   background-color: transparent;
   border: none;
@@ -322,7 +378,7 @@ html, body, #root {
   line-height: 1.5;
 }
 
-.template-creator-dropdown-wrapper::after {
+.welcome-agent-creator-dropdown-wrapper::after {
   content: '▼';
   position: absolute;
   right: 12px;
@@ -334,14 +390,14 @@ html, body, #root {
   z-index: 2;
 }
 
-.template-creator-dropdown:focus {
+.welcome-agent-creator-dropdown:focus {
   outline: none;
   box-shadow: var(--gradient-shadow-focus);
 }
 
-.template-creator-instructions-input,
-.template-creator-title-input,
-.template-creator-description-input {
+.welcome-agent-creator-instructions-input,
+.welcome-agent-creator-title-input,
+.welcome-agent-creator-description-input {
   width: 100%;
   background-color: transparent;
   border: none;
@@ -354,72 +410,72 @@ html, body, #root {
   z-index: 1;
 }
 
-.template-creator-instructions-input {
+.welcome-agent-creator-instructions-input {
   height: 90px;
   font-size: 13px;
   resize: none;
   margin-top: 0;
 }
 
-.template-creator-title-input {
+.welcome-agent-creator-title-input {
   height: 44px;
   font-size: 13px;
 }
 
-.template-creator-description-input {
+.welcome-agent-creator-description-input {
   height: 120px;
   font-size: 14px;
   resize: none;
 }
 
-.template-creator-title-input,
-.template-creator-description-input {
+.welcome-agent-creator-title-input,
+.welcome-agent-creator-description-input {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
 }
 
-.template-creator-left-aligned-review .template-creator-title-input,
-.template-creator-left-aligned-review .template-creator-description-input,
-.template-creator-left-aligned-review .template-creator-instructions-input {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-title-input,
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-description-input,
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-instructions-input {
   max-width: 600px;
   margin: 0;
 }
 
-.template-creator-instructions-input:focus,
-.template-creator-title-input:focus,
-.template-creator-description-input:focus {
+.welcome-agent-creator-instructions-input:focus,
+.welcome-agent-creator-title-input:focus,
+.welcome-agent-creator-description-input:focus {
   outline: none;
   box-shadow: var(--gradient-shadow-focus);
 }
 
-.template-creator-instructions-input::placeholder,
-.template-creator-title-input::placeholder,
-.template-creator-description-input::placeholder {
+.welcome-agent-creator-instructions-input::placeholder,
+.welcome-agent-creator-title-input::placeholder,
+.welcome-agent-creator-description-input::placeholder {
   color: #b0b0b0;
   font-family: 'Inter', sans-serif;
 }
 
-.template-creator-title-input:disabled {
+.welcome-agent-creator-title-input:disabled {
   color: #b0b0b0;
   opacity: 0.8;
   background-color: transparent;
 }
 
-.template-creator-instructions-input:-webkit-autofill,
-.template-creator-title-input:-webkit-autofill,
-.template-creator-description-input:-webkit-autofill {
+.welcome-agent-creator-instructions-input:-webkit-autofill,
+.welcome-agent-creator-title-input:-webkit-autofill,
+.welcome-agent-creator-description-input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px transparent inset !important;
   -webkit-text-fill-color: #ffffff !important;
   background-color: transparent !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.template-creator-review-section > div {
+.welcome-agent-creator-review-section > div {
   padding: 15px 0;
 }
 
-.template-creator-left-aligned-review {
+.welcome-agent-creator-left-aligned-review {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -427,7 +483,7 @@ html, body, #root {
   margin-bottom: 30px;
 }
 
-.template-creator-document-card {
+.welcome-agent-creator-document-card {
   background-color: transparent;
   border: 1px solid #3a4a6a;
   border-radius: 8px;
@@ -444,42 +500,42 @@ html, body, #root {
   margin-right: auto;
 }
 
-.template-creator-left-aligned-review .template-creator-document-card {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-document-card {
   max-width: 600px;
   margin: 0;
   margin-bottom: 20px;
 }
 
-.template-creator-document-card.selected {
+.welcome-agent-creator-document-card.selected {
   border-color: #0056d2;
 }
 
-.template-creator-document-name {
+.welcome-agent-creator-document-name {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   text-align: left;
   color: #ffffff;
 }
 
-.template-creator-document-size {
+.welcome-agent-creator-document-size {
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   color: #e5e7eb;
   text-align: left;
 }
 
-.template-creator-context-section,
-.template-creator-title-section,
-.template-creator-review-section {
+.welcome-agent-creator-context-section,
+.welcome-agent-creator-title-section,
+.welcome-agent-creator-review-section {
   width: 100%;
   margin-bottom: 30px;
 }
 
-.template-creator-context-title,
-.template-creator-instructions-title,
-.template-creator-title-label,
-.template-creator-description-label,
-.template-creator-review-title {
+.welcome-agent-creator-context-title,
+.welcome-agent-creator-instructions-title,
+.welcome-agent-creator-title-label,
+.welcome-agent-creator-description-label,
+.welcome-agent-creator-review-title {
   font-family: 'Inter', sans-serif;
   font-size: 17px;
   font-weight: bold;
@@ -492,13 +548,13 @@ html, body, #root {
   margin-right: auto;
 }
 
-.template-creator-left-aligned-review .template-creator-review-title {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-review-title {
   margin: 0;
   max-width: none;
   margin-bottom: 20px;
 }
 
-.template-creator-attachment-card {
+.welcome-agent-creator-attachment-card {
   background-color: transparent;
   border: 1px solid #3a4a6a;
   border-radius: 8px;
@@ -516,42 +572,42 @@ html, body, #root {
   margin-right: auto;
 }
 
-.template-creator-left-aligned-review .template-creator-attachment-card {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-attachment-card {
   max-width: 600px;
   margin: 0;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.template-creator-attachment-card:hover {
+.welcome-agent-creator-attachment-card:hover {
   background-color: transparent;
   border-color: #5a6a8a;
 }
 
-.template-creator-attachment-label {
+.welcome-agent-creator-attachment-label {
   cursor: pointer;
   width: 100%;
 }
 
-.template-creator-attachment-info {
+.welcome-agent-creator-attachment-info {
   margin-left: 8px;
 }
 
-.template-creator-attachment-info div {
+.welcome-agent-creator-attachment-info div {
   font-family: 'Inter', sans-serif;
   color: #ffffff;
 }
 
-.template-creator-attachment-info .template-creator-description {
+.welcome-agent-creator-attachment-info .welcome-agent-creator-description {
   font-family: 'Inter', sans-serif;
   color: #e5e7eb;
 }
 
-.template-creator-file-input {
+.welcome-agent-creator-file-input {
   display: none;
 }
 
-.template-creator-upload-more-btn {
+.welcome-agent-creator-upload-more-btn {
   padding: 9px 30px;
   border: none;
   border-radius: 5px;
@@ -569,12 +625,12 @@ html, body, #root {
   width: 100%;
 }
 
-.template-creator-left-aligned-review .template-creator-upload-more-btn {
+.welcome-agent-creator-left-aligned-review .welcome-agent-creator-upload-more-btn {
   max-width: 600px;
   margin: 20px 0;
 }
 
-.template-creator-upload-more-btn::before {
+.welcome-agent-creator-upload-more-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -591,21 +647,21 @@ html, body, #root {
   transition: opacity 0.3s ease;
 }
 
-.template-creator-upload-more-btn:not(:disabled)::before {
+.welcome-agent-creator-upload-more-btn:not(:disabled)::before {
   opacity: 1;
 }
 
-.template-creator-upload-more-btn:hover:not(:disabled) {
+.welcome-agent-creator-upload-more-btn:hover:not(:disabled) {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 91, 181, 0.4);
   background: linear-gradient(45deg, #005BB5, #0073E6);
 }
 
-.template-creator-upload-more-btn:hover:not(:disabled)::before {
+.welcome-agent-creator-upload-more-btn:hover:not(:disabled)::before {
   opacity: 1;
 }
 
-.template-creator-upload-more-btn:disabled {
+.welcome-agent-creator-upload-more-btn:disabled {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
@@ -613,18 +669,18 @@ html, body, #root {
   opacity: 0.5;
 }
 
-.template-creator-selected-scenarios-section {
+.welcome-agent-creator-selected-scenarios-section {
   width: 100%;
   margin-bottom: 0;
 }
 
-.template-creator-section-divider {
+.welcome-agent-creator-section-divider {
   border: none;
   border-top: 1px solid #3a4a6a;
   margin: 40px 0;
 }
 
-.template-creator-divider-label {
+.welcome-agent-creator-divider-label {
   text-align: center;
   margin: 30px 0;
   font-family: 'Inter', sans-serif;
@@ -632,28 +688,12 @@ html, body, #root {
   color: #e5e7eb;
 }
 
-.template-creator-divider-label span {
+.welcome-agent-creator-divider-label span {
   background-color: #101827;
   padding: 0 10px;
 }
 
-.template-creator-scenario-section-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 17px;
-  font-weight: bold;
-  margin-bottom: 12px;
-  color: #ffffff;
-}
-
-.template-creator-scenario-section-description {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  color: #e5e7eb;
-  line-height: 1.5;
-  margin-bottom: 30px;
-}
-
-.template-creator-footer-container {
+.welcome-agent-creator-footer-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -664,21 +704,21 @@ html, body, #root {
   flex-shrink: 0;
 }
 
-.template-creator-footer-text {
+.welcome-agent-creator-footer-text {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  color: #e5e7eb;
+  color: #d1d5db;
   text-align: left;
 }
 
-.template-creator-navigation {
+.welcome-agent-creator-navigation {
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-.template-creator-back-btn,
-.template-creator-next-btn {
+.welcome-agent-creator-back-btn,
+.welcome-agent-creator-next-btn {
   padding: 9px 30px;
   border: none;
   border-radius: 5px;
@@ -687,19 +727,19 @@ html, body, #root {
   cursor: pointer;
 }
 
-.template-creator-back-btn {
+.welcome-agent-creator-back-btn {
   background-color: transparent;
   color: #ffffff;
   border: 1px solid #ffffff;
 }
 
-.template-creator-back-btn:focus,
-.template-creator-next-btn:focus {
+.welcome-agent-creator-back-btn:focus,
+.welcome-agent-creator-next-btn:focus {
   outline: 2px solid #0073E6;
   outline-offset: 2px;
 }
 
-.template-creator-next-btn {
+.welcome-agent-creator-next-btn {
   position: relative;
   padding: 9px 30px;
   border: none;
@@ -716,7 +756,7 @@ html, body, #root {
   z-index: 1;
 }
 
-.template-creator-next-btn::before {
+.welcome-agent-creator-next-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -733,87 +773,123 @@ html, body, #root {
   transition: opacity 0.3s ease;
 }
 
-.template-creator-next-btn:not(:disabled)::before {
+.welcome-agent-creator-next-btn:not(:disabled)::before {
   opacity: 1;
 }
 
-.template-creator-next-btn:hover:not(:disabled) {
+.welcome-agent-creator-next-btn:hover:not(:disabled) {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 91, 181, 0.4);
   background: linear-gradient(45deg, #005BB5, #0073E6);
 }
 
-.template-creator-next-btn:hover:not(:disabled)::before {
+.welcome-agent-creator-next-btn:hover:not(:disabled)::before {
   opacity: 1;
 }
 
-.template-creator-next-btn:disabled {
+.welcome-agent-creator-next-btn:disabled {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
   background: transparent;
 }
 
-.template-creator-next-btn:disabled::before {
+.welcome-agent-creator-next-btn:disabled::before {
   opacity: 0.3;
 }
 
-.template-creator-back-btn:hover {
+.welcome-agent-creator-back-btn:hover {
   background-color: #3a4a6a;
 }
 
-.template-creator-back-btn:disabled,
-.template-creator-next-btn:disabled {
+.welcome-agent-creator-back-btn:disabled,
+.welcome-agent-creator-next-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
+/* Fade-in animations */
+.fade-in-block {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-delay-1 { animation-delay: 0.1s; }
+.fade-in-delay-2 { animation-delay: 0.2s; }
+.fade-in-delay-3 { animation-delay: 0.3s; }
+.fade-in-delay-4 { animation-delay: 0.4s; }
+.fade-in-delay-5 { animation-delay: 0.5s; }
+.fade-in-delay-6 { animation-delay: 0.6s; }
+.fade-in-delay-7 { animation-delay: 0.7s; }
+.fade-in-delay-8 { animation-delay: 0.8s; }
+.fade-in-delay-9 { animation-delay: 0.9s; }
+.fade-in-delay-10 { animation-delay: 1.0s; }
+.fade-in-delay-11 { animation-delay: 1.1s; }
+.fade-in-delay-12 { animation-delay: 1.2s; }
+.fade-in-delay-13 { animation-delay: 1.3s; }
+.fade-in-delay-14 { animation-delay: 1.4s; }
+.fade-in-delay-15 { animation-delay: 1.5s; }
+.fade-in-delay-16 { animation-delay: 1.6s; }
+.fade-in-delay-17 { animation-delay: 1.7s; }
+
+/* Media queries for MacBook and iMac screens */
 @media (min-width: 1280px) and (max-width: 2560px) {
-  .template-creator-grid {
+  .welcome-agent-creator-selector-container {
+    margin: 20px;
+    padding: 30px;
+  }
+
+  .welcome-agent-creator-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin-bottom: 50px;
   }
 
-  .template-creator-left-aligned-review .template-creator-grid {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-grid {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .template-creator-card {
+  .welcome-agent-creator-card {
     padding: 10px; /* Reduced padding */
     box-shadow: var(--gradient-shadow);
   }
 
-  .template-creator-scrollable-content.step-1 .template-creator-card,
-  .template-creator-scrollable-content.step-2 .template-creator-card,
-  .template-creator-scrollable-content.step-3 .template-creator-card {
+  .welcome-agent-creator-scrollable-content.step-1 .welcome-agent-creator-card,
+  .welcome-agent-creator-scrollable-content.step-2 .welcome-agent-creator-card,
+  .welcome-agent-creator-scrollable-content.step-3 .welcome-agent-creator-card {
     min-height: 160px;
   }
 
-  .template-creator-card-content {
+  .welcome-agent-creator-card-content {
     gap: 8px; /* Reduced gap */
   }
 
-  .template-creator-left-aligned-review .template-creator-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-card {
     max-width: 600px;
     padding: 16px;
   }
 
-  .template-creator-icon {
+  .welcome-agent-creator-icon {
     width: 40px;
     height: 40px;
     margin: 0;
   }
 
-  .template-creator-email-type {
+  .welcome-agent-creator-email-type {
     font-size: 16px;
     margin: 0;
   }
 
-  .template-creator-description {
+  .welcome-agent-creator-description {
     font-size: 14px;
     margin: 0;
   }
@@ -822,73 +898,63 @@ html, body, #root {
     margin-bottom: 0px;
   }
 
-  .template-creator-dropdown,
-  .template-creator-instructions-input,
-  .template-creator-title-input,
-  .template-creator-description-input {
+  .welcome-agent-creator-dropdown,
+  .welcome-agent-creator-instructions-input,
+  .welcome-agent-creator-title-input,
+  .welcome-agent-creator-description-input {
     font-size: 14px;
     padding: 10px;
   }
 
-  .template-creator-instructions-input {
+  .welcome-agent-creator-instructions-input {
     height: 110px;
     margin-top: 0;
   }
 
-  .template-creator-description-input {
+  .welcome-agent-creator-description-input {
     height: 140px;
   }
 
-  .template-creator-title-input,
-  .template-creator-description-input {
+  .welcome-agent-creator-title-input,
+  .welcome-agent-creator-description-input {
     max-width: 400px;
     margin: 0 auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-title-input,
-  .template-creator-left-aligned-review .template-creator-description-input,
-  .template-creator-left-aligned-review .template-creator-instructions-input {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-title-input,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-description-input,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-instructions-input {
     max-width: 600px;
     margin: 0;
   }
 
-  .template-creator-input-wrapper,
-  .template-creator-dropdown-wrapper {
+  .welcome-agent-creator-input-wrapper,
+  .welcome-agent-creator-dropdown-wrapper {
     max-width: 400px;
     margin: 0 auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-input-wrapper,
-  .template-creator-left-aligned-review .template-creator-dropdown-wrapper {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-input-wrapper,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-dropdown-wrapper {
     max-width: 600px;
     margin: 0;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .template-creator-scenario-section-title {
-    font-size: 19px;
-    margin-bottom: 16px;
-  }
-
-  .template-creator-scenario-section-description {
-    font-size: 14px;
-    margin-bottom: 40px;
-  }
-
-  .template-creator-context-title,
-  .template-creator-instructions-title {
+  .welcome-agent-creator-context-title,
+  .welcome-agent-creator-instructions-title {
     font-size: 15px;
     margin-bottom: 15px;
   }
 
-  .template-creator-left-aligned-review .template-creator-review-title {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-review-title {
     margin: 0;
     max-width: none;
     margin-bottom: 20px;
   }
 
-  .template-creator-attachment-card {
+  .welcome-agent-creator-attachment-card {
     padding: 12px;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -898,26 +964,26 @@ html, body, #root {
     margin-right: auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-attachment-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-attachment-card {
     max-width: 600px;
     margin: 0;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .template-creator-upload-more-btn {
+  .welcome-agent-creator-upload-more-btn {
     padding: 10px 35px;
     font-size: 14px;
     margin: 20px auto;
     max-width: 400px;
   }
 
-  .template-creator-left-aligned-review .template-creator-upload-more-btn {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-upload-more-btn {
     max-width: 600px;
     margin: 20px 0;
   }
 
-  .template-creator-document-card {
+  .welcome-agent-creator-document-card {
     padding: 8px;
     margin-bottom: 20px;
     box-shadow: var(--gradient-shadow);
@@ -926,116 +992,117 @@ html, body, #root {
     margin-right: auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-document-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-document-card {
     max-width: 600px;
     margin: 0;
     margin-bottom: 20px;
   }
 
-  .template-creator-document-name {
+  .welcome-agent-creator-document-name {
     font-size: 15px;
   }
 
-  .template-creator-document-size {
+  .welcome-agent-creator-document-size {
     font-size: 13px;
   }
 
-  .template-creator-section-divider {
+  .welcome-agent-creator-section-divider {
     margin: 50px 0;
   }
 
-  .template-creator-divider-label {
+  .welcome-agent-creator-divider-label {
     margin: 40px 0;
     font-size: 15px;
   }
 
-  .template-creator-footer-text {
+  .welcome-agent-creator-footer-text {
     font-size: 14px;
   }
 
-  .template-creator-back-btn,
-  .template-creator-next-btn {
+  .welcome-agent-creator-back-btn,
+  .welcome-agent-creator-next-btn {
     padding: 10px 35px;
     font-size: 14px;
   }
 
-  .template-creator-footer-container {
+  .welcome-agent-creator-footer-container {
     padding: 20px;
   }
 
-  .template-creator-navigation {
+  .welcome-agent-creator-navigation {
     gap: 15px;
   }
 
-  .template-creator-header-title {
+  .welcome-agent-creator-header-title-text {
     font-size: 18px;
   }
 
-  .template-creator-header-dot {
+  .welcome-agent-creator-header-dot {
     font-size: 15px;
     margin: 0 14px;
   }
 
-  .template-creator-header {
+  .welcome-agent-creator-header {
     margin-bottom: 20px;
   }
 
-  .template-creator-progress-bar {
+  .welcome-agent-creator-progress-bar {
     margin: 20px 0 8px 0;
-  }
-
-  .template-creator-step-title {
-    margin-top: 20px;
-    margin-bottom: 35px;
   }
 }
 
+/* Media queries for extra large screens */
 @media (min-width: 2561px) {
-  .template-creator-grid {
+  .welcome-agent-creator-selector-container {
+    margin: 20px;
+    padding: 30px;
+  }
+
+  .welcome-agent-creator-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin-bottom: 60px;
   }
 
-  .template-creator-left-aligned-review .template-creator-grid {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-grid {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .template-creator-card {
+  .welcome-agent-creator-card {
     padding: 12px; /* Reduced padding */
     box-shadow: var(--gradient-shadow);
   }
 
-  .template-creator-scrollable-content.step-1 .template-creator-card,
-  .template-creator-scrollable-content.step-2 .template-creator-card,
-  .template-creator-scrollable-content.step-3 .template-creator-card {
+  .welcome-agent-creator-scrollable-content.step-1 .welcome-agent-creator-card,
+  .welcome-agent-creator-scrollable-content.step-2 .welcome-agent-creator-card,
+  .welcome-agent-creator-scrollable-content.step-3 .welcome-agent-creator-card {
     min-height: 180px;
   }
 
-  .template-creator-card-content {
+  .welcome-agent-creator-card-content {
     gap: 10px; /* Reduced gap */
   }
 
-  .template-creator-left-aligned-review .template-creator-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-card {
     max-width: 600px;
     padding: 16px;
   }
 
-  .template-creator-icon {
+  .welcome-agent-creator-icon {
     width: 44px;
     height: 44px;
     margin: 0;
   }
 
-  .template-creator-email-type {
+  .welcome-agent-creator-email-type {
     font-size: 18px;
     margin: 0;
   }
 
-  .template-creator-description {
+  .welcome-agent-creator-description {
     font-size: 15px;
     margin: 0;
   }
@@ -1044,73 +1111,63 @@ html, body, #root {
     margin-bottom: 2px;
   }
 
-  .template-creator-dropdown,
-  .template-creator-instructions-input,
-  .template-creator-title-input,
-  .template-creator-description-input {
+  .welcome-agent-creator-dropdown,
+  .welcome-agent-creator-instructions-input,
+  .welcome-agent-creator-title-input,
+  .welcome-agent-creator-description-input {
     font-size: 15px;
     padding: 12px;
   }
 
-  .template-creator-instructions-input {
+  .welcome-agent-creator-instructions-input {
     height: 120px;
     margin-top: 0;
   }
 
-  .template-creator-description-input {
+  .welcome-agent-creator-description-input {
     height: 160px;
   }
 
-  .template-creator-title-input,
-  .template-creator-description-input {
+  .welcome-agent-creator-title-input,
+  .welcome-agent-creator-description-input {
     max-width: 400px;
     margin: 0 auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-title-input,
-  .template-creator-left-aligned-review .template-creator-description-input,
-  .template-creator-left-aligned-review .template-creator-instructions-input {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-title-input,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-description-input,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-instructions-input {
     max-width: 600px;
     margin: 0;
   }
 
-  .template-creator-input-wrapper,
-  .template-creator-dropdown-wrapper {
+  .welcome-agent-creator-input-wrapper,
+  .welcome-agent-creator-dropdown-wrapper {
     max-width: 400px;
     margin: 0 auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-input-wrapper,
-  .template-creator-left-aligned-review .template-creator-dropdown-wrapper {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-input-wrapper,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-dropdown-wrapper {
     max-width: 600px;
     margin: 0;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .template-creator-scenario-section-title {
-    font-size: 21px;
-    margin-bottom: 20px;
-  }
-
-  .template-creator-scenario-section-description {
-    font-size: 16px;
-    margin-bottom: 50px;
-  }
-
-  .template-creator-context-title,
-  .template-creator-instructions-title {
+  .welcome-agent-creator-context-title,
+  .welcome-agent-creator-instructions-title {
     font-size: 16px;
     margin-bottom: 20px;
   }
 
-  .template-creator-left-aligned-review .template-creator-review-title {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-review-title {
     margin: 0;
     max-width: none;
     margin-bottom: 20px;
   }
 
-  .template-creator-attachment-card {
+  .welcome-agent-creator-attachment-card {
     padding: 15px;
     margin-bottom: 25px;
     margin-top: 25px;
@@ -1120,26 +1177,26 @@ html, body, #root {
     margin-right: auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-attachment-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-attachment-card {
     max-width: 600px;
     margin: 0;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .template-creator-upload-more-btn {
+  .welcome-agent-creator-upload-more-btn {
     padding: 11px 40px;
     font-size: 15px;
     margin: 25px auto;
     max-width: 400px;
   }
 
-  .template-creator-left-aligned-review .template-creator-upload-more-btn {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-upload-more-btn {
     max-width: 600px;
     margin: 20px 0;
   }
 
-  .template-creator-document-card {
+  .welcome-agent-creator-document-card {
     padding: 10px;
     margin-bottom: 25px;
     box-shadow: var(--gradient-shadow);
@@ -1148,116 +1205,119 @@ html, body, #root {
     margin-right: auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-document-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-document-card {
     max-width: 600px;
     margin: 0;
     margin-bottom: 20px;
   }
 
-  .template-creator-document-name {
+  .welcome-agent-creator-document-name {
     font-size: 18px;
   }
 
-  .template-creator-document-size {
+  .welcome-agent-creator-document-size {
     font-size: 16px;
   }
 
-  .template-creator-section-divider {
+  .welcome-agent-creator-section-divider {
     margin: 60px 0;
   }
 
-  .template-creator-divider-label {
+  .welcome-agent-creator-divider-label {
     margin: 50px 0;
     font-size: 16px;
   }
 
-  .template-creator-footer-text {
+  .welcome-agent-creator-footer-text {
     font-size: 15px;
   }
 
-  .template-creator-back-btn,
-  .template-creator-next-btn {
+  .welcome-agent-creator-back-btn,
+  .welcome-agent-creator-next-btn {
     padding: 11px 40px;
     font-size: 15px;
   }
 
-  .template-creator-footer-container {
+  .welcome-agent-creator-footer-container {
     padding: 25px;
   }
 
-  .template-creator-navigation {
+  .welcome-agent-creator-navigation {
     gap: 18px;
   }
 
-  .template-creator-header-title {
+  .welcome-agent-creator-header-title-text {
     font-size: 18px;
   }
 
-  .template-creator-header-dot {
+  .welcome-agent-creator-header-dot {
     font-size: 16px;
     margin: 0 16px;
   }
 
-  .template-creator-header {
+  .welcome-agent-creator-header {
     margin-bottom: 22px;
   }
 
-  .template-creator-progress-bar {
+  .welcome-agent-creator-progress-bar {
     margin: 22px 0 10px 0;
-  }
-
-  .template-creator-step-title {
-    margin-top: 20px;
-    margin-bottom: 40px;
   }
 }
 
+/* Media queries for smaller screens */
 @media (max-width: 600px) {
-  .template-creator-grid {
+  .welcome-agent-creator-selector-container {
+    margin: 20px;
+    padding: 15px;
+    width: calc(100% - 40px);
+    height: calc(100vh - 112px);
+  }
+
+  .welcome-agent-creator-grid {
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin-bottom: 25px;
   }
 
-  .template-creator-left-aligned-review .template-creator-grid {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-grid {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .template-creator-card {
+  .welcome-agent-creator-card {
     padding: 6px; /* Reduced padding for mobile */
     box-shadow: var(--gradient-shadow);
   }
 
-  .template-creator-scrollable-content.step-1 .template-creator-card,
-  .template-creator-scrollable-content.step-2 .template-creator-card,
-  .template-creator-scrollable-content.step-3 .template-creator-card {
+  .welcome-agent-creator-scrollable-content.step-1 .welcome-agent-creator-card,
+  .welcome-agent-creator-scrollable-content.step-2 .welcome-agent-creator-card,
+  .welcome-agent-creator-scrollable-content.step-3 .welcome-agent-creator-card {
     min-height: 120px;
   }
 
-  .template-creator-card-content {
+  .welcome-agent-creator-card-content {
     gap: 4px; /* Reduced gap for mobile */
   }
 
-  .template-creator-left-aligned-review .template-creator-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-card {
     max-width: 100%;
     padding: 12px;
   }
 
-  .template-creator-icon {
+  .welcome-agent-creator-icon {
     width: 32px;
     height: 32px;
     margin: 0;
   }
 
-  .template-creator-email-type {
+  .welcome-agent-creator-email-type {
     font-size: 13px;
     margin: 0;
   }
 
-  .template-creator-description {
+  .welcome-agent-creator-description {
     font-size: 12px;
     line-height: 1.3;
     margin: 0;
@@ -1267,53 +1327,53 @@ html, body, #root {
     margin-bottom: 0px;
   }
 
-  .template-creator-dropdown,
-  .template-creator-instructions-input,
-  .template-creator-title-input,
-  .template-creator-description-input {
+  .welcome-agent-creator-dropdown,
+  .welcome-agent-creator-instructions-input,
+  .welcome-agent-creator-title-input,
+  .welcome-agent-creator-description-input {
     font-size: 12px;
     padding: 8px;
   }
 
-  .template-creator-instructions-input {
+  .welcome-agent-creator-instructions-input {
     height: 80px;
     margin-top: 0;
   }
 
-  .template-creator-description-input {
+  .welcome-agent-creator-description-input {
     height: 100px;
   }
 
-  .template-creator-title-input,
-  .template-creator-description-input {
+  .welcome-agent-creator-title-input,
+  .welcome-agent-creator-description-input {
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-title-input,
-  .template-creator-left-aligned-review .template-creator-description-input,
-  .template-creator-left-aligned-review .template-creator-instructions-input {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-title-input,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-description-input,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-instructions-input {
     max-width: 100%;
     margin: 0;
   }
 
-  .template-creator-input-wrapper,
-  .template-creator-dropdown-wrapper {
+  .welcome-agent-creator-input-wrapper,
+  .welcome-agent-creator-dropdown-wrapper {
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-input-wrapper,
-  .template-creator-left-aligned-review .template-creator-dropdown-wrapper {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-input-wrapper,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-dropdown-wrapper {
     max-width: 100%;
     margin: 0;
     margin-top: 15px;
     margin-bottom: 15px;
   }
 
-  .template-creator-attachment-card {
+  .welcome-agent-creator-attachment-card {
     padding: 8px;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -1324,14 +1384,14 @@ html, body, #root {
     margin-right: auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-attachment-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-attachment-card {
     max-width: 100%;
     margin: 0;
     margin-top: 15px;
     margin-bottom: 15px;
   }
 
-  .template-creator-upload-more-btn {
+  .welcome-agent-creator-upload-more-btn {
     padding: 8px 24px;
     font-size: 11px;
     margin: 10px auto;
@@ -1339,12 +1399,12 @@ html, body, #root {
     width: 100%;
   }
 
-  .template-creator-left-aligned-review .template-creator-upload-more-btn {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-upload-more-btn {
     max-width: 100%;
     margin: 15px 0;
   }
 
-  .template-creator-document-card {
+  .welcome-agent-creator-document-card {
     padding: 4px;
     margin-bottom: 10px;
     box-shadow: var(--gradient-shadow);
@@ -1354,121 +1414,106 @@ html, body, #root {
     margin-right: auto;
   }
 
-  .template-creator-left-aligned-review .template-creator-document-card {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-document-card {
     max-width: 100%;
     margin: 0;
     margin-bottom: 15px;
   }
 
-  .template-creator-document-name {
+  .welcome-agent-creator-document-name {
     font-size: 12px;
   }
 
-  .template-creator-document-size {
+  .welcome-agent-creator-document-size {
     font-size: 10px;
   }
 
-  .template-creator-section-divider {
+  .welcome-agent-creator-section-divider {
     margin: 30px 0;
   }
 
-  .template-creator-divider-label {
+  .welcome-agent-creator-divider-label {
     margin: 20px 0;
     font-size: 12px;
   }
 
-  .template-creator-scenario-section-title {
-    font-size: 15px;
-    margin-bottom: 8px;
-  }
-
-  .template-creator-scenario-section-description {
-    font-size: 12px;
-    margin-bottom: 20px;
-  }
-
-  .template-creator-context-title,
-  .template-creator-instructions-title {
+  .welcome-agent-creator-context-title,
+  .welcome-agent-creator-instructions-title {
     font-size: 12px;
     margin-bottom: 10px;
   }
 
-  .template-creator-left-aligned-review .template-creator-context-title,
-  .template-creator-left-aligned-review .template-creator-instructions-title {
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-context-title,
+  .welcome-agent-creator-left-aligned-review .welcome-agent-creator-instructions-title {
     margin: 0;
     max-width: none;
     margin-bottom: 15px;
   }
 
-  .template-creator-footer-container {
+  .welcome-agent-creator-footer-container {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 15px;
   }
 
-  .template-creator-navigation {
+  .welcome-agent-creator-navigation {
     gap: 8px;
   }
 
-  .template-creator-footer-text {
+  .welcome-agent-creator-footer-text {
     font-size: 11px;
     color: #e5e7eb;
   }
 
-  .template-creator-back-btn,
-  .template-creator-next-btn {
+  .welcome-agent-creator-back-btn,
+  .welcome-agent-creator-next-btn {
     padding: 8px 24px;
     font-size: 11px;
   }
 
-  .template-creator-header-title {
-    font-size: 18px;
+  .welcome-agent-creator-header-title-text {
+    font-size: 16px;
   }
 
-  .template-creator-header-dot {
+  .welcome-agent-creator-header-dot {
     font-size: 12px;
     margin: 0 10px;
   }
 
-  .template-creator-header {
+  .welcome-agent-creator-header {
     margin-bottom: 16px;
   }
 
-  .template-creator-progress-bar {
+  .welcome-agent-creator-progress-bar {
     margin: 16px 0 4px 0;
-  }
-
-  .template-creator-step-title {
-    margin-top: 4px;
-    margin-bottom: 25px;
   }
 }
 
 /* Step 4 and 5 specific styles for dropdown spacing */
-.template-creator-scrollable-content.step-4 .template-creator-dropdown-wrapper,
-.template-creator-scrollable-content.step-5 .template-creator-dropdown-wrapper {
+.welcome-agent-creator-scrollable-content.step-4 .welcome-agent-creator-dropdown-wrapper,
+.welcome-agent-creator-scrollable-content.step-5 .welcome-agent-creator-dropdown-wrapper {
   margin-bottom: 35px; /* Increased spacing below dropdowns */
 }
 
 /* Step 8 specific styles */
-.template-creator-scrollable-content.step-8 .template-creator-left-aligned-review {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-left-aligned-review {
   width: 100%;
   max-width: none !important;
 }
 
-.template-creator-scrollable-content.step-8 .template-creator-left-aligned-review .template-creator-grid {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-left-aligned-review .welcome-agent-creator-grid {
   width: 100%;
   max-width: none !important;
 }
 
-.template-creator-scrollable-content.step-8 .template-creator-card {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-card {
   max-width: 1200px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.template-creator-scrollable-content.step-8 .template-creator-title-input {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-title-input {
   height: 60px;
   font-size: 16px;
   padding: 12px;
@@ -1477,7 +1522,7 @@ html, body, #root {
   min-width: 600px;
 }
 
-.template-creator-scrollable-content.step-8 .template-creator-description-input {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-description-input {
   height: 180px;
   font-size: 16px;
   padding: 12px;
@@ -1486,42 +1531,42 @@ html, body, #root {
   min-width: 600px;
 }
 
-.template-creator-scrollable-content.step-8 .template-creator-left-aligned-review .template-creator-input-wrapper {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-left-aligned-review .welcome-agent-creator-input-wrapper {
   max-width: 1200px !important;
   width: 100% !important;
   margin: 0 !important;
 }
 
-.template-creator-scrollable-content.step-8 .template-creator-left-aligned-review .template-creator-card:has(.template-creator-email-type) {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-left-aligned-review .welcome-agent-creator-card:has(.welcome-agent-creator-email-type) {
   max-width: none;
   width: 630px;
 }
 
-.template-creator-scrollable-content.step-8 .template-creator-left-aligned-review .template-creator-card:has(.template-creator-email-type)::after {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-left-aligned-review .welcome-agent-creator-card:has(.welcome-agent-creator-email-type)::after {
   content: none;
 }
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 1200px) {
-  .template-creator-scrollable-content.step-8 .template-creator-left-aligned-review .template-creator-card:has(.template-creator-email-type) {
+  .welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-left-aligned-review .welcome-agent-creator-card:has(.welcome-agent-creator-email-type) {
     width: 100%;
   }
-  .template-creator-scrollable-content.step-8 .template-creator-title-input,
-  .template-creator-scrollable-content.step-8 .template-creator-description-input,
-  .template-creator-scrollable-content.step-8 .template-creator-left-aligned-review .template-creator-input-wrapper {
+  .welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-title-input,
+  .welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-description-input,
+  .welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-left-aligned-review .welcome-agent-creator-input-wrapper {
     max-width: 100% !important;
     width: 100% !important;
     min-width: 0;
   }
   /* Adjust dropdown spacing for Steps 4 and 5 on smaller screens */
-  .template-creator-scrollable-content.step-4 .template-creator-dropdown-wrapper,
-  .template-creator-scrollable-content.step-5 .template-creator-dropdown-wrapper {
+  .welcome-agent-creator-scrollable-content.step-4 .welcome-agent-creator-dropdown-wrapper,
+  .welcome-agent-creator-scrollable-content.step-5 .welcome-agent-creator-dropdown-wrapper {
     margin-bottom: 25px; /* Slightly reduced for mobile */
   }
 }
 
 /* Ensure no conflicting styles from general rules */
-.template-creator-scrollable-content.step-8 .template-creator-centered-content {
+.welcome-agent-creator-scrollable-content.step-8 .welcome-agent-creator-centered-content {
   width: 100%;
   max-width: none !important;
   align-items: flex-start;

@@ -1,20 +1,55 @@
+/* App.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
 @import url("https://cdn.jsdelivr.net/gh/eunchurn/NanumSquareNeo@0.0.6/nanumsquareneovar.css");
 
-/* Remove any body margins so we can fill the screen */
+/* Ensure full-screen layout */
 html, body {
-  height: 100%; /* let them expand fully */
+  height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrollbars during transitions */
   font-family: 'Inter', sans-serif;
 }
 
-/* #root should also fill the entire viewport */
 #root {
   height: 100%;
-  width: 100%;  /* remove max-width or margin: 0 auto */
+  width: 100%;
 }
 
-/* You can remove or adapt anything else from your original code as needed */
+/* Transition wrapper */
+.page-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* Transition styles */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 600ms ease-in-out, transform 600ms ease-in-out;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 600ms ease-in-out, transform 600ms ease-in-out;
+}
+
+/* Existing styles */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -37,7 +72,6 @@ html, body {
   }
 }
 
-/* Demo only */
 .card {
   padding: 2em;
 }
@@ -46,51 +80,44 @@ html, body {
   color: #888;
 }
 
-/* 
-  ============================
-      LOADING OVERLAY 
-  ============================
-*/
+/* Loading Overlay */
 .loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  background: rgba(18, 18, 18, 0.7);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999; /* Above everything */
-  gap: 1rem; /* Space between loader and text */
+  z-index: 9999;
+  gap: 1rem;
 }
 
-/* Loader */
 .loader {
-  --s: 28px; /* Size variable for the loader height */
+  --s: 28px;
   height: var(--s);
-  aspect-ratio: 2.5; /* Width is 2.5 times the height */
-  --_g: #007AFF 90%, #0000; /* Blue gradient with transparency */
+  aspect-ratio: 2.5;
+  --_g: #4a90e2 90%, #0000;
   --_g0: no-repeat radial-gradient(farthest-side, var(--_g));
   --_g1: no-repeat radial-gradient(farthest-side at top, var(--_g));
   --_g2: no-repeat radial-gradient(farthest-side at bottom, var(--_g));
   background: var(--_g0), var(--_g1), var(--_g2), var(--_g0), var(--_g1), var(--_g2);
   background-size: 20% 50%, 20% 25%, 20% 25%;
-  animation: l45 1s infinite; /* Applies the animation */
+  animation: l45 1s infinite;
 }
 
-/* Loading Text */
 .loading-text {
-  font-size: 1.25rem;
-  color: #333;
+  font-size: 16px;
+  color: #e0e0e0;
   margin: 0;
   font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  animation: textFade 1.2s ease-in-out infinite alternate; /* Subtle pulse */
+  font-weight: 200;
+  animation: textFade 1.2s ease-in-out infinite alternate;
 }
 
-/* Text Fade Animation */
 @keyframes textFade {
   0% {
     opacity: 0.5;
@@ -100,7 +127,6 @@ html, body {
   }
 }
 
-/* Loader Animation */
 @keyframes l45 {
   0% {
     background-position:
@@ -140,7 +166,7 @@ html, body {
   }
 }
 
-/* =========== FADE-IN ANIMATION =========== */
+/* Fade-in Animation */
 .fade-in-block {
   opacity: 0;
   transform: translateY(20px);
@@ -154,7 +180,6 @@ html, body {
   }
 }
 
-/* Stagger classes to offset the animation start times */
 .fade-in-delay-1 { animation-delay: 0.1s; }
 .fade-in-delay-2 { animation-delay: 0.2s; }
 .fade-in-delay-3 { animation-delay: 0.3s; }
