@@ -15,7 +15,7 @@ const WelcomePage = () => {
   const handleGetStarted = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      navigate('/welcome/agent-creator');
+      navigate('/pricing');
     }, 200);
   };
 

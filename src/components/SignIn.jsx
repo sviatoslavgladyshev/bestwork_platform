@@ -153,7 +153,7 @@ const SignIn = () => {
             <button
               type="button"
               className="bw-signin__create-button"
-              onClick={() => navigate('/welcome')}
+              onClick={() => navigate('/signup')}
             >
               Create Account
             </button>

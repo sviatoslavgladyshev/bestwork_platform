@@ -106,7 +106,7 @@ const GoogleAppDetails = () => {
 
           {/* Button Group */}
           <div className="bw-google-app-details__button-group">
-            <Link to="/welcome">
+            <Link to="/signup">
               <button className="bw-google-app-details__next-button">Sign Up</button>
             </Link>
           </div>
