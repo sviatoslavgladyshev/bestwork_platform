@@ -3,126 +3,11 @@ import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import './TemplateCreator.css';
 
-// Step 1 icons (category selection)
-import clientCommunicationsBlue from '/assets/client_communications_type_icon_scenario.png';
-import clientCommunicationsGrey from '/assets/client_communications_type_icon_scenario.png';
-
-// Step 2 icons (scenario selection)
-import projectUpdateBlue from '/assets/project_status_update_type_icon_scenario.png';
-import projectUpdateGrey from '/assets/project_status_update_type_icon_scenario.png';
-
-// Step 3 icons (tone selection)
-import clientCommunicationsBlueTone from '/assets/client_communications_type_icon_scenario.png';
-import clientCommunicationsGreyTone from '/assets/client_communications_type_icon_scenario.png';
-import coldSalesBlueTone from '/assets/cold_sales_pitch_type_icon_scenario.png';
-import coldSalesGreyTone from '/assets/cold_sales_pitch_type_icon_scenario.png';
-
-// Category icons mapping
-const categoryIcons = {
-  'Client communications': {
-    blue: clientCommunicationsBlue,
-    grey: clientCommunicationsGrey,
-  },
-  'Cold inbound': {
-    blue: clientCommunicationsBlue,
-    grey: clientCommunicationsGrey,
-  },
-};
-
-// Tone icons mapping
-const toneIcons = {
-  professional: {
-    blue: clientCommunicationsBlueTone,
-    grey: clientCommunicationsGreyTone,
-  },
-  casual: {
-    blue: coldSalesBlueTone,
-    grey: coldSalesGreyTone,
-  },
-};
-
-// Utility function to convert string to snake_case
-const toSnakeCase = (str) => {
-  if (!str) return '';
-  return str
-    .toLowerCase()
-    .replace(/\s+/g, '_')
-    .replace(/[^a-z0-9_]/g, '');
-};
-
-// Document and context options based on category and scenario
-const categorySettings = {
-  'Client communications': {
-    defaultTitle: 'Client Communications Template',
-    defaultTone: 'Communication',
-    scenarios: {
-      'Negotiation/project agreement': {
-        description: 'Finalizing or amending the formal engagement documents',
-        documents: [
-          'Draft contract or Master Services Agreement (MSA)',
-          'Redlined project versions',
-          'Statement of Work (SOW) references',
-          'Previous signed agreement',
-        ],
-        additionalContext: [
-          'Current project timeline and capacity',
-          'Budget constraints or requirements',
-          'Stakeholder priorities or executive sponsorship',
-          'Precedents for similar agreements',
-        ],
-      },
-      'Scope change request/RFP': {
-        description: 'Asking to expand, modify, or re-solicit work',
-        documents: [
-          'Original SOW or project charter',
-          'Project plan or Gantt chart',
-          'RFP document or questionnaire',
-          'Requirements specification',
-        ],
-        additionalContext: [
-          'Current project timeline and capacity',
-          'Budget constraints or requirements',
-          'Stakeholder priorities or executive sponsorship',
-          'Precedents for similar change orders',
-        ],
-      },
-    },
-  },
-  'Cold inbound': {
-    defaultTitle: 'Cold Inbound Template',
-    scenarios: {
-      'Founder pitch': {
-        description: 'Unsolicited outreach seeking capital, strategic partnerships, or pilots',
-        documents: [
-          'Investment thesis',
-          'Pilot requirements',
-          'Strategic partnership requirements',
-        ],
-        additionalContext: [
-          'Target founder profile',
-          'Firm’s sector focus or thesis',
-          'Previous interactions',
-          'Key metrics',
-        ],
-      },
-      'Networking': {
-        description: 'Seeking to establish rapport, gain insights, or explore collaboration',
-        documents: [
-          'Resume',
-          'Personal bio',
-          'Relevant case studies',
-          'Portfolio',
-        ],
-        additionalContext: [
-          'Preferred mutual contact names or referral sources',
-          'Specific topics or questions to discuss',
-          'Availability or preferred format',
-          'Past interactions or shared events',
-        ],
-      },
-    },
-  },
-};
+// Placeholder icons (replace with actual assets)
+import goalIconBlue from '/assets/client_communications_type_icon_scenario.png';
+import goalIconGrey from '/assets/client_communications_type_icon_scenario.png';
+import typeIconBlue from '/assets/project_status_update_type_icon_scenario.png';
+import typeIconGrey from '/assets/project_status_update_type_icon_scenario.png';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -151,39 +36,80 @@ const TemplateCreator = ({
   onTemplateNameChange,
   templateData,
   setTemplateData,
+  isPublishing,
+  setIsPublishing,
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState(templateData?.category || null);
-  const [selectedScenarios, setSelectedScenarios] = useState(templateData?.scenarios || []);
-  const [scenarioDetails, setScenarioDetails] = useState(templateData?.scenarioDetails || {});
+  const [selectedGoal, setSelectedGoal] = useState(templateData?.goal || null);
+  const [selectedType, setSelectedType] = useState(templateData?.type || null);
+  const [breakfastTime, setBreakfastTime] = useState(templateData?.breakfastTime || '');
+  const [lunchTime, setLunchTime] = useState(templateData?.lunchTime || '');
+  const [dinnerTime, setDinnerTime] = useState(templateData?.dinnerTime || '');
+  const [sleepTime, setSleepTime] = useState(templateData?.sleepTime || '');
+  const [hasRecurringEvents, setHasRecurringEvents] = useState(templateData?.hasRecurringEvents || null);
+  const [recurringEvents, setRecurringEvents] = useState(templateData?.recurringEvents || []);
   const [workflowTitle, setWorkflowTitle] = useState(templateName || '');
-  const [workflowDescription, setWorkflowDescription] = useState(
-    templateData?.workflowDescription || ''
-  );
-  const [isPublishing, setIsPublishing] = useState(false);
   const [error, setError] = useState(null);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [direction, setDirection] = useState('next');
 
   const scrollableRef = useRef(null);
+  const cardRefs = useRef([]);
 
-  const categories = ['Client communications', 'Cold inbound'];
-
-  const tones = [
-    {
-      id: 'professional',
-      name: 'Professional',
-      description: 'Courtesy and formality',
-    },
-    {
-      id: 'casual',
-      name: 'Casual',
-      description: 'Warm, approachable emails',
-    },
+  const goals = [
+    { id: 'start_business', name: 'Start a Business', description: 'Launch your own company or venture.' },
+    { id: 'get_internship', name: 'Get an Internship', description: 'Secure a professional internship opportunity.' },
   ];
 
-  const greetings = ['Hi', 'Hey', 'Dear', 'Custom'];
-  const signatures = ['Best', 'Sincerely', 'Cheers', 'Custom'];
+  const businessTypes = [
+    { id: 'tech_startup', name: 'Tech Startup', description: 'A technology-driven company with innovative solutions.' },
+    { id: 'online_service', name: 'Online Service', description: 'A digital service offered over the internet.' },
+    { id: 'in_person_service', name: 'In-Person Service', description: 'Services provided face-to-face with clients.' },
+    { id: 'e_commerce_website', name: 'E-commerce Website', description: 'An online store selling products or services.' },
+  ];
+
+  const internshipTypes = [
+    { id: 'finance', name: 'Finance', description: 'Internships in banking, investment, or financial analysis.' },
+    { id: 'software_engineering', name: 'Software Engineering', description: 'Internships in coding, development, or tech.' },
+    { id: 'sales', name: 'Sales', description: 'Internships in business development or customer acquisition.' },
+    { id: 'marketing', name: 'Marketing', description: 'Internships in advertising, branding, or digital marketing.' },
+  ];
+
+  const breakfastTimeOptions = Array.from({ length: 7 }, (_, i) => {
+    const hour = (i + 5) % 12 === 0 ? 12 : (i + 5) % 12;
+    return `${hour}:00 AM`;
+  });
+
+  const lunchTimeOptions = Array.from({ length: 5 }, (_, i) => {
+    const hour = (i + 11) % 12 === 0 ? 12 : (i + 11) % 12;
+    const period = i + 11 < 12 ? 'AM' : 'PM';
+    return `${hour}:00 ${period}`;
+  });
+
+  const dinnerTimeOptions = Array.from({ length: 6 }, (_, i) => {
+    const hour = (i + 5) % 12 === 0 ? 12 : (i + 5) % 12;
+    return `${hour}:00 PM`;
+  });
+
+  const sleepTimeOptions = [
+    ...Array.from({ length: 8 }, (_, i) => {
+      const hour = (i + 8) % 12 === 0 ? 12 : (i + 8) % 12;
+      return `${hour}:00 PM`;
+    }),
+    ...Array.from({ length: 4 }, (_, i) => {
+      const hour = i + 12 === 12 ? 12 : i;
+      return `${hour}:00 AM`;
+    }),
+  ];
+
+  const eventTimeOptions = Array.from({ length: 24 }, (_, i) => {
+    const hour = i % 12 === 0 ? 12 : i % 12;
+    const period = i < 12 ? 'AM' : 'PM';
+    return `${hour}:00 ${period}`;
+  });
+
+  const eventTypes = ['Meeting', 'Exercise', 'Study Session', 'Other'];
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -204,356 +130,125 @@ const TemplateCreator = ({
     };
   }, [hasScrolled]);
 
-  const getScenarios = useCallback((category) => {
-    const settings = categorySettings[category] || {};
-    return Object.keys(settings.scenarios || {}).map((key) => ({
-      id: toSnakeCase(key),
-      name: key,
-      description: settings.scenarios[key].description,
-    }));
-  }, []);
+  useEffect(() => {
+    // Reset refs to avoid stale references
+    cardRefs.current = [];
 
-  const handleCategorySelect = useCallback(
-    (category) => {
-      const snakeCaseCategory = toSnakeCase(category);
-      setSelectedCategory(category);
-      setSelectedScenarios([]);
-      setScenarioDetails({});
-      setTemplateData((prev) => ({
-        ...prev,
-        category: snakeCaseCategory,
-        scenarios: [],
-        scenarioDetails: {},
-      }));
-    },
-    [setTemplateData]
-  );
+    const handleMouseMove = (e, card) => {
+      if (!card) return;
 
-  const handleScenarioSelect = useCallback(
-    (id) => {
-      let updatedScenarios;
-      let updatedDetails = { ...scenarioDetails };
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
 
-      if (selectedScenarios.includes(id)) {
-        updatedScenarios = [];
-        delete updatedDetails[id];
-      } else {
-        updatedScenarios = [id];
-        updatedDetails = {
-          [id]: {
-            tones: { selected: null },
-            documents: [],
-            additionalDocuments: [],
-            context: { type: '', content: '', displayType: '' },
-            signature: { greeting: 'Hi', signature: 'Best' },
-            documentType: '',
-            documentDisplayType: '',
-          },
-        };
+      const maxTilt = 10; // Maximum tilt angle in degrees
+      const tiltX = (y / rect.height) * maxTilt;
+      const tiltY = -(x / rect.width) * maxTilt;
+
+      // Preserve existing transforms (e.g., hover, selected)
+      const isSelected = card.classList.contains('selected');
+      const baseTransform = isSelected ? 'scale(1.02)' : '';
+      card.style.transform = `${baseTransform} perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    };
+
+    const handleMouseLeave = (card) => {
+      if (card) {
+        const isSelected = card.classList.contains('selected');
+        card.style.transform = isSelected
+          ? 'scale(1.02) perspective(1000px) rotateX(0deg) rotateY(0deg)'
+          : 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
       }
+    };
 
-      setSelectedScenarios(updatedScenarios);
-      setScenarioDetails(updatedDetails);
-      setTemplateData((prev) => ({
-        ...prev,
-        scenarios: updatedScenarios,
-        scenarioDetails: updatedDetails,
-      }));
-    },
-    [selectedScenarios, scenarioDetails, setTemplateData]
-  );
-
-  const handleToneSelect = useCallback(
-    (scenarioId, toneId) => {
-      setScenarioDetails((prev) => ({
-        ...prev,
-        [scenarioId]: {
-          ...prev[scenarioId],
-          tones: {
-            selected: prev[scenarioId]?.tones?.selected === toneId ? null : toneId,
-          },
-        },
-      }));
-      setTemplateData((prev) => ({
-        ...prev,
-        scenarioDetails: {
-          ...prev.scenarioDetails,
-          [scenarioId]: {
-            ...prev.scenarioDetails[scenarioId],
-            tones: {
-              selected: prev.scenarioDetails[scenarioId]?.tones?.selected === toneId ? null : toneId,
-            },
-          },
-        },
-      }));
-    },
-    [setTemplateData]
-  );
-
-  const handleDocumentUpload = useCallback(
-    (scenarioId, event, isAdditional = false) => {
-      if (!event.target.files || event.target.files.length === 0) {
-        setError('No files selected.');
-        return;
+    cardRefs.current.forEach((card) => {
+      if (card) {
+        card.addEventListener('mousemove', (e) => handleMouseMove(e, card));
+        card.addEventListener('mouseleave', () => handleMouseLeave(card));
       }
+    });
 
-      const MAX_FILE_SIZE_MB = 25;
-      const files = Array.from(event.target.files);
-      const filePromises = files.map((file) => {
-        return new Promise((resolve, reject) => {
-          if (file.size / (1024 * 1024) > MAX_FILE_SIZE_MB) {
-            reject(new Error(`File ${file.name} exceeds ${MAX_FILE_SIZE_MB} MB`));
-            return;
-          }
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            if (!reader.result || typeof reader.result !== 'string') {
-              reject(new Error(`Failed to read file: ${file.name}`));
-              return;
-            }
-            const base64Data = reader.result.split(',')[1];
-            if (!base64Data) {
-              reject(new Error(`Invalid base64 data for file: ${file.name}`));
-              return;
-            }
-            const doc = {
-              name: encodeURIComponent(file.name),
-              size: (file.size / (1024 * 1024)).toFixed(2) + ' MB',
-              base64Data,
-            };
-            resolve(doc);
-          };
-          reader.onerror = () => {
-            reject(new Error(`Error reading file: ${file.name}`));
-          };
-          reader.readAsDataURL(file);
-        });
+    return () => {
+      cardRefs.current.forEach((card) => {
+        if (card) {
+          card.removeEventListener('mousemove', (e) => handleMouseMove(e, card));
+          card.removeEventListener('mouseleave', () => handleMouseLeave(card));
+        }
       });
+    };
+  }, [currentStep, goals, businessTypes, internshipTypes]);
 
-      Promise.all(filePromises)
-        .then((newDocuments) => {
-          setScenarioDetails((prev) => ({
-            ...prev,
-            [scenarioId]: {
-              ...prev[scenarioId],
-              [isAdditional ? 'additionalDocuments' : 'documents']: [
-                ...(prev[scenarioId]?.[isAdditional ? 'additionalDocuments' : 'documents'] || []),
-                ...newDocuments,
-              ],
-            },
-          }));
-          setTemplateData((prev) => ({
-            ...prev,
-            scenarioDetails: {
-              ...prev.scenarioDetails,
-              [scenarioId]: {
-                ...prev.scenarioDetails[scenarioId],
-                [isAdditional ? 'additionalDocuments' : 'documents']: [
-                  ...(prev.scenarioDetails[scenarioId]?.[
-                    isAdditional ? 'additionalDocuments' : 'documents'
-                  ] || []),
-                  ...newDocuments,
-                ],
-              },
-            },
-          }));
-        })
-        .catch((err) => {
-          setError(`Failed to process uploaded files: ${err.message}`);
-        });
-    },
-    [setTemplateData]
-  );
+  const handleGoalSelect = useCallback((goalId) => {
+    setSelectedGoal(goalId);
+    setSelectedType(null);
+    setTemplateData((prev) => ({ ...prev, goal: goalId, type: null }));
+  }, [setTemplateData]);
 
-  const handleDocumentTypeChange = useCallback(
-    (scenarioId, documentType) => {
-      const snakeCaseDocumentType = toSnakeCase(documentType);
-      setScenarioDetails((prev) => ({
-        ...prev,
-        [scenarioId]: {
-          ...prev[scenarioId],
-          documentType: snakeCaseDocumentType,
-          documentDisplayType: documentType,
-        },
-      }));
-      setTemplateData((prev) => ({
-        ...prev,
-        scenarioDetails: {
-          ...prev.scenarioDetails,
-          [scenarioId]: {
-            ...prev.scenarioDetails[scenarioId],
-            documentType: snakeCaseDocumentType,
-            documentDisplayType: documentType,
-          },
-        },
-      }));
-    },
-    [setTemplateData]
-  );
+  const handleTypeSelect = useCallback((typeId) => {
+    setSelectedType(typeId);
+    setTemplateData((prev) => ({ ...prev, type: typeId }));
+  }, [setTemplateData]);
 
-  const handleContextChange = useCallback(
-    (scenarioId, field, value) => {
-      if (field === 'type') {
-        const snakeCaseValue = toSnakeCase(value);
-        setScenarioDetails((prev) => ({
-          ...prev,
-          [scenarioId]: {
-            ...prev[scenarioId],
-            context: {
-              ...prev[scenarioId]?.context,
-              type: snakeCaseValue,
-              displayType: value,
-              content: prev[scenarioId]?.context?.content || '',
-            },
-          },
-        }));
-        setTemplateData((prev) => ({
-          ...prev,
-          scenarioDetails: {
-            ...prev.scenarioDetails,
-            [scenarioId]: {
-              ...prev.scenarioDetails[scenarioId],
-              context: {
-                ...prev.scenarioDetails[scenarioId]?.context,
-                type: snakeCaseValue,
-                displayType: value,
-                content: prev.scenarioDetails[scenarioId]?.context?.content || '',
-              },
-            },
-          },
-        }));
-      } else {
-        setScenarioDetails((prev) => ({
-          ...prev,
-          [scenarioId]: {
-            ...prev[scenarioId],
-            context: {
-              ...prev[scenarioId]?.context,
-              [field]: value,
-            },
-          },
-        }));
-        setTemplateData((prev) => ({
-          ...prev,
-          scenarioDetails: {
-            ...prev.scenarioDetails,
-            [scenarioId]: {
-              ...prev.scenarioDetails[scenarioId],
-              context: {
-                ...prev.scenarioDetails[scenarioId]?.context,
-                [field]: value,
-              },
-            },
-          },
-        }));
-      }
-    },
-    [setTemplateData]
-  );
-
-  const handleSignatureChange = useCallback(
-    (scenarioId, field, value) => {
-      setScenarioDetails((prev) => ({
-        ...prev,
-        [scenarioId]: {
-          ...prev[scenarioId],
-          signature: {
-            ...prev[scenarioId]?.signature,
-            [field]: value,
-          },
-        },
-      }));
-      setTemplateData((prev) => ({
-        ...prev,
-        scenarioDetails: {
-          ...prev.scenarioDetails,
-          [scenarioId]: {
-            ...prev.scenarioDetails[scenarioId],
-            signature: {
-              ...prev.scenarioDetails[scenarioId]?.signature,
-              [field]: value,
-            },
-          },
-        },
-      }));
-    },
-    [setTemplateData]
-  );
-
-  const handleWorkflowTitleChange = useCallback(
-    (e) => {
-      const newTitle = e.target.value;
-      setWorkflowTitle(newTitle);
-      onTemplateNameChange({ target: { value: newTitle } });
-      setTemplateData((prev) => ({ ...prev, workflowTitle: newTitle }));
-    },
-    [onTemplateNameChange, setTemplateData]
-  );
-
-  const handleWorkflowDescriptionChange = useCallback(
-    (e) => {
-      const newDescription = e.target.value;
-      setWorkflowDescription(newDescription);
-      setTemplateData((prev) => ({ ...prev, workflowDescription: newDescription }));
-    },
-    [setTemplateData]
-  );
-
-  const handleNextStep = useCallback(() => {
-    if (currentStep === 1 && selectedCategory) {
-      setDirection('next');
-      setCurrentStep(2);
-    } else if (currentStep === 2 && selectedScenarios.length > 0) {
-      setDirection('next');
-      setCurrentStep(3);
-    } else if (
-      currentStep === 3 &&
-      selectedScenarios.every((scenarioId) => {
-        const toneDetails = scenarioDetails[scenarioId]?.tones;
-        return toneDetails?.selected;
-      })
-    ) {
-      setDirection('next');
-      setCurrentStep(4);
-      setTemplateData((prev) => ({ ...prev, scenarioDetails }));
-    } else if (currentStep === 4) {
-      setDirection('next');
-      setCurrentStep(5);
-    } else if (currentStep === 5) {
-      setDirection('next');
-      setCurrentStep(6);
-    } else if (
-      currentStep === 6 &&
-      selectedScenarios.every(
-        (scenarioId) =>
-          scenarioDetails[scenarioId]?.signature?.greeting &&
-          scenarioDetails[scenarioId]?.signature?.signature
-      )
-    ) {
-      setDirection('next');
-      setCurrentStep(7);
-    } else if (currentStep === 7 && workflowTitle.trim()) {
-      setDirection('next');
-      setCurrentStep(8);
-    } else {
-      setError('Please complete the required fields to proceed.');
+  const handleTimeChange = useCallback((field, value) => {
+    if (field === 'breakfast') {
+      setBreakfastTime(value);
+      setTemplateData((prev) => ({ ...prev, breakfastTime: value }));
+    } else if (field === 'lunch') {
+      setLunchTime(value);
+      setTemplateData((prev) => ({ ...prev, lunchTime: value }));
+    } else if (field === 'dinner') {
+      setDinnerTime(value);
+      setTemplateData((prev) => ({ ...prev, dinnerTime: value }));
+    } else if (field === 'sleep') {
+      setSleepTime(value);
+      setTemplateData((prev) => ({ ...prev, sleepTime: value }));
     }
-  }, [
-    currentStep,
-    selectedCategory,
-    selectedScenarios,
-    scenarioDetails,
-    workflowTitle,
-    setTemplateData,
-  ]);
+  }, [setTemplateData]);
 
-  const handleBackStep = useCallback(() => {
-    if (currentStep > 1) {
-      setDirection('back');
-      setCurrentStep(currentStep - 1);
-      setError(null);
-    }
-  }, [currentStep]);
+  const handleRecurringEventsSelect = useCallback((value) => {
+    setHasRecurringEvents(value);
+    const newEvents = value === 'yes' ? [{ eventType: '', startTime: '', endTime: '', days: [] }] : [];
+    setRecurringEvents(newEvents);
+    setTemplateData((prev) => ({
+      ...prev,
+      hasRecurringEvents: value,
+      recurringEvents: newEvents,
+    }));
+  }, [setTemplateData]);
+
+  const handleAddEvent = useCallback(() => {
+    setRecurringEvents((prev) => [
+      ...prev,
+      { eventType: '', startTime: '', endTime: '', days: [] },
+    ]);
+    setTemplateData((prev) => ({
+      ...prev,
+      recurringEvents: [
+        ...(prev.recurringEvents || []),
+        { eventType: '', startTime: '', endTime: '', days: [] },
+      ],
+    }));
+  }, [setTemplateData]);
+
+  const handleEventChange = useCallback((index, field, value) => {
+    setRecurringEvents((prev) => {
+      const updatedEvents = [...prev];
+      updatedEvents[index] = { ...updatedEvents[index], [field]: value };
+      return updatedEvents;
+    });
+    setTemplateData((prev) => ({
+      ...prev,
+      recurringEvents: prev.recurringEvents.map((event, i) =>
+        i === index ? { ...event, [field]: value } : event
+      ),
+    }));
+  }, [setTemplateData]);
+
+  const handleWorkflowTitleChange = useCallback((e) => {
+    const newTitle = e.target.value;
+    setWorkflowTitle(newTitle);
+    onTemplateNameChange({ target: { value: newTitle } });
+    setTemplateData((prev) => ({ ...prev, workflowTitle: newTitle }));
+  }, [onTemplateNameChange, setTemplateData]);
 
   const handlePublish = useCallback(async () => {
     setIsPublishing(true);
@@ -562,29 +257,15 @@ const TemplateCreator = ({
     const payload = {
       userEmail,
       templateName: workflowTitle,
-      category: toSnakeCase(selectedCategory),
-      scenarios: selectedScenarios,
-      scenarioDetails: Object.fromEntries(
-        Object.entries(scenarioDetails).map(([scenarioId, details]) => [
-          scenarioId,
-          {
-            ...details,
-            documentType: details.documentType,
-            context: {
-              type: details.context?.type,
-              content: details.context?.content || '',
-            },
-            signature: {
-              greeting: details.signature?.greeting || 'Hi',
-              signature: details.signature?.signature || 'Best',
-              customGreeting: details.signature?.customGreeting || '',
-              customSignature: details.signature?.customSignature || '',
-            },
-          },
-        ])
-      ),
+      goal: selectedGoal,
+      type: selectedType,
+      breakfastTime,
+      lunchTime,
+      dinnerTime,
+      sleepTime,
+      hasRecurringEvents,
+      recurringEvents,
       workflowTitle,
-      workflowDescription,
     };
 
     try {
@@ -592,9 +273,7 @@ const TemplateCreator = ({
         'https://2ofjdl14kg.execute-api.us-east-1.amazonaws.com/prod/publish',
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         }
       );
@@ -607,11 +286,15 @@ const TemplateCreator = ({
       }
 
       setCurrentStep(1);
-      setSelectedCategory(null);
-      setSelectedScenarios([]);
-      setScenarioDetails({});
+      setSelectedGoal(null);
+      setSelectedType(null);
+      setBreakfastTime('');
+      setLunchTime('');
+      setDinnerTime('');
+      setSleepTime('');
+      setHasRecurringEvents(null);
+      setRecurringEvents([]);
       setWorkflowTitle('');
-      setWorkflowDescription('');
       setHasScrolled(false);
       setTemplateData({});
       localStorage.removeItem('templateData');
@@ -624,32 +307,90 @@ const TemplateCreator = ({
   }, [
     userEmail,
     workflowTitle,
-    selectedCategory,
-    selectedScenarios,
-    scenarioDetails,
-    workflowDescription,
+    selectedGoal,
+    selectedType,
+    breakfastTime,
+    lunchTime,
+    dinnerTime,
+    sleepTime,
+    hasRecurringEvents,
+    recurringEvents,
     handleBack,
     setTemplateData,
+    setIsPublishing,
   ]);
+
+  const handleNextStep = useCallback(() => {
+    if (currentStep === 1 && selectedGoal) {
+      setDirection('next');
+      setCurrentStep(2);
+    } else if (currentStep === 2 && selectedType) {
+      setDirection('next');
+      setCurrentStep(3);
+    } else if (currentStep === 3 && breakfastTime) {
+      setDirection('next');
+      setCurrentStep(4);
+    } else if (currentStep === 4 && lunchTime) {
+      setDirection('next');
+      setCurrentStep(5);
+    } else if (currentStep === 5 && dinnerTime) {
+      setDirection('next');
+      setCurrentStep(6);
+    } else if (currentStep === 6 && sleepTime) {
+      setDirection('next');
+      setCurrentStep(7);
+    } else if (
+      currentStep === 7 &&
+      hasRecurringEvents &&
+      (hasRecurringEvents === 'no' ||
+        (hasRecurringEvents === 'yes' &&
+          recurringEvents.every(
+            (event) => event.eventType && event.startTime && event.endTime && event.days.length > 0
+          )))
+    ) {
+      setDirection('next');
+      setCurrentStep(8);
+    } else {
+      setError('Please complete the required fields to proceed.');
+    }
+  }, [
+    currentStep,
+    selectedGoal,
+    selectedType,
+    breakfastTime,
+    lunchTime,
+    dinnerTime,
+    sleepTime,
+    hasRecurringEvents,
+    recurringEvents,
+  ]);
+
+  const handleBackStep = useCallback(() => {
+    if (currentStep > 1) {
+      setDirection('back');
+      setCurrentStep(currentStep - 1);
+      setError(null);
+    }
+  }, [currentStep]);
 
   const getStepTitle = () => {
     switch (currentStep) {
       case 1:
-        return 'Select email category';
+        return 'Select Goal';
       case 2:
-        return 'Select scenarios';
+        return selectedGoal === 'start_business' ? 'Select Business Type' : 'Select Internship Type';
       case 3:
-        return 'Select tone';
+        return 'Breakfast Time';
       case 4:
-        return 'Upload documents';
+        return 'Lunch Time';
       case 5:
-        return 'Add context';
+        return 'Dinner Time';
       case 6:
-        return 'Configure signature';
+        return 'Sleep Time';
       case 7:
-        return 'Title and description';
+        return 'Recurring Events';
       case 8:
-        return 'Review';
+        return 'Review Your Selections';
       default:
         return '';
     }
@@ -695,35 +436,32 @@ const TemplateCreator = ({
             </div>
           </div>
           {currentStep === 1 && (
-            <h3 className="template-creator-step-title">
-              What type of email will your agent reply to?
-            </h3>
+            <h3 className="template-creator-step-title">What do you want to accomplish?</h3>
           )}
           {currentStep === 2 && (
             <h3 className="template-creator-step-title">
-              What type of scenario will you reply to?
+              {selectedGoal === 'start_business'
+                ? 'Select which type of business you want to create'
+                : 'Select which type of internship you want to get'}
             </h3>
           )}
           {currentStep === 3 && (
-            <h3 className="template-creator-step-title step-3-title">Select tone for reply</h3>
+            <h3 className="template-creator-step-title">When do you normally eat breakfast?</h3>
           )}
           {currentStep === 4 && (
-            <h3 className="template-creator-step-title">
-              Attach documents if specific information is needed{' '}
-              <span style={{ color: '#9CA3AF' }}>(optional)</span>
-            </h3>
+            <h3 className="template-creator-step-title">When do you normally eat lunch?</h3>
           )}
           {currentStep === 5 && (
-            <h3 className="template-creator-step-title">Provide additional context <span style={{ color: '#9CA3AF' }}>(optional)</span></h3>
+            <h3 className="template-creator-step-title">When do you normally eat dinner?</h3>
           )}
           {currentStep === 6 && (
-            <h3 className="template-creator-step-title">Configure email signature</h3>
+            <h3 className="template-creator-step-title">When do you normally go to sleep?</h3>
           )}
           {currentStep === 7 && (
-            <h3 className="template-creator-step-title">Title this Agent</h3>
+            <h3 className="template-creator-step-title">Are there any other recurring events in your life?</h3>
           )}
           {currentStep === 8 && (
-            <h3 className="template-creator-step-title">Identifying information</h3>
+            <h3 className="template-creator-step-title">Review Your Selections</h3>
           )}
         </div>
 
@@ -750,30 +488,21 @@ const TemplateCreator = ({
 
                 {currentStep === 1 && (
                   <div className="template-creator-grid">
-                    {categories.map((category) => (
+                    {goals.map((goal, index) => (
                       <div
-                        key={category}
-                        className={`template-creator-card ${
-                          selectedCategory === category ? 'selected' : ''
-                        }`}
-                        onClick={() => handleCategorySelect(category)}
+                        key={goal.id}
+                        className={`template-creator-card ${selectedGoal === goal.id ? 'selected' : ''}`}
+                        onClick={() => handleGoalSelect(goal.id)}
+                        ref={(el) => (cardRefs.current[index] = el)}
                       >
                         <div className="template-creator-card-content">
                           <img
-                            src={
-                              selectedCategory === category
-                                ? categoryIcons[category].blue
-                                : categoryIcons[category].grey
-                            }
-                            alt={`${category} icon`}
+                            src={selectedGoal === goal.id ? goalIconBlue : goalIconGrey}
+                            alt={`${goal.name} icon`}
                             className="template-creator-icon"
                           />
-                          <div className="template-creator-email-type">{category}</div>
-                          <div className="template-creator-description">
-                            {category === 'Client communications'
-                              ? 'Project or account-related emails covering deliverables, feedback, change requests, etc.'
-                              : 'Senders proposing services, partnerships, investment, or requests to connect for networking'}
-                          </div>
+                          <div className="template-creator-email-type">{goal.name}</div>
+                          <div className="template-creator-description">{goal.description}</div>
                         </div>
                       </div>
                     ))}
@@ -782,26 +511,21 @@ const TemplateCreator = ({
 
                 {currentStep === 2 && (
                   <div className="template-creator-grid">
-                    {getScenarios(selectedCategory).map((scenario) => (
+                    {(selectedGoal === 'start_business' ? businessTypes : internshipTypes).map((type, index) => (
                       <div
-                        key={scenario.id}
-                        className={`template-creator-card ${
-                          selectedScenarios.includes(scenario.id) ? 'selected' : ''
-                        }`}
-                        onClick={() => handleScenarioSelect(scenario.id)}
+                        key={type.id}
+                        className={`template-creator-card ${selectedType === type.id ? 'selected' : ''}`}
+                        onClick={() => handleTypeSelect(type.id)}
+                        ref={(el) => (cardRefs.current[index] = el)}
                       >
                         <div className="template-creator-card-content">
                           <img
-                            src={
-                              selectedScenarios.includes(scenario.id)
-                                ? projectUpdateBlue
-                                : projectUpdateGrey
-                            }
-                            alt="Scenario email icon"
+                            src={selectedType === type.id ? typeIconBlue : typeIconGrey}
+                            alt={`${type.name} icon`}
                             className="template-creator-icon"
                           />
-                          <div className="template-creator-email-type">{scenario.name}</div>
-                          <div className="template-creator-description">{scenario.description}</div>
+                          <div className="template-creator-email-type">{type.name}</div>
+                          <div className="template-creator-description">{type.description}</div>
                         </div>
                       </div>
                     ))}
@@ -809,297 +533,172 @@ const TemplateCreator = ({
                 )}
 
                 {currentStep === 3 && (
-                  <div className="template-creator-grid">
-                    {selectedScenarios.map((scenarioId) =>
-                      tones.map((tone) => {
-                        const details = scenarioDetails[scenarioId] || {};
-                        return (
-                          <div
-                            key={`${scenarioId}-${tone.id}`}
-                            className={`template-creator-card ${
-                              details.tones?.selected === tone.id ? 'selected' : ''
-                            }`}
-                            onClick={() => handleToneSelect(scenarioId, tone.id)}
-                          >
-                            <div className="template-creator-card-content">
-                              <img
-                                src={
-                                  details.tones?.selected === tone.id
-                                    ? toneIcons[tone.id].blue
-                                    : toneIcons[tone.id].grey
-                                }
-                                alt={`${tone.name} tone icon`}
-                                className="template-creator-icon"
-                              />
-                              <div className="template-creator-email-type">{tone.name}</div>
-                              <div className="template-creator-description">
-                                {tone.description}
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    )}
+                  <div className="template-creator-dropdown-wrapper">
+                    <select
+                      className="template-creator-dropdown"
+                      value={breakfastTime}
+                      onChange={(e) => handleTimeChange('breakfast', e.target.value)}
+                    >
+                      <option value="">Select time</option>
+                      {breakfastTimeOptions.map((time) => (
+                        <option key={time} value={time}>
+                          {time}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 )}
 
                 {currentStep === 4 && (
-                  <div className="template-creator-selected-scenarios-section">
-                    <div className="template-creator-selected-scenarios-list">
-                      {selectedScenarios.map((scenarioId, index) => {
-                        const scenario = getScenarios(selectedCategory).find(
-                          (s) => s.id === scenarioId
-                        );
-                        const details = scenarioDetails[scenarioId] || {};
-                        const documentOptions =
-                          categorySettings[selectedCategory]?.scenarios[scenario?.name]
-                            ?.documents || [];
-                        return (
-                          <React.Fragment key={scenarioId}>
-                            <div>
-                              <div className="template-creator-context-section">
-                                <h4 className="template-creator-context-title">Document type</h4>
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.documentDisplayType || ''}
-                                    onChange={(e) =>
-                                      handleDocumentTypeChange(scenarioId, e.target.value)
-                                    }
-                                  >
-                                    <option value="">Select document type</option>
-                                    {documentOptions.map((doc, idx) => (
-                                      <option key={idx} value={doc}>
-                                        {doc}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.documentType && (
-                                  <>
-                                    <h4 className="template-creator-context-title">Document</h4>
-                                    <div className="template-creator-attachment-card">
-                                      <label
-                                        htmlFor={`file-upload-${scenarioId}`}
-                                        className="template-creator-attachment-label"
-                                      >
-                                        <div className="template-creator-attachment-info">
-                                          <div>Upload document</div>
-                                          <div className="template-creator-description">
-                                            Click to upload file
-                                          </div>
-                                        </div>
-                                      </label>
-                                      <input
-                                        id={`file-upload-${scenarioId}`}
-                                        type="file"
-                                        onChange={(e) => handleDocumentUpload(scenarioId, e)}
-                                        className="template-creator-file-input"
-                                        multiple
-                                      />
-                                    </div>
-                                    {(details.documents || []).map((doc, idx) => (
-                                      <div
-                                        key={idx}
-                                        className="template-creator-document-card selected"
-                                      >
-                                        <div className="template-creator-document-name">
-                                          {decodeURIComponent(doc.name)}
-                                        </div>
-                                        <div className="template-creator-document-size">{doc.size}</div>
-                                      </div>
-                                    ))}
-                                    <button
-                                      className="template-creator-upload-more-btn"
-                                      onClick={() => document.getElementById(`file-upload-${scenarioId}`).click()}
-                                    >
-                                      Upload more
-                                    </button>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                            {index < selectedScenarios.length - 1 && (
-                              <div className="template-creator-section-divider" />
-                            )}
-                          </React.Fragment>
-                        );
-                      })}
-                    </div>
+                  <div className="template-creator-dropdown-wrapper">
+                    <select
+                      className="template-creator-dropdown"
+                      value={lunchTime}
+                      onChange={(e) => handleTimeChange('lunch', e.target.value)}
+                    >
+                      <option value="">Select time</option>
+                      {lunchTimeOptions.map((time) => (
+                        <option key={time} value={time}>
+                          {time}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 )}
 
                 {currentStep === 5 && (
-                  <div className="template-creator-selected-scenarios-section">
-                    <div className="template-creator-selected-scenarios-list">
-                      {selectedScenarios.map((scenarioId, index) => {
-                        const scenario = getScenarios(selectedCategory).find(
-                          (s) => s.id === scenarioId
-                        );
-                        const details = scenarioDetails[scenarioId] || {};
-                        const contextOptions =
-                          categorySettings[selectedCategory]?.scenarios[scenario?.name]
-                            ?.additionalContext || [];
-                        return (
-                          <React.Fragment key={scenarioId}>
-                            <div>
-                              <div className="template-creator-context-section">
-                                <h4 className="template-creator-context-title">
-                                  Select context type
-                                </h4>
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.context?.displayType || ''}
-                                    onChange={(e) =>
-                                      handleContextChange(scenarioId, 'type', e.target.value)
-                                    }
-                                  >
-                                    <option value="">Select context type</option>
-                                    {contextOptions.map((context, idx) => (
-                                      <option key={idx} value={context}>
-                                        {context}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.context?.type && (
-                                  <>
-                                    <h4 className="template-creator-context-title">Context</h4>
-                                    <div className="template-creator-input-wrapper">
-                                      <textarea
-                                        className="template-creator-instructions-input"
-                                        placeholder="Add context"
-                                        value={details.context?.content || ''}
-                                        onChange={(e) =>
-                                          handleContextChange(scenarioId, 'content', e.target.value)
-                                        }
-                                      />
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                            {index < selectedScenarios.length - 1 && (
-                              <div className="template-creator-section-divider" />
-                            )}
-                          </React.Fragment>
-                        );
-                      })}
-                    </div>
+                  <div className="template-creator-dropdown-wrapper">
+                    <select
+                      className="template-creator-dropdown"
+                      value={dinnerTime}
+                      onChange={(e) => handleTimeChange('dinner', e.target.value)}
+                    >
+                      <option value="">Select time</option>
+                      {dinnerTimeOptions.map((time) => (
+                        <option key={time} value={time}>
+                          {time}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 )}
 
                 {currentStep === 6 && (
-                  <div className="template-creator-selected-scenarios-section">
-                    <div className="template-creator-selected-scenarios-list">
-                      {selectedScenarios.map((scenarioId, index) => {
-                        const details = scenarioDetails[scenarioId] || {};
-                        return (
-                          <React.Fragment key={scenarioId}>
-                            <div>
-                              <div className="template-creator-context-section">
-                                <h4 className="template-creator-context-title">Select greeting</h4>
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.signature?.greeting || 'Hi'}
-                                    onChange={(e) =>
-                                      handleSignatureChange(scenarioId, 'greeting', e.target.value)
-                                    }
-                                  >
-                                    {greetings.map((greeting) => (
-                                      <option key={greeting} value={greeting}>
-                                        {greeting}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.signature?.greeting === 'Custom' && (
-                                  <div className="template-creator-input-wrapper">
-                                    <textarea
-                                      className="template-creator-instructions-input"
-                                      placeholder="Enter custom greeting"
-                                      value={details.signature?.customGreeting || ''}
-                                      onChange={(e) =>
-                                        handleSignatureChange(
-                                          scenarioId,
-                                          'customGreeting',
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                )}
-                                <div className="template-creator-divider-label">
-                                </div>
-                                <h4 className="template-creator-context-title">Select signature</h4>
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.signature?.signature || 'Best'}
-                                    onChange={(e) =>
-                                      handleSignatureChange(scenarioId, 'signature', e.target.value)
-                                    }
-                                  >
-                                    {signatures.map((sig) => (
-                                      <option key={sig} value={sig}>
-                                        {sig}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.signature?.signature === 'Custom' && (
-                                  <div className="template-creator-input-wrapper">
-                                    <textarea
-                                      className="template-creator-instructions-input"
-                                      placeholder="Enter custom signature"
-                                      value={details.signature?.customSignature || ''}
-                                      onChange={(e) =>
-                                        handleSignatureChange(
-                                          scenarioId,
-                                          'customSignature',
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                            {index < selectedScenarios.length - 1 && (
-                              <hr className="template-creator-section-divider" />
-                            )}
-                          </React.Fragment>
-                        );
-                      })}
-                    </div>
+                  <div className="template-creator-dropdown-wrapper">
+                    <select
+                      className="template-creator-dropdown"
+                      value={sleepTime}
+                      onChange={(e) => handleTimeChange('sleep', e.target.value)}
+                    >
+                      <option value="">Select time</option>
+                      {sleepTimeOptions.map((time) => (
+                        <option key={time} value={time}>
+                          {time}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 )}
 
                 {currentStep === 7 && (
-                  <div className="template-creator-title-section">
-                    <h3 className="template-creator-review-title">Title</h3>
-                    <div className="template-creator-input-wrapper">
-                      <input
-                        type="text"
-                        className="template-creator-title-input"
-                        placeholder="Enter workflow title"
-                        value={workflowTitle}
-                        onChange={handleWorkflowTitleChange}
-                      />
+                  <div className="template-creator-selected-scenarios-section">
+                    <div className="template-creator-choice-row">
+                      {['yes', 'no'].map((option, index) => (
+                        <div
+                          key={option}
+                          className={`template-creator-card ${hasRecurringEvents === option ? 'selected' : ''}`}
+                          onClick={() => handleRecurringEventsSelect(option)}
+                          ref={(el) => (cardRefs.current[index] = el)}
+                        >
+                          <div className="template-creator-card-content">
+                            <div className="template-creator-email-type">{option.charAt(0).toUpperCase() + option.slice(1)}</div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="template-creator-divider-label">
-                    </div>
-                    <h3 className="template-creator-review-title">Description</h3>
-                    <div className="template-creator-input-wrapper">
-                      <textarea
-                        className="template-creator-description-input"
-                        placeholder="Add a description for your workflow"
-                        value={workflowDescription}
-                        onChange={handleWorkflowDescriptionChange}
-                      />
-                    </div>
+                    {hasRecurringEvents === 'yes' && (
+                      <div className="template-creator-context-section">
+                        <h4 className="template-creator-context-title">Add Recurring Events</h4>
+                        {recurringEvents.map((event, index) => (
+                          <div key={index} className="template-creator-event-form">
+                            <div className="template-creator-dropdown-wrapper">
+                              <select
+                                className="template-creator-dropdown"
+                                value={event.eventType}
+                                onChange={(e) => handleEventChange(index, 'eventType', e.target.value)}
+                              >
+                                <option value="">Select event type</option>
+                                {eventTypes.map((type) => (
+                                  <option key={type} value={type}>
+                                    {type}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="template-creator-time-wrapper">
+                              <div className="template-creator-dropdown-wrapper">
+                                <select
+                                  className="template-creator-dropdown"
+                                  value={event.startTime}
+                                  onChange={(e) => handleEventChange(index, 'startTime', e.target.value)}
+                                >
+                                  <option value="">Select start time</option>
+                                  {eventTimeOptions.map((time) => (
+                                    <option key={time} value={time}>
+                                      {time}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                              <div className="template-creator-time-divider">to</div>
+                              <div className="template-creator-dropdown-wrapper">
+                                <select
+                                  className="template-creator-dropdown"
+                                  value={event.endTime}
+                                  onChange={(e) => handleEventChange(index, 'endTime', e.target.value)}
+                                >
+                                  <option value="">Select end time</option>
+                                  {eventTimeOptions.map((time) => (
+                                    <option key={time} value={time}>
+                                      {time}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="template-creator-days-selection">
+                              <h4 className="template-creator-context-title">Days Repeated</h4>
+                              <div className="template-creator-days-grid">
+                                {daysOfWeek.map((day) => (
+                                  <label key={day} className="template-creator-day-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      checked={event.days.includes(day)}
+                                      onChange={(e) => {
+                                        const updatedDays = e.target.checked
+                                          ? [...event.days, day]
+                                          : event.days.filter((d) => d !== day);
+                                        handleEventChange(index, 'days', updatedDays);
+                                      }}
+                                    />
+                                    <span>{day.slice(0, 3)}</span>
+                                  </label>
+                                ))}
+                              </div>
+                            </div>
+                            {index < recurringEvents.length - 1 && (
+                              <div className="template-creator-section-divider" />
+                            )}
+                          </div>
+                        ))}
+                        <button
+                          className="template-creator-upload-more-btn"
+                          onClick={handleAddEvent}
+                        >
+                          Add New Event
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -1118,308 +717,102 @@ const TemplateCreator = ({
                       </div>
                     </div>
                     <div>
-                      <h3 className="template-creator-review-title">Description</h3>
-                      <div className="template-creator-input-wrapper">
-                        <textarea
-                          className="template-creator-description-input"
-                          placeholder="Add a description for your workflow"
-                          value={workflowDescription}
-                          onChange={handleWorkflowDescriptionChange}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="template-creator-review-title">Email category</h3>
+                      <h3 className="template-creator-review-title">Goal</h3>
                       <div className="template-creator-grid">
                         <div className="template-creator-card selected">
                           <img
-                            src={categoryIcons[selectedCategory]?.blue}
-                            alt={`${selectedCategory} icon`}
+                            src={goalIconBlue}
+                            alt="Goal icon"
                             className="template-creator-icon"
                           />
                           <div className="template-creator-email-type">
-                            {selectedCategory || 'Not selected'}
+                            {goals.find((g) => g.id === selectedGoal)?.name || 'Not selected'}
                           </div>
                           <div className="template-creator-description">
-                            {selectedCategory === 'Client communications'
-                              ? 'Ongoing project or account-related emails from existing clients, covering deliverables, feedback, change requests, etc.'
-                              : selectedCategory === 'Cold inbound'
-                              ? 'Senders proposing services, partnerships, investment, or requests to connect for networking'
-                              : '...'}
+                            {goals.find((g) => g.id === selectedGoal)?.description || '...'}
                           </div>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <h3 className="template-creator-review-title">Scenarios</h3>
+                      <h3 className="template-creator-review-title">
+                        {selectedGoal === 'start_business' ? 'Business Type' : 'Internship Type'}
+                      </h3>
                       <div className="template-creator-grid">
-                        {selectedScenarios.map((scenarioId) => {
-                          const scenario = getScenarios(selectedCategory).find(
-                            (s) => s.id === scenarioId
-                          );
-                          return (
-                            <div key={scenarioId} className="template-creator-card selected">
-                              <img
-                                src={projectUpdateBlue}
-                                alt="Scenario email icon"
-                                className="template-creator-icon"
-                              />
-                              <div className="template-creator-email-type">
-                                {scenario?.name || 'Unknown Scenario'}
-                              </div>
-                              <div className="template-creator-description">
-                                {scenario?.description || 'No description available'}
-                              </div>
-                            </div>
-                          );
-                        })}
+                        <div className="template-creator-card selected">
+                          <img
+                            src={typeIconBlue}
+                            alt="Type icon"
+                            className="template-creator-icon"
+                          />
+                          <div className="template-creator-email-type">
+                            {(selectedGoal === 'start_business' ? businessTypes : internshipTypes).find(
+                              (t) => t.id === selectedType
+                            )?.name || 'Not selected'}
+                          </div>
+                          <div className="template-creator-description">
+                            {(selectedGoal === 'start_business' ? businessTypes : internshipTypes).find(
+                              (t) => t.id === selectedType
+                            )?.description || '...'}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    {selectedScenarios.map((scenarioId) => {
-                      const scenario = getScenarios(selectedCategory).find(
-                        (s) => s.id === scenarioId
-                      );
-                      const details = scenarioDetails[scenarioId] || {};
-                      const documentOptions =
-                        categorySettings[selectedCategory]?.scenarios[scenario?.name]?.documents ||
-                        [];
-                      const contextOptions =
-                        categorySettings[selectedCategory]?.scenarios[scenario?.name]
-                          ?.additionalContext || [];
-                      return (
-                        <React.Fragment key={scenarioId}>
-                          <div>
-                            <h3 className="template-creator-review-title">Tone</h3>
-                            <div className="template-creator-grid">
-                              {(() => {
-                                const selectedTone = tones.find(
-                                  (tone) => tone.id === details.tones?.selected
-                                );
-                                if (!selectedTone) {
-                                  return (
-                                    <div className="template-creator-card">
-                                      <div className="template-creator-email-type">No tone selected</div>
-                                      <div className="template-creator-description">
-                                        Please select a tone for this scenario.
-                                      </div>
-                                    </div>
-                                  );
-                                }
-                                return (
-                                  <div
-                                    className="template-creator-card selected"
-                                    onClick={() => handleToneSelect(scenarioId, selectedTone.id)}
-                                  >
-                                    <img
-                                      src={toneIcons[selectedTone.id].blue}
-                                      alt={`${selectedTone.name} tone icon`}
-                                      className="template-creator-icon"
-                                    />
-                                    <div className="template-creator-email-type">{selectedTone.name}</div>
-                                    <div className="template-creator-description">
-                                      {selectedTone.description}
-                                    </div>
-                                  </div>
-                                );
-                              })()}
-                            </div>
+                    <div>
+                      <h3 className="template-creator-review-title">Breakfast Time</h3>
+                      <div className="template-creator-grid">
+                        <div className="template-creator-card selected">
+                          <div className="template-creator-email-type">{breakfastTime || 'Not selected'}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="template-creator-review-title">Lunch Time</h3>
+                      <div className="template-creator-grid">
+                        <div className="template-creator-card selected">
+                          <div className="template-creator-email-type">{lunchTime || 'Not selected'}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="template-creator-review-title">Dinner Time</h3>
+                      <div className="template-creator-grid">
+                        <div className="template-creator-card selected">
+                          <div className="template-creator-email-type">{dinnerTime || 'Not selected'}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="template-creator-review-title">Sleep Time</h3>
+                      <div className="template-creator-grid">
+                        <div className="template-creator-card selected">
+                          <div className="template-creator-email-type">{sleepTime || 'Not selected'}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="template-creator-review-title">Recurring Events</h3>
+                      <div className="template-creator-grid">
+                        {hasRecurringEvents === 'no' ? (
+                          <div className="template-creator-card selected">
+                            <div className="template-creator-email-type">No recurring events</div>
                           </div>
-                          <div>
-                            <h3 className="template-creator-review-title">Documents</h3>
-                            <div className="template-creator-grid">
-                              <div className="template-creator-card">
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.documentDisplayType || ''}
-                                    onChange={(e) =>
-                                      handleDocumentTypeChange(scenarioId, e.target.value)
-                                    }
-                                  >
-                                    <option value="">Select document type</option>
-                                    {documentOptions.map((doc, idx) => (
-                                      <option key={idx} value={doc}>
-                                        {doc}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.documentType && (
-                                  <div className="template-creator-attachment-card">
-                                    <label
-                                      htmlFor={`file-upload-review-${scenarioId}`}
-                                      className="template-creator-attachment-label"
-                                    >
-                                      <div className="template-creator-attachment-info">
-                                        <div>Upload document</div>
-                                        <div className="template-creator-description">
-                                          Click to upload file
-                                        </div>
-                                      </div>
-                                    </label>
-                                    <input
-                                      id={`file-upload-review-${scenarioId}`}
-                                      type="file"
-                                      onChange={(e) => handleDocumentUpload(scenarioId, e)}
-                                      className="template-creator-file-input"
-                                      multiple
-                                    />
-                                  </div>
-                                )}
-                                {(details.documents || []).map((doc, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="template-creator-document-card selected"
-                                  >
-                                    <div className="template-creator-document-name">
-                                      {decodeURIComponent(doc.name)}
-                                    </div>
-                                    <div className="template-creator-document-size">{doc.size}</div>
-                                  </div>
-                                ))}
-                                <div className="template-creator-attachment-card">
-                                  <label
-                                    htmlFor={`additional-file-upload-review-${scenarioId}`}
-                                    className="template-creator-attachment-label"
-                                  >
-                                    <div className="template-creator-attachment-info">
-                                      <div>Upload additional document</div>
-                                      <div className="template-creator-description">
-                                        Click to upload additional file
-                                      </div>
-                                    </div>
-                                  </label>
-                                  <input
-                                    id={`additional-file-upload-review-${scenarioId}`}
-                                    type="file"
-                                    onChange={(e) => handleDocumentUpload(scenarioId, e, true)}
-                                    className="template-creator-file-input"
-                                    multiple
-                                  />
-                                </div>
-                                {(details.additionalDocuments || []).map((doc, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="template-creator-document-card selected"
-                                  >
-                                    <div className="template-creator-document-name">
-                                      {decodeURIComponent(doc.name)}
-                                    </div>
-                                    <div className="template-creator-document-size">{doc.size}</div>
-                                  </div>
-                                ))}
+                        ) : (
+                          recurringEvents.map((event, index) => (
+                            <div key={index} className="template-creator-card selected">
+                              <div className="template-creator-email-type">{event.eventType || 'Not selected'}</div>
+                              <div className="template-creator-description">
+                                {event.startTime && event.endTime
+                                  ? `${event.startTime} - ${event.endTime}`
+                                  : 'Time not selected'}
+                                <br />
+                                {event.days.length > 0 ? event.days.join(', ') : 'Days not selected'}
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <h3 className="template-creator-review-title">Context</h3>
-                            <div className="template-creator-grid">
-                              <div className="template-creator-card">
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.context?.displayType || ''}
-                                    onChange={(e) =>
-                                      handleContextChange(scenarioId, 'type', e.target.value)
-                                    }
-                                  >
-                                    <option value="">Select context type</option>
-                                    {contextOptions.map((context, idx) => (
-                                      <option key={idx} value={context}>
-                                        {context}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.context?.type && (
-                                  <div className="template-creator-input-wrapper">
-                                    <textarea
-                                      className="template-creator-instructions-input"
-                                      placeholder="Add additional context"
-                                      value={details.context?.content || ''}
-                                      onChange={(e) =>
-                                        handleContextChange(scenarioId, 'content', e.target.value)
-                                      }
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-                            <h3 className="template-creator-review-title">Salutation</h3>
-                            <div className="template-creator-grid">
-                              <div className="template-creator-card">
-                                <div className="template-creator-email-type">Greeting</div>
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.signature?.greeting || 'Hi'}
-                                    onChange={(e) =>
-                                      handleSignatureChange(scenarioId, 'greeting', e.target.value)
-                                    }
-                                  >
-                                    {greetings.map((greeting) => (
-                                      <option key={greeting} value={greeting}>
-                                        {greeting}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.signature?.greeting === 'Custom' && (
-                                  <div className="template-creator-input-wrapper">
-                                    <textarea
-                                      className="template-creator-instructions-input"
-                                      placeholder="Enter custom greeting"
-                                      value={details.signature?.customGreeting || ''}
-                                      onChange={(e) =>
-                                        handleSignatureChange(
-                                          scenarioId,
-                                          'customGreeting',
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                )}
-                                <div className="template-creator-email-type">Signature</div>
-                                <div className="template-creator-dropdown-wrapper">
-                                  <select
-                                    className="template-creator-dropdown"
-                                    value={details.signature?.signature || 'Best'}
-                                    onChange={(e) =>
-                                      handleSignatureChange(scenarioId, 'signature', e.target.value)
-                                    }
-                                  >
-                                    {signatures.map((sig) => (
-                                      <option key={sig} value={sig}>
-                                        {sig}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                {details.signature?.signature === 'Custom' && (
-                                  <div className="template-creator-input-wrapper">
-                                    <textarea
-                                      className="template-creator-instructions-input"
-                                      placeholder="Enter custom signature"
-                                      value={details.signature?.customSignature || ''}
-                                      onChange={(e) =>
-                                        handleSignatureChange(
-                                          scenarioId,
-                                          'customSignature',
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </React.Fragment>
-                      );
-                    })}
+                          ))
+                        )}
+                      </div>
+                    </div>
                   </div>
                 )}
               </motion.div>
@@ -1430,7 +823,7 @@ const TemplateCreator = ({
         {(currentStep >= 1 && currentStep <= 8) && (
           <div className="template-creator-footer-container">
             <div className="template-creator-footer-text">
-              Replies are written to the drafts of your linked account.
+              Your schedule will be saved for planning purposes.
             </div>
             <div className="template-creator-navigation">
               <button
@@ -1444,20 +837,20 @@ const TemplateCreator = ({
                 className="template-creator-next-btn"
                 onClick={currentStep === 8 ? handlePublish : handleNextStep}
                 disabled={
-                  (currentStep === 1 && !selectedCategory) ||
-                  (currentStep === 2 && selectedScenarios.length === 0) ||
-                  (currentStep === 3 &&
-                    !selectedScenarios.every(
-                      (scenarioId) => scenarioDetails[scenarioId]?.tones?.selected
-                    )) ||
-                  (currentStep === 6 &&
-                    !selectedScenarios.every(
-                      (scenarioId) =>
-                        scenarioDetails[scenarioId]?.signature?.greeting &&
-                        scenarioDetails[scenarioId]?.signature?.signature
-                    )) ||
-                  (currentStep === 7 && !workflowTitle.trim()) ||
-                  (currentStep === 8 && isPublishing)
+                  (currentStep === 1 && !selectedGoal) ||
+                  (currentStep === 2 && !selectedType) ||
+                  (currentStep === 3 && !breakfastTime) ||
+                  (currentStep === 4 && !lunchTime) ||
+                  (currentStep === 5 && !dinnerTime) ||
+                  (currentStep === 6 && !sleepTime) ||
+                  (currentStep === 7 &&
+                    (!hasRecurringEvents ||
+                      (hasRecurringEvents === 'yes' &&
+                        !recurringEvents.every(
+                          (event) =>
+                            event.eventType && event.startTime && event.endTime && event.days.length > 0
+                        )))) ||
+                  (currentStep === 8 && (!workflowTitle.trim() || isPublishing))
                 }
               >
                 {currentStep === 8
@@ -1481,6 +874,8 @@ TemplateCreator.propTypes = {
   onTemplateNameChange: PropTypes.func,
   templateData: PropTypes.object,
   setTemplateData: PropTypes.func,
+  isPublishing: PropTypes.bool,
+  setIsPublishing: PropTypes.func,
 };
 
 TemplateCreator.defaultProps = {
@@ -1488,6 +883,8 @@ TemplateCreator.defaultProps = {
   templateData: {},
   onTemplateNameChange: () => {},
   setTemplateData: () => {},
+  isPublishing: false,
+  setIsPublishing: () => {},
 };
 
 export default TemplateCreator;
