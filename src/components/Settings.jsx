@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import config from '../config';
 import './Settings.css';
-import { FaGoogle } from 'react-icons/fa';
+import { FaGoogle, FaCalendarAlt } from 'react-icons/fa';
 import TabBar from './TabBar';
 import Sidebar from './Sidebar';
 
@@ -38,16 +38,18 @@ ErrorBoundary.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserData, activeTab, setActiveTab }) => {
-  console.log('Settings.jsx rendering:', { userEmail, isGmailConnected });
+const Settings = ({ userEmail, firstName, lastName, isGmailConnected, isGcalConnected, setUserData, activeTab, setActiveTab }) => {
+  console.log('Settings.jsx rendering:', { userEmail, isGmailConnected, isGcalConnected });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [signOutError, setSignOutError] = useState(null);
   const [signOutLoading, setSignOutLoading] = useState(false);
   const [gmailLoading, setGmailLoading] = useState(false);
+  const [gcalLoading, setGcalLoading] = useState(false);
   const [gmailError, setGmailError] = useState(null);
-  const [disconnectLoading, setDisconnectLoading] = useState({ gmail: false });
+  const [gcalError, setGcalError] = useState(null);
+  const [disconnectLoading, setDisconnectLoading] = useState({ gmail: false, gcal: false });
   const [disconnectError, setDisconnectError] = useState(null);
   const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
@@ -56,8 +58,9 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserDat
   const [newPassword, setNewPassword] = useState('');
 
   const gmailApiBase = config.gmail?.apiBaseUrl || 'https://39ormpmfi2.execute-api.us-east-1.amazonaws.com/dev/gmail-auth';
+  const gcalApiBase = 'https://1m2ribx1tc.execute-api.us-east-1.amazonaws.com/dev/gcal-auth';
   const gmailDisconnectApiBase = 'https://trnf47jkj2.execute-api.us-east-1.amazonaws.com/dev/gmail-disconnect';
-  const deleteAccountApiBase = 'https://l07ve60hr3.execute-api.us-east-1.amazonaws.com/dev/delete-account';
+  const gcalDisconnectApiBase = 'https://trnf47jkj2.execute-api.us-east-1.amazonaws.com/dev/gcal-disconnect';
 
   const handleSignOutClick = () => {
     setShowConfirmDialog(true);
@@ -103,7 +106,7 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserDat
     try {
       const token = (await Auth.currentSession()).getIdToken().getJwtToken();
       console.log('Deleting account for email:', userEmail);
-      const response = await fetch(deleteAccountApiBase, {
+      const response = await fetch('https://l07ve60hr3.execute-api.us-east-1.amazonaws.com/dev/delete-account', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,6 +200,58 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserDat
     }
   };
 
+  const handleGcalSignIn = async () => {
+    console.log('handleGcalSignIn called with userEmail:', userEmail);
+    if (!userEmail) {
+      setGcalError('Authentication issue. Please sign in again.');
+      navigate('/signin', { replace: true });
+      return;
+    }
+    setGcalLoading(true);
+    setGcalError(null);
+    try {
+      const session = await Auth.currentSession();
+      const idToken = session.getIdToken().getJwtToken();
+      const response = await fetch(gcalApiBase, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: idToken,
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          action: 'authenticate',
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Server error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      const gcalAuthResult = result.analysis?.gcalAuthResult;
+      if (gcalAuthResult) {
+        if (gcalAuthResult.needsAuth && gcalAuthResult.authUrl) {
+          console.log('Redirecting to Google Calendar OAuth:', gcalAuthResult.authUrl);
+          window.location.href = gcalAuthResult.authUrl;
+        } else if (!gcalAuthResult.needsAuth && gcalAuthResult.isGcalConnected) {
+          setUserData((prev) => ({ ...prev, isGcalConnected: true }));
+          navigate('/settings', { replace: true });
+        } else {
+          throw new Error('Unexpected response: ' + (gcalAuthResult.message || 'No auth details'));
+        }
+      } else {
+        throw new Error('Invalid response structure: missing gcalAuthResult');
+      }
+    } catch (error) {
+      console.error('Google Calendar authentication error:', error.message);
+      setGcalError(`Failed to connect to Google Calendar: ${error.message}`);
+    } finally {
+      setGcalLoading(false);
+    }
+  };
+
   const handleDisconnect = async (platform) => {
     if (!userEmail) {
       setDisconnectError('User email not found');
@@ -208,7 +263,8 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserDat
 
     try {
       const token = (await Auth.currentSession()).getIdToken().getJwtToken();
-      const response = await fetch(gmailDisconnectApiBase, {
+      const apiBase = platform === 'gmail' ? gmailDisconnectApiBase : gcalDisconnectApiBase;
+      const response = await fetch(apiBase, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -226,15 +282,17 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserDat
       }
 
       const data = await response.json();
-      console.log('Disconnect platform response:', data);
-      if (platform.toLowerCase() === 'gmail') {
+      console.log(`Disconnect ${platform} response:`, data);
+      if (platform === 'gmail') {
         setUserData((prev) => ({ ...prev, isGmailConnected: false }));
+      } else if (platform === 'gcal') {
+        setUserData((prev) => ({ ...prev, isGcalConnected: false }));
       } else {
         throw new Error(`Unknown platform: ${platform}`);
       }
     } catch (error) {
-      console.error('Error disconnecting platform:', error.message);
-      setDisconnectError(`Failed to disconnect ${platform}: ${error.message}`);
+      console.error(`Error disconnecting ${platform}:`, error.message);
+      setDisconnectError(`Failed to disconnect ${platform === 'gmail' ? 'Gmail' : 'Google Calendar'}: ${error.message}`);
     } finally {
       setDisconnectLoading((prev) => ({ ...prev, [platform]: false }));
     }
@@ -242,12 +300,12 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserDat
 
   const handleEmailChange = () => {
     console.log('Email change requested for:', userEmail);
-    // Add email change logic here (e.g., API call to update email)
+    // Add email change logic here
   };
 
   const handlePasswordChange = () => {
     console.log('Password change requested with new password:', newPassword);
-    // Add password change logic here (e.g., API call to update password)
+    // Add password change logic here
     setNewPassword('');
   };
 
@@ -361,20 +419,45 @@ const Settings = ({ userEmail, firstName, lastName, isGmailConnected, setUserDat
                     </div>
                   </div>
                   <div className="account-divider"></div>
-                  <div className="account-column gmail-integration">
-                    <h3>Gmail Integration</h3>
-                    <p className="gmail-subtitle">
-                      Your Gmail credentials are fully encrypted and required to perform automated actions in the background. We do not have direct access and control over your Gmail account.
+                  <div className="account-column integrations">
+                    <h3>Integrations</h3>
+                    <p className="integration-subtitle">
+                      Your Google credentials are fully encrypted and required to perform automated actions. We do not have direct access or control over your Google accounts.
                     </p>
-                    <div className="gmail-integration-card">
-                      <div className="gmail-integration-header">
-                        <span className="gmail-integration-label">Your current Gmail integration:</span>
-                        <span className="gmail-integration-email">{userEmail}</span>
+                    <div className="integration-card-container">
+                      <div className="gcal-integration-card">
+                        <div className="integration-header">
+                          <FaCalendarAlt className="integration-icon" />
+                          <h4>Google Calendar</h4>
+                        </div>
+                        <div className="integration-status">
+                          <span className={`status-dot ${isGcalConnected ? 'connected' : 'disconnected'}`}></span>
+                          <span>{isGcalConnected ? 'Google Calendar is connected!' : 'Google Calendar not connected yet.'}</span>
+                        </div>
+                        {isGcalConnected ? (
+                          <button
+                            onClick={() => handleDisconnect('gcal')}
+                            disabled={disconnectLoading.gcal}
+                            className={`action-button disconnect-button ${disconnectLoading.gcal ? 'loading' : ''}`}
+                          >
+                            {disconnectLoading.gcal ? 'Disconnecting...' : 'Disconnect Google Calendar'}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={handleGcalSignIn}
+                            disabled={gcalLoading || !userEmail}
+                            className={`action-button sign-in ${gcalLoading ? 'loading' : ''}`}
+                          >
+                            {gcalLoading ? 'Connecting...' : 'Sign in to Google Calendar'}
+                          </button>
+                        )}
+                        {gcalError && <p className="error-text">{gcalError}</p>}
                       </div>
-                      <div className={`integration-card ${isGmailConnected ? 'connected' : 'disconnected'}`}>
+                      <div className="gmail-integration-card">
                         <div className="integration-header">
                           <FaGoogle className="integration-icon" />
                           <h4>Gmail</h4>
+                          <span className="beta-badge">Beta</span>
                         </div>
                         <div className="integration-status">
                           <span className={`status-dot ${isGmailConnected ? 'connected' : 'disconnected'}`}></span>
@@ -523,6 +606,7 @@ Settings.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   isGmailConnected: PropTypes.bool,
+  isGcalConnected: PropTypes.bool,
   setUserData: PropTypes.func,
   activeTab: PropTypes.string,
   setActiveTab: PropTypes.func,

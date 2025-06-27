@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Auth } from 'aws-amplify';
 import SignUp from './components/SignUp';
@@ -32,7 +32,7 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('ErrorBoundary caught an error:', errorInfo);
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
   }
 
   render() {
@@ -63,16 +63,19 @@ const ProtectedRoute = ({ children }) => {
   const [userData, setUserData] = useState(() => {
     try {
       const cached = localStorage.getItem(CACHE_KEY);
-      return cached
-        ? JSON.parse(cached)
-        : {
-            userEmail: '',
-            firstName: 'Unknown',
-            lastName: 'User',
-            isGmailConnected: false,
-            templates: [],
-            lastFetched: 0,
-          };
+      if (!cached || cached === 'undefined') {
+        console.log('ProtectedRoute: No valid cache found, initializing default userData');
+        return {
+          userEmail: '',
+          firstName: 'Unknown',
+          lastName: 'User',
+          isGmailConnected: false,
+          isGcalConnected: false,
+          templates: [],
+          lastFetched: 0,
+        };
+      }
+      return JSON.parse(cached);
     } catch (err) {
       console.error('ProtectedRoute: Failed to parse initial cache:', err);
       return {
@@ -80,6 +83,7 @@ const ProtectedRoute = ({ children }) => {
         firstName: 'Unknown',
         lastName: 'User',
         isGmailConnected: false,
+        isGcalConnected: false,
         templates: [],
         lastFetched: 0,
       };
@@ -91,16 +95,19 @@ const ProtectedRoute = ({ children }) => {
   const authChecked = React.useRef(false);
   const pollIntervalRef = React.useRef(null);
   const pollFailureCountRef = React.useRef(0);
-  const pausePollingUntilRef = React.useRef(0); // Pause polling after deletion
+  const pausePollingUntilRef = React.useRef(0);
 
   const updateCacheAndState = (newData) => {
     console.log('ProtectedRoute: Updating cache and state:', newData);
     setUserData(newData);
-    localStorage.setItem(CACHE_KEY, JSON.stringify(newData));
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(newData));
+    } catch (err) {
+      console.error('ProtectedRoute: Failed to update localStorage cache:', err);
+    }
   };
 
   const fetchUserData = async (isPolling = false) => {
-    // Skip polling if paused
     if (isPolling && Date.now() < pausePollingUntilRef.current) {
       console.log('ProtectedRoute: Polling paused until:', new Date(pausePollingUntilRef.current));
       return false;
@@ -127,7 +134,7 @@ const ProtectedRoute = ({ children }) => {
           },
           body: JSON.stringify({
             email,
-            fields: ['firstName', 'lastName', 'gmailToken', 'templates'],
+            fields: ['firstName', 'lastName', 'gmailToken', 'gCalToken', 'templates'],
           }),
           signal: controller.signal,
         }
@@ -149,6 +156,9 @@ const ProtectedRoute = ({ children }) => {
         firstName: userDataResponse.firstName || 'Unknown',
         lastName: userDataResponse.lastName || 'User',
         isGmailConnected: userDataResponse.isGmailConnected ?? false,
+        isGcalConnected: userDataResponse.isGcalConnected ?? false,
+        gmailEmail: userDataResponse.gmailEmail || '',
+        calendarEmail: userDataResponse.calendarEmail || '',
         templates: Array.isArray(serverTemplates)
           ? serverTemplates.map((server) => ({
               ...server,
@@ -158,11 +168,11 @@ const ProtectedRoute = ({ children }) => {
         lastFetched: Date.now(),
       };
 
-      // Only update if server data is newer or no local changes
       const hasChanges =
         newUserData.firstName !== userData.firstName ||
         newUserData.lastName !== userData.lastName ||
         newUserData.isGmailConnected !== userData.isGmailConnected ||
+        newUserData.isGcalConnected !== userData.isGcalConnected ||
         JSON.stringify(newUserData.templates) !== JSON.stringify(userData.templates);
 
       if (hasChanges || isPolling) {
@@ -256,10 +266,8 @@ const ProtectedRoute = ({ children }) => {
 
   console.log('ProtectedRoute: Passing props to children:', {
     ...userData,
-    templates: userData.templates,
     setUserData: (newData) => {
       console.log('ProtectedRoute: setUserData called with:', newData);
-      // Pause polling for 10 seconds to allow server to update
       pausePollingUntilRef.current = Date.now() + 10000;
       updateCacheAndState(newData);
     },
@@ -280,7 +288,6 @@ const ProtectedRoute = ({ children }) => {
           ...userData,
           setUserData: (newData) => {
             console.log('ProtectedRoute: setUserData called with:', newData);
-            // Pause polling for 10 seconds to allow server to update
             pausePollingUntilRef.current = Date.now() + 10000;
             updateCacheAndState(newData);
           },
@@ -428,7 +435,143 @@ function GoogleCallback() {
   }
 
   return <Navigate to="/dashboard" replace />;
-}
+};
+
+function GoogleCalendarCallback() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const hasProcessed = React.useRef(false);
+
+  useEffect(() => {
+    if (hasProcessed.current || isProcessing) {
+      setLoading(false);
+      return;
+    }
+
+    const handleCallback = async (retryCount = 0, maxRetries = 3) => {
+      isProcessing = true;
+      try {
+        const authCode = searchParams.get('code');
+        const email = searchParams.get('state');
+        console.log('GoogleCalendarCallback - authCode:', authCode ? '[REDACTED]' : null, 'email:', email);
+
+        if (!authCode || !email) {
+          throw new Error('Missing auth code or email in query parameters');
+        }
+
+        if (processedCodes.has(authCode)) {
+          console.log('GoogleCalendarCallback - Auth code already processed');
+          setLoading(false);
+          return;
+        }
+
+        let idToken;
+        try {
+          const session = await Auth.currentSession();
+          idToken = session.getIdToken().getJwtToken();
+        } catch (sessionErr) {
+          console.error('GoogleCalendarCallback - Session error:', sessionErr);
+          throw new Error('Invalid session. Please sign in again.');
+        }
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        const response = await fetch(
+          'https://1m2ribx1tc.execute-api.us-east-1.amazonaws.com/dev/gcal-auth',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: idToken,
+            },
+            body: JSON.stringify({
+              email,
+              authCode,
+              action: 'authenticate',
+            }),
+            signal: controller.signal,
+          }
+        );
+
+        clearTimeout(timeoutId);
+
+        const result = await response.json();
+        console.log('GoogleCalendarCallback - API response:', result);
+
+        if (!response.ok || result.error) {
+          throw new Error(
+            result.details || result.error || `API error (Status: ${response.status})`
+          );
+        }
+
+        const gcalAuthResult = result.analysis?.gcalAuthResult;
+        if (!gcalAuthResult) {
+          throw new Error('Invalid API response: Missing gcalAuthResult');
+        }
+
+        if (gcalAuthResult.needsAuth && gcalAuthResult.authUrl) {
+          console.log('GoogleCalendarCallback - Redirecting to auth URL:', gcalAuthResult.authUrl);
+          window.location.href = gcalAuthResult.authUrl;
+          return;
+        } else if (!gcalAuthResult.needsAuth && gcalAuthResult.isGcalConnected) {
+          processedCodes.add(authCode);
+          hasProcessed.current = true;
+          console.log('GoogleCalendarCallback - Google Calendar connected, navigating to settings');
+          navigate('/settings', {
+            replace: true,
+            state: { email, isGcalConnected: true },
+          });
+        } else {
+          throw new Error('Unexpected auth result');
+        }
+      } catch (err) {
+        const errorMessage = err.message || String(err) || 'Unknown authentication error';
+        console.error('GoogleCalendarCallback error:', errorMessage, err.stack || err);
+
+        if (errorMessage.includes('invalid_grant') && retryCount < maxRetries) {
+          console.log(`GoogleCalendarCallback - Retrying (${retryCount + 1}/${maxRetries})...`);
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return handleCallback(retryCount + 1, maxRetries);
+        }
+
+        setError(`Google Calendar authentication failed: ${errorMessage}`);
+      } finally {
+        isProcessing = false;
+        setLoading(false);
+        localStorage.removeItem('inAuth');
+        console.log('GoogleCalendarCallback - Cleared inAuth localStorage key');
+      }
+    };
+
+    handleCallback();
+  }, [navigate, searchParams]);
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>Processing Google Calendar authentication...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-overlay">
+        <h2>Google Calendar Authentication Failed</h2>
+        <p>{error}</p>
+        <button onClick={() => navigate('/settings')}>
+          Return to Settings
+        </button>
+      </div>
+    );
+  }
+
+  return <Navigate to="/settings" replace />;
+};
 
 function DashboardLayout({
   children,
@@ -469,9 +612,9 @@ function DashboardLayout({
       <main className="dashboard-content">{children}</main>
     </div>
   );
-}
+};
 
-function DashboardRoutes({ activeTab, setActiveTab, firstName, lastName, templates, setUserData, userEmail, isGmailConnected }) {
+function DashboardRoutes({ activeTab, setActiveTab, firstName, lastName, templates, setUserData, userEmail, isGmailConnected, isGcalConnected }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [resetCounter, setResetCounter] = useState(0);
@@ -562,6 +705,7 @@ function DashboardRoutes({ activeTab, setActiveTab, firstName, lastName, templat
               firstName={firstName}
               lastName={lastName}
               isGmailConnected={isGmailConnected}
+              isGcalConnected={isGcalConnected}
             />
           </DashboardLayout>
         }
@@ -641,7 +785,7 @@ function DashboardRoutes({ activeTab, setActiveTab, firstName, lastName, templat
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
-}
+};
 
 function App() {
   const [activeTab, setActiveTab] = useState('Templates');
@@ -751,8 +895,16 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/settings" element={<ProtectedRoute><Settings activeTab={activeTab} setActiveTab={setActiveTab} /></ProtectedRoute>} />
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <Settings activeTab={activeTab} setActiveTab={setActiveTab} />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/google-callback" element={<GoogleCallback />} />
+              <Route path="/gcal-callback" element={<GoogleCalendarCallback />} />
               <Route path="/" element={<RootRedirect />} />
               <Route path="*" element={<Navigate to="/google-app-details" replace />} />
             </Routes>
@@ -761,6 +913,6 @@ function App() {
       </TransitionGroup>
     </ErrorBoundary>
   );
-}
+};
 
 export default App;
